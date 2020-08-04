@@ -1,0 +1,419 @@
+---
+title: "Rock Lichen data from Sunset Crater"
+author: M.K. Lau
+output: html_document
+
+---
+
+# Analysis Summary
+
+- Dead trees were removed from lichen community analyses.
+- Rock epiphyte communities were adequately sampled, based on species
+  accumulation curves, with moth resistant trees accumulating slightly
+  more lichen species.
+- Communities (abundance, richness, diversity, composition)
+were significantly, generally negatively, affected by moth
+susceptibility.
+- Several tree variables, including light availability, leaf litter
+  abundance and rock abundance, were impacted by moth susceptibility.
+- Analysis of causal pathways supported an indirect link between moth
+  susceptibility and impacts on lichen communities via decreasing rock
+  (i.e. habitat) availability through increased leaf abscission and
+  accumulation on rocks under trees.
+- These results support a genetically based link between intraspecific
+  variation in susceptibility to an insect herbivore and community
+  dynamics in an arid ecosystem.
+- Given the possible impacts of cliimate change on this system, this
+  study supports the conclusion that community and ecosystem impacts
+  need to be considered in an evolutionary context.
+
+```{r, echo = TRUE, results = "hide", eval = TRUE}
+
+# 0. Supporting functions and libraries
+## Support functions
+
+dif <- function(x){
+    out=x[1]
+    for (i in 2:length(x)){
+        out=out-x[i]
+    }
+    return(out)
+}
+
+se <- function(x){sd(x) / sqrt(length(x))}
+
+
+## Libraries
+my.libs <- c("vegan", "ecodist", "knitr", "reshape2")
+if (any(!(my.libs %in% installed.packages()[, 1]))){
+    sapply(my.libs[!(my.libs %in% installed.packages()[, 1])], 
+           install.packages)
+}else{}
+sapply(my.libs, require, character.only = TRUE)
+
+# if (!(any(grepl("ComGenR", installed.packages()[, 1])))){
+#    devtools::install_github("ecgen/comgenr")
+# }
+
+
+
+```
+
+# Load Data
+
+
+The following are variable descriptions (Variable, Type, Range, Definition):
+
+    
+
+- Moth,categorical,0 or 1,Was the tree susceptible (0) or resistant (1) to moth attack?
+- Live/Dead,categorical,0 or 1,Was the tree dead (0) or alive (1)?
+- Litter %,continuous,0 to 100,Percent cover inside quadrat
+- Rocks > 3cm? %,continuous,0 to 100,Percent cover of rocks > 3cm? inside quadrat
+- Rocks < 3cm? %,continuous,0 to 100,Percent cover of rocks < 3cm? inside quadrat
+- Shrubs %,continuous,0 to 100,Percent cover of shrubs inside quadrat
+- Grass %,continuous,0 to 100,Percent cover of grass inside quadrat
+- Branches %,continuous,0 to 100,Percent cover of branches on ground inside quadrat
+- Distance,continuous,0 to 100,"Distance from main trunk, converted to percent of crown radius at that azimuth"
+- Azimuth,continuous,0 to 360,Compass direction from main trunk
+- Slope,continuous,0 to 90,Topographical steepness
+- Aspect,continuous,0 to 360,Compass direction of slope
+- Light,continuous,,Amount of light available to epiliths
+
+```{r results = "hide"}
+
+## Data are in ../data/scrl
+l.dat <- read.csv("./data/spp_env_combined.csv")
+
+## Fix species names
+colnames(l.dat)[colnames(l.dat) == "Acasup"] <- "Acaame"
+
+## Summary of data
+summary(l.dat)
+
+## remove dead trees
+l.dat <- l.dat[l.dat[, "Live.Dead"] != 0, ]
+
+## Lichen species list
+spp.l <- c("Acacon", "Acaame", "Acaobp", "Sterile.sp", "Brown.cr",
+"Lobalp", "Canros", "Calare", "Phydub", "Rhichr", "Xanlin", "Xanpli",
+"Xanele", "GrBr.cr", "Gray.cr")
+spp.moss <- c("Synrur", "Cerpur.Bryarg")
+
+## Create a community matrix
+com <- l.dat[, colnames(l.dat) %in% c(spp.l, spp.moss)]
+com.moss <- l.dat[, colnames(l.dat) %in% spp.moss]
+
+## Add the tree labels to the rownames
+rownames(com) <- paste(l.dat[, "Moth"], l.dat[, "Tree.pairs"], sep = "_")
+rownames(com.moss) <- paste(l.dat[, "Moth"], l.dat[, "Tree.pairs"], sep = "_")
+rownames(l.dat) <- paste(l.dat[, "Moth"], l.dat[, "Tree.pairs"], sep = "_")
+
+## Paired environmental differences
+total.rocks  <- apply(l.dat[, c("Big.rocks..", "Small.rocks..")], 1, sum)
+env <- l.dat[, c("Litter..", "Big.rocks..", "Small.rocks..", 
+                           "Shrubs..", "Grass..", "Branches..", 
+                           "Light...N", "Light...S", "Light...average")]
+env <- cbind(env, total.rocks)
+env.dif <- apply(env, 2, function(x, p) tapply(x, p, diff), p = l.dat[, "Tree.pairs"])
+
+heatmap(abs(round(cor(env.dif), 3)))
+
+```
+
+
+# Species accumulation
+
+Are the communities on each tree type adequately sampled?
+
+```{r specacum}
+
+spa.all <- specaccum(com, method = "exact")
+spa.res <- specaccum(com[l.dat[, "Moth"] == 1, ], method = "exact")
+spa.sus <- specaccum(com[l.dat[, "Moth"] == 0, ], method = "exact")
+
+plot(spa.all,
+     ylim = c(0, 20),
+     xlab = "Cumulative Trees Sampled",
+     ylab = "Species Observed", 
+     col = "grey", ci.col = 'lightgrey', ci.type = "poly", ci.lty = 0)
+plot(spa.res, ci.col = "black", ci.type = "bar", lty = 1, add = TRUE, ci.lty = 1)
+plot(spa.sus, ci.col = "black", ci.type = "bar", lty = 3, add = TRUE, ci.lty = 3)
+legend("bottomright", 
+       legend = c("All", "Resistant", "Susceptible"), 
+       lty = c(1, 1, 3), lwd = c(5, 2, 2), col = c("lightgrey", "black", "black"))
+
+```
+
+```{R, specaccum-plot}
+
+pdf("./results/scrl_spp-accum.pdf", width = 5, height = 5)
+plot(spa.all,
+     ylim = c(0, 20),
+     xlab = "Cumulative Trees Sampled",
+     ylab = "Species Observed", 
+     col = "grey", ci.col = 'lightgrey', ci.type = "poly", ci.lty = 0)
+plot(spa.res, ci.col = "black", ci.type = "bar", lty = 1, add = TRUE, ci.lty = 1)
+plot(spa.sus, ci.col = "black", ci.type = "bar", lty = 3, add = TRUE, ci.lty = 3)
+legend("bottomright", 
+       legend = c("All", "Resistant", "Susceptible"), 
+       lty = c(1, 1, 3), lwd = c(5, 2, 2), col = c("lightgrey", "black", "black"))
+dev.off()
+
+
+```
+
+# Moth trees have different microenvironments 
+
+- paired t-tests 
+
+# Moth trees have different lichen communities (FIGURE ch.plot A, R, H) 
+
+less abundant and diverse (paired t-tests, in text) 
+
+```{R }
+
+abun <- apply(com, 1, sum)
+rich <- apply(com, 1, function(x) sum(sign(x)))
+shan <- apply(com, 1, diversity, index = "shannon")
+tt.a <- t.test(tapply(abun, l.dat[, "Tree.pairs"], diff))
+tt.r <- t.test(tapply(rich, l.dat[, "Tree.pairs"], diff))
+tt.h <- t.test(tapply(shan, l.dat[, "Tree.pairs"], diff))
+tt.arh <- do.call(rbind, 
+                  list(a = unlist(tt.a), r = unlist(tt.r), h = unlist(tt.h)))
+data.frame(tt.arh)
+
+```
+
+composition is different (PERMANOVA, in text and supplement)
+
+```{R, cache  = TRUE}
+
+com.ds <- cbind(com, ds = rep(0.0001, nrow(com)))
+com.ds.rel <- apply(com, 2, function(x) x/max(x))
+com.ds.rel <- cbind(com.ds.rel, ds = rep(0.0001, nrow(com)))
+com.ds.rel[is.na(com.ds.rel)] <- 0
+
+set.seed(123)
+ptab.moth <- adonis2(com.ds~ Moth, data = l.dat, 
+                    strata = l.dat[, "Tree.pairs"], 
+                    by = "margin", nperm = 100000)
+set.seed(123)
+ptab.moth.rel <- adonis2(com.ds.rel ~ Moth, data = l.dat, 
+                         strata = l.dat[, "Tree.pairs"], 
+                         by = "margin", nperm = 100000)
+
+kable(ptab.moth)
+kable(ptab.moth.rel)
+
+```
+
+three main species were reduced by moths (FDR paired t-tests, in text + supplement)
+
+```{R}
+
+ind.spp <- lapply(com, function(x, p) t.test(tapply(x, p, diff)), p = l.dat[, "Tree.pairs"])
+isp <- apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric)
+rownames(isp) <- names(ind.spp)
+isp[, "p.value"] <- p.adjust(isp[, "p.value"], method = "fdr")
+isp <- isp[order(isp[, "p.value"]), ]
+
+```
+
+Calculate the average abundances of the indicators
+
+```{r }
+
+isp.names <- as.character(na.omit(rownames(isp[isp[, "p.value"] < 0.05, ])))
+isp.com <- com[,colnames(com) %in% isp.names]
+isp.dif <- apply(isp.com, 2, function(x,y) tapply(x, y, diff), y = l.dat[ ,"Tree.pairs"])
+
+```
+
+Create a multi-bar plot figure for the community.
+
+```{r}
+
+isp.dat <- melt(isp.dif)
+colnames(isp.dat) <- c("Tree.pairs", "Species", "diff")
+isp.mu <- tapply(isp.dat[, "diff"], isp.dat[, "Species"], mean)
+isp.se <- tapply(isp.dat[, "diff"], isp.dat[, "Species"], se)
+ard.dif <- cbind(tapply(abun, l.dat[, "Tree.pairs"], diff), 
+                 tapply(rich, l.dat[, "Tree.pairs"], diff), 
+                 tapply(shan, l.dat[, "Tree.pairs"], diff))
+colnames(ard.dif) <- c("Abundance", "Richness", "Diversity")
+ard.dat <- melt(ard.dif)
+colnames(ard.dat) <- c("Tree.pairs", "Stat", "diff")
+ard.mu <- tapply(ard.dat[, "diff"], ard.dat[, "Stat"], mean)
+ard.se <- tapply(ard.dat[, "diff"], ard.dat[, "Stat"], se)
+
+pdf(file = "./results/scrl_isp_ard.pdf", width = 9, height = 5)
+
+par(mfrow = c(1,2))
+bp.out <- barplot(ard.mu, col = "darkgrey", ylim = c(-5, 0), 
+                  ylab = "Difference (S - R)", border = "NA")
+segments(bp.out[, 1], ard.mu + ard.se,
+         bp.out[, 1], ard.mu - ard.se, 
+         lwd = 1.5)
+bp.out <- barplot(isp.mu, col = "darkgrey", ylim = c(-0.5, 0), 
+                  ylab = "Difference (S - R)", border = "NA",
+			axisnames = TRUE, 
+			names.arg = sapply(names(isp.mu), 
+				function(x) 
+                                    paste(c(substr(x, 1, 1), 
+                                            substr(x, 4, 4)), collapse = "")))
+segments(bp.out[, 1], isp.mu + isp.se,
+         bp.out[, 1], isp.mu - isp.se, 
+         lwd = 1.5)
+dev.off()
+
+```
+
+Create a plot of the two most indicative species
+
+```{r}
+
+pdf(file = "./results/scrl_complot.pdf", width = 7, height = 7)
+plot(com[, c("Acaame", "Canros")], pch = l.dat[, "Moth"] + 1, cex = 3, col = l.dat[, "Moth"] + 1)
+legend("topleft", title = "Tree Type", legend = c("Resistant", "Susceptible"), pch = c(2, 1), col = c(2, 1))
+dev.off()
+
+```
+
+Create plot with indicator taxa
+
+```{r}
+
+pdf(file = "./results/scrl_pdif.pdf", width = 7, height = 7)
+plot(melt(isp.dif)[-1], xlab = "Species", ylab = "Abundance Reduction")
+dev.off()
+
+```
+
+
+# Litter covering rocks was the main driver (FIGURE = ORDINATION)
+
+Although light did significantly explain variation in the lichen
+community, this was not significant once the variation in litter was
+controlled for. 
+
+
+```{R, cache = TRUE}
+
+
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ Litter.. +  Light...average, data = l.dat, 
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "margin", nperm = 100000)
+kable(ptab.env)
+
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ Light...average + Litter.. , data = l.dat, 
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "margin", nperm = 100000)
+kable(ptab.env)
+
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ total.rocks ,
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "term", nperm = 100000)
+
+kable(ptab.env)
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ Big.rocks.. , data = l.dat, 
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "term", nperm = 100000)
+
+kable(ptab.env)
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ Small.rocks.. , data = l.dat, 
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "term", nperm = 100000)
+kable(ptab.env)
+set.seed(123)
+ptab.env <- adonis2(com.ds ~ Litter.. , data = l.dat, 
+                   strata = l.dat[, "Tree.pairs"], 
+                   by = "term", nperm = 100000)
+kable(ptab.env)
+
+
+```
+
+Because light was significantly, negatively correlated with litter and
+large rocks.
+
+```{R, corplot-bigrocks-litter, cache = TRUE}
+
+cor.test(env.dif[, "Big.rocks.."], env.dif[, "Litter.."])
+
+pdf("./results/scrl_litterVbigrocks.pdf", width = 5, height = 5)
+dev.off()
+
+```
+
+
+```{R, litter-plot, cache = TRUE, fig.width = 10, fig.height = 5}
+
+par(mfrow = c(1,3))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Litter Difference (S - R)")
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+	lwd = 0.5)
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
+plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff), 
+	tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff), 
+	xlab = "Litter Difference (S - R)", ylab = "Light Difference (S - R)",
+	pch = 19, cex = 1.5)
+
+```
+
+```{R, pdf-litter-plot, cache = TRUE}
+
+pdf("./results/scrl_litter_effects.pdf", width = 10, height = 5)
+par(mfrow = c(1,3))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Litter Difference (S - R)")
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+	lwd = 0.5)
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
+plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff), 
+	tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff), 
+	xlab = "Litter Difference (S - R)", ylab = "Light Difference (S - R)",
+	pch = 19, cex = 1.5)
+dev.off()
+
+```
+
+```{R ord-com-plot, cache = TRUE, width = 5, height = 5, dpi = 400}
+
+nmds.out <- nmds(vegdist(com.ds), 2, 2)
+ord <- nmds.min(nmds.out, dims = 2)
+ord.pch <- c("R", "S")[(l.dat[, "Moth"] + 1)]
+plot(X2~ X1, data = ord, pch = ord.pch)
+
+```
+
+Litter not light was correlated with large rocks (dist cor, in text).
+Thus, higher amounts of litter under trees was not related to the
+penetration of light under the tree canopy.
+
+```{R}
+
+cor.test(tapply(l.dat[, "Big.rocks.."], l.dat[, "Tree.pairs"], diff),
+         tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff))
+cor.test(tapply(l.dat[, "Big.rocks.."], l.dat[, "Tree.pairs"], diff),
+         tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff))
+cor.test(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff),
+         tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff))
+cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
+         tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff))
+
+
+```
+
