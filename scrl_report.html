@@ -1082,6 +1082,12 @@ plot(X2~ X1, data = ord, pch = ord.pch)</code></pre>
 ## sample estimates:
 ##        cor 
 ## -0.6863699</code></pre>
+<pre class="r"><code>moss.stats &lt;- apply(com.moss, 1, sum)
+moss.stats &lt;- tapply(moss.stats, l.dat[, &quot;Moth&quot;], mean)
+pc.moss &lt;- moss.stats * 100
+pc.moss</code></pre>
+<pre><code>##        0        1 
+## 6.033333 5.566667</code></pre>
 </div>
 
 

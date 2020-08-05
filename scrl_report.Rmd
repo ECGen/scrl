@@ -421,7 +421,7 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 moss.stats <- apply(com.moss, 1, sum)
 moss.stats <- tapply(moss.stats, l.dat[, "Moth"], mean)
-pc.moss <- moss.stats * 100
-pc.moss
+moss.stats
+
 
 ```
