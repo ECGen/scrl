@@ -216,7 +216,23 @@ ind.spp <- lapply(com, function(x, p) t.test(tapply(x, p, diff)), p = l.dat[, "T
 isp <- apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric)
 rownames(isp) <- names(ind.spp)
 isp[, "p.value"] <- p.adjust(isp[, "p.value"], method = "fdr")
+isp.all <- isp[, !(apply(isp, 2, function(x) all(is.na(x))))]
 isp <- isp[order(isp[, "p.value"]), ]
+
+```
+
+```{r}
+
+isp.all <- isp.all[, c(1, 2, 3, 6, 4, 5)]
+isp.all
+colnames(isp.all) <- c("t", "df", "p-value", "Mean Difference", "Lower CI 95%", "Upper CI 95%")
+kable(isp.all)
+
+```
+
+```{r}
+
+write.csv(round(isp.all, 5), file = "results/scrl_isp_table.csv")
 
 ```
 
