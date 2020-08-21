@@ -1,7 +1,9 @@
 ---
 title: "Rock Lichen data from Sunset Crater"
-author: M.K. Lau
-output: html_document
+author: M.K. Lau 
+output: 
+html_document: 
+keep_md: yes
 
 ---
 
@@ -36,20 +38,17 @@ output: html_document
 
 # Analysis and Results
 
+Analyses were conducted in the **R** statistical programming
+language. The following section loads dependencies and custom
+functions used in the analysis. 
+
 ## Dependencies
 
 ```{r, echo = TRUE, results = "hide", eval = TRUE}
 
-# 0. Supporting functions and libraries
+cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr")
 
-cran.pkgs <- c("xtable", "vegan", "ecodist")
-gh.pkgs <- c("ROpenSci/drake", "r-lib/styler",
-             "ECGen/ComGenR", "ECGen/conetto")
-gh.pkgs.names <- do.call(rbind, 
-                         strsplit(gh.pkgs, 
-                                  split = "/"))[, 2]
 ## install packages that are not installed
-## CRAN
 if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
     sapply(cran.pkgs[which(!(cran.pkgs %in% 
                              installed.packages()[, 1]))], 
@@ -57,44 +56,14 @@ if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
            dependencies = TRUE, 
            repos = 'http://cran.us.r-project.org')
 }
-## github 
-if (any(!(gh.pkgs.names %in% installed.packages()[, 1]))){
-    sapply(gh.pkgs[which(!(gh.pkgs.names %in% 
-                           installed.packages()[, 1]))], 
-           devtools::install_github,
-           dependencies = TRUE)
-}
+
 ## Load libraries
-sapply(c(cran.pkgs, gh.pkgs.names), 
-       library, quietly = TRUE, character.only = TRUE)
+sapply(cran.pkgs, library, quietly = TRUE, character.only = TRUE)
 
+## Custom Functions
 
-## Support functions
-
-dif <- function(x){
-    out=x[1]
-    for (i in 2:length(x)){
-        out=out-x[i]
-    }
-    return(out)
-}
-
+## se: Calculate the standard error of a variable.
 se <- function(x){sd(x) / sqrt(length(x))}
-
-
-## Libraries
-my.libs <- c("vegan", "ecodist", "knitr", "reshape2")
-if (any(!(my.libs %in% installed.packages()[, 1]))){
-    sapply(my.libs[!(my.libs %in% installed.packages()[, 1])], 
-           install.packages)
-}else{}
-sapply(my.libs, require, character.only = TRUE)
-
-# if (!(any(grepl("ComGenR", installed.packages()[, 1])))){
-#    devtools::install_github("ecgen/comgenr")
-# }
-
-
 
 ```
 
@@ -154,8 +123,6 @@ env <- l.dat[, c("Litter..", "Big.rocks..", "Small.rocks..",
 env <- cbind(env, total.rocks)
 env.dif <- apply(env, 2, function(x, p) tapply(x, p, diff), p = l.dat[, "Tree.pairs"])
 
-heatmap(abs(round(cor(env.dif), 3)))
-
 ```
 
 ## Saxicole communities were sufficiently sampled
@@ -201,13 +168,19 @@ dev.off()
 
 ```{R }
 
-
+env.test.l <- apply(env.dif, 2, t.test)
+env.test.l <- lapply(env.test.l, unlist)
+env.test.tab <- do.call(rbind, env.test.l)
+env.test.tab <- env.test.tab[, c(1, 2, 3, 6, 4, 5)]
+env.test.tab <- apply(env.test.tab, 2, as.numeric)
+rownames(env.test.tab) <- names(env.test.l)
+colnames(env.test.tab) <- c("t", "df", "p-value", "Mean Difference", "Lower CI 95%", "Upper CI 95%")
+kable(env.test.tab, digits = 4)
 
 ```
 
 ## Moth trees have different lichen communities 
 
-less abundant and diverse (paired t-tests, in text) 
 
 ```{R }
 
@@ -262,9 +235,8 @@ isp <- isp[order(isp[, "p.value"]), ]
 ```{r}
 
 isp.all <- isp.all[, c(1, 2, 3, 6, 4, 5)]
-isp.all
 colnames(isp.all) <- c("t", "df", "p-value", "Mean Difference", "Lower CI 95%", "Upper CI 95%")
-kable(isp.all)
+kable(isp.all, digits = 4)
 
 ```
 
@@ -350,6 +322,14 @@ dev.off()
 Although light did significantly explain variation in the lichen
 community, this was not significant once the variation in litter was
 controlled for. 
+
+There was high correlation among environmental variables.
+
+```{r}
+
+heatmap(abs(round(cor(env.dif), 3)))
+
+```
 
 
 ```{R, cache = TRUE}
@@ -471,11 +451,3 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 ```
 
-```{R, env-table}
-
-moss.stats <- apply(com.moss, 1, sum)
-moss.stats <- tapply(moss.stats, l.dat[, "Moth"], mean)
-kable(moss.stats)
-
-
-```
