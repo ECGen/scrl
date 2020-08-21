@@ -5,31 +5,70 @@ output: html_document
 
 ---
 
-# Analysis Summary
+# Data Summary
 
-- Dead trees were removed from lichen community analyses.
+- This is an analysis of the effect of Pinyon Pine tree traits on
+  the saxicole (lichen and moss) community on rocks under the canopy
+  of the trees. 
+- Trees were sampled in a pairwise design in which pairs were
+  comprised of one tree that is susceptible to the herbivory of a stem
+  boring moth (*Diorictria abietella*) and an adjacent tree that is
+  resistant to the moth. 
+- As tree resistance to the moth is genetically based, pairwise
+  sampling was conducted in order to isolate this genetic effect.
+- Some trees that were sampled were dead, these trees were removed
+  from the analysis. 
+
+# Main Results
+
 - Rock epiphyte communities were adequately sampled, based on species
   accumulation curves, with moth resistant trees accumulating slightly
   more lichen species.
-- Communities (abundance, richness, diversity, composition)
-were significantly, generally negatively, affected by moth
-susceptibility.
 - Several tree variables, including light availability, leaf litter
-  abundance and rock abundance, were impacted by moth susceptibility.
-- Analysis of causal pathways supported an indirect link between moth
-  susceptibility and impacts on lichen communities via decreasing rock
-  (i.e. habitat) availability through increased leaf abscission and
-  accumulation on rocks under trees.
-- These results support a genetically based link between intraspecific
-  variation in susceptibility to an insect herbivore and community
-  dynamics in an arid ecosystem.
-- Given the possible impacts of cliimate change on this system, this
-  study supports the conclusion that community and ecosystem impacts
-  need to be considered in an evolutionary context.
+  abundance and rock abundance, were impacted by moth susceptibility,
+  creating strong differences in sub-canopy conditions. 
+- Saxicole community abundance, richness, diversity, composition were
+  significantly, generally negatively, affected by moth herbivory. 
+- Correlation analysis supported an indirect link between genetically
+  based moth susceptibility and impacts on lichen communities via
+  decreasing rock (i.e. habitat) availability through increased leaf
+  abscission and accumulation on rocks under trees.
+
+# Analysis and Results
+
+## Dependencies
 
 ```{r, echo = TRUE, results = "hide", eval = TRUE}
 
 # 0. Supporting functions and libraries
+
+cran.pkgs <- c("xtable", "vegan", "ecodist")
+gh.pkgs <- c("ROpenSci/drake", "r-lib/styler",
+             "ECGen/ComGenR", "ECGen/conetto")
+gh.pkgs.names <- do.call(rbind, 
+                         strsplit(gh.pkgs, 
+                                  split = "/"))[, 2]
+## install packages that are not installed
+## CRAN
+if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
+    sapply(cran.pkgs[which(!(cran.pkgs %in% 
+                             installed.packages()[, 1]))], 
+           install.packages, 
+           dependencies = TRUE, 
+           repos = 'http://cran.us.r-project.org')
+}
+## github 
+if (any(!(gh.pkgs.names %in% installed.packages()[, 1]))){
+    sapply(gh.pkgs[which(!(gh.pkgs.names %in% 
+                           installed.packages()[, 1]))], 
+           devtools::install_github,
+           dependencies = TRUE)
+}
+## Load libraries
+sapply(c(cran.pkgs, gh.pkgs.names), 
+       library, quietly = TRUE, character.only = TRUE)
+
+
 ## Support functions
 
 dif <- function(x){
@@ -59,18 +98,16 @@ sapply(my.libs, require, character.only = TRUE)
 
 ```
 
-# Load Data
+## Load Data
 
 
 The following are variable descriptions (Variable, Type, Range, Definition):
 
-    
-
-- Moth,categorical,0 or 1,Was the tree susceptible (0) or resistant (1) to moth attack?
-- Live/Dead,categorical,0 or 1,Was the tree dead (0) or alive (1)?
+- Moth,categorical,0 or 1,Was the tree susceptible (0) or resistant (1) to moth attack
+- Live/Dead,categorical,0 or 1,Was the tree dead (0) or alive (1)
 - Litter %,continuous,0 to 100,Percent cover inside quadrat
-- Rocks > 3cm? %,continuous,0 to 100,Percent cover of rocks > 3cm? inside quadrat
-- Rocks < 3cm? %,continuous,0 to 100,Percent cover of rocks < 3cm? inside quadrat
+- Rocks > 3cm %,continuous,0 to 100,Percent cover of rocks > 3cm? inside quadrat
+- Rocks < 3cm %,continuous,0 to 100,Percent cover of rocks < 3cm? inside quadrat
 - Shrubs %,continuous,0 to 100,Percent cover of shrubs inside quadrat
 - Grass %,continuous,0 to 100,Percent cover of grass inside quadrat
 - Branches %,continuous,0 to 100,Percent cover of branches on ground inside quadrat
@@ -121,10 +158,7 @@ heatmap(abs(round(cor(env.dif), 3)))
 
 ```
 
-
-# Species accumulation
-
-Are the communities on each tree type adequately sampled?
+## Saxicole communities were sufficiently sampled
 
 ```{r specacum}
 
@@ -163,11 +197,15 @@ dev.off()
 
 ```
 
-# Moth trees have different microenvironments 
+## Moth trees have different microenvironments 
 
-- paired t-tests 
+```{R }
 
-# Moth trees have different lichen communities (FIGURE ch.plot A, R, H) 
+
+
+```
+
+## Moth trees have different lichen communities 
 
 less abundant and diverse (paired t-tests, in text) 
 
@@ -307,7 +345,7 @@ dev.off()
 ```
 
 
-# Litter covering rocks was the main driver (FIGURE = ORDINATION)
+## Litter covering rocks was the main driver 
 
 Although light did significantly explain variation in the lichen
 community, this was not significant once the variation in litter was
@@ -437,7 +475,7 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 moss.stats <- apply(com.moss, 1, sum)
 moss.stats <- tapply(moss.stats, l.dat[, "Moth"], mean)
-moss.stats
+kable(moss.stats)
 
 
 ```
