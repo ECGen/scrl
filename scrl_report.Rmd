@@ -453,3 +453,143 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 ```
 
+
+
+# Vegentation Analysis
+
+## From Richard Michalet
+
+> First sheet is the vegetation matrix with all relevés.
+
+> Second sheet are values of vegetation cover, rock cover and species
+> richness in all replicates of all treatments + mean values of
+> treatments and corresponding graphs.
+
+> From what I remember the methods were simple, quadrats of 1square
+> meter in four treatments with a full factorial design, exposure (north
+> and south of the tree), mortality (alive vs dead shrubs), tree
+> susceptibility (resistant vs susceptible) and tree presence (below the
+> canopy or outside the canopy in open conditions at the close vicinity
+> of the trees).
+
+
+> You can see that without stats results are obvious: strong effect of
+> tree susceptibility only below the tree and in both exposure for both
+> alive and dead trees.
+
+```{r}
+
+library(readxl)
+
+veg <- readxl::read_xlsx("data/Vegetation.xlsx")
+veg <- as.data.frame(veg)
+l.raw <- read.csv("data/rawdata Sunset Crater for Matt.csv")
+l.raw <- l.raw[!(grepl("cover", l.raw[,1])),]
+le.raw <- read.csv("data/rawdata Sunset Crater for Matt_env.csv")
+le.raw <- le.raw[!(grepl("cover", le.raw[,1])),]
+le.raw <- na.omit(le.raw)
+
+```
+
+## Observation checks
+
+Do the saxicole community and environment data match?
+
+```{r}
+
+all(l.raw[,1:3] == le.raw[,1:3])
+
+```
+
+Are all of the trees in the saxicole dataset represented in the veg dataset?
+
+```{r}
+
+all(unlist(lapply(lapply(l.raw[, "Tree.ID"], grepl, x = veg[, "Tree ID"]), any)))
+
+```
+
+## Coalesce datasets
+
+
+```{r}
+
+head(l.raw)
+
+l.d <- cbind(le.raw[, -2:-3], l.raw[, -1:-3])
+l.d <- split(l.d, l.d[, "Tree.ID"])
+l.d <- lapply(l.d, function(x) x[, -1])
+l.d <- lapply(l.d, apply, 2, mean)
+l.df <- do.call(rbind, l.d)
+trt <- strsplit(rownames(l.df), "")
+moth.alive <- lapply(trt, function(x) x[x %in% c(letters, LETTERS)])
+moth.alive <- do.call(rbind, moth.alive)
+tree <- lapply(trt, function(x) x[!(x %in% c(letters, LETTERS))])
+tree <- as.numeric(unlist(lapply(tree, paste, collapse = "")))
+l.df <- data.frame(Tree.pairs = tree, 
+                   Moth = moth.alive[, 1], 
+                   Live.Dead = moth.alive[, 2], 
+                   l.df)
+l.df <- l.df[l.df[, "Live.Dead"] == "A", ]
+l.df[l.df[, "Moth"] == "R", "Moth"] <- 1
+l.df[l.df[, "Moth"] == "S", "Moth"] <- 0
+moth.tree <- paste(l.df[, "Moth"], l.df[, "Tree.pairs"], sep = "_")
+l.df <- l.df[match(rownames(l.dat), moth.tree), ]
+
+```
+
+Check that `l.dat` and `l.df` are correctly coalesced:
+
+
+```{r}
+
+all(l.df[, 1:2] == l.dat[, 1:2])
+colnames(l.dat[, -10:-12]) == colnames(l.df)
+
+```
+
+Check that the values of the variables match, excluding light:
+
+```{r}
+
+l.dat[, c(-1:-3, -10:-12)] - l.df[, c(-1:-3)]
+
+```
+
+The following vector should work to match-up the saxicoles with the
+veg data:
+
+```{r}
+
+m.v <- rownames(l.df)
+v.dat <- veg[match(m.v, veg[, "Tree ID"]), ]
+v.dat[is.na(v.dat)] <- 0
+
+```
+
+Quick community analysis:
+
+
+```{r}
+
+v.com <- v.dat[, 8:ncol(v.dat)]
+v.com <- v.com[, apply(v.com, 2, sum) > 0]
+
+v.com.ds <- cbind(v.com, ds = rep(1, nrow(v.com)))
+v.com.ds.rel <- apply(v.com, 2, function(x) x/max(x))
+v.com.ds.rel <- cbind(v.com.ds.rel, ds = rep(0.0001, nrow(v.com)))
+v.com.ds.rel[is.na(v.com.ds.rel)] <- 0
+
+set.seed(123)
+ptab.v.moth <- adonis2(v.com.ds~ Moth, data = l.dat, 
+                    strata = l.dat[, "Tree.pairs"], 
+                    by = "margin", nperm = 100000)
+set.seed(123)
+ptab.v.moth.rel <- adonis2(v.com.ds.rel ~ Moth, data = l.dat, 
+                         strata = l.dat[, "Tree.pairs"], 
+                         by = "margin", nperm = 100000)
+
+kable(ptab.v.moth)
+kable(ptab.v.moth.rel)
+
+```
