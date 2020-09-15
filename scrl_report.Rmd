@@ -593,3 +593,13 @@ kable(ptab.v.moth)
 kable(ptab.v.moth.rel)
 
 ```
+
+More analyses
+
+- plant univariate (cover, richness, diversity)
+- Correspondence analysis? / ordination
+- Indicator species
+- Mantel using paired distances
+
+
+
