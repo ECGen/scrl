@@ -246,6 +246,8 @@ isp.dif <- apply(isp.com, 2, function(x,y) tapply(x, y, diff), y = l.dat[ ,"Tree
 
 ```
 
+
+
 Create a multi-bar plot figure for the community.
 
 ```{r}
