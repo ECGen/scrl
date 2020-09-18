@@ -20,6 +20,11 @@ keep_md: yes
   sampling was conducted in order to isolate this genetic effect.
 - Some trees that were sampled were dead, these trees were removed
   from the analysis. 
+- Plant data were observed by R. Michalet
+   - Vegetation.xlsx
+   - Light penetration.xls
+   - light_&_litter(1).xls
+
 
 # Main Results
 
