@@ -1,0 +1,1865 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={Rock Lichen data from Sunset Crater},
+            pdfauthor={M.K. Lau},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Rock Lichen data from Sunset Crater}
+\author{M.K. Lau}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Data Summary}\label{data-summary}
+
+\begin{itemize}
+\tightlist
+\item
+  This is an analysis of the effect of Pinyon Pine tree traits on the
+  saxicole (lichen and moss) community on rocks under the canopy of the
+  trees.
+\item
+  Trees were sampled in a pairwise design in which pairs were comprised
+  of one tree that is susceptible to the herbivory of a stem boring moth
+  (\emph{Diorictria abietella}) and an adjacent tree that is resistant
+  to the moth.
+\item
+  As tree resistance to the moth is genetically based, pairwise sampling
+  was conducted in order to isolate this genetic effect.
+\item
+  Some trees that were sampled were dead, these trees were removed from
+  the analysis.
+\item
+  Plant data were observed by R. Michalet
+\item
+  Vegetation.xlsx
+\item
+  Light penetration.xls
+\item
+  light\_\&\_litter(1).xls
+\end{itemize}
+
+\section{Main Results}\label{main-results}
+
+\begin{itemize}
+\tightlist
+\item
+  Rock epiphyte communities were adequately sampled, based on species
+  accumulation curves, with moth resistant trees accumulating slightly
+  more lichen species.
+\item
+  Several tree variables, including light availability, leaf litter
+  abundance and rock abundance, were impacted by moth susceptibility,
+  creating strong differences in sub-canopy conditions.
+\item
+  Saxicole community abundance, richness, diversity, composition were
+  significantly, generally negatively, affected by moth herbivory.
+\item
+  Correlation analysis supported an indirect link between genetically
+  based moth susceptibility and impacts on lichen communities via
+  decreasing rock (i.e.~habitat) availability through increased leaf
+  abscission and accumulation on rocks under trees.
+\end{itemize}
+
+\section{Analysis and Results}\label{analysis-and-results}
+
+Analyses were conducted in the \textbf{R} statistical programming
+language. The following section loads dependencies and custom functions
+used in the analysis.
+
+\subsection{Dependencies}\label{dependencies}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cran.pkgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"reshape2"}\NormalTok{, }\StringTok{"vegan"}\NormalTok{, }\StringTok{"ecodist"}\NormalTok{, }\StringTok{"xtable"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{)}
+
+\NormalTok{## install packages that are not installed}
+\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{any}\NormalTok{(}\OperatorTok{!}\NormalTok{(cran.pkgs }\OperatorTok{%in%}\StringTok{ }\KeywordTok{installed.packages}\NormalTok{()[, }\DecValTok{1}\NormalTok{])))\{}
+    \KeywordTok{sapply}\NormalTok{(cran.pkgs[}\KeywordTok{which}\NormalTok{(}\OperatorTok{!}\NormalTok{(cran.pkgs }\OperatorTok{%in%}\StringTok{ }
+\StringTok{                             }\KeywordTok{installed.packages}\NormalTok{()[, }\DecValTok{1}\NormalTok{]))], }
+\NormalTok{           install.packages, }
+           \DataTypeTok{dependencies =} \OtherTok{TRUE}\NormalTok{, }
+           \DataTypeTok{repos =} \StringTok{'http://cran.us.r-project.org'}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{## Load libraries}
+\KeywordTok{sapply}\NormalTok{(cran.pkgs, library, }\DataTypeTok{quietly =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{character.only =} \OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{## Custom Functions}
+
+\NormalTok{## se: Calculate the standard error of a variable.}
+\NormalTok{se <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}\KeywordTok{sd}\NormalTok{(x) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(x))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Load Data}\label{load-data}
+
+The following are variable descriptions (Variable, Type, Range,
+Definition):
+
+\begin{itemize}
+\tightlist
+\item
+  Moth,categorical,0 or 1,Was the tree susceptible (0) or resistant (1)
+  to moth attack
+\item
+  Live/Dead,categorical,0 or 1,Was the tree dead (0) or alive (1)
+\item
+  Litter \%,continuous,0 to 100,Percent cover inside quadrat
+\item
+  Rocks \textgreater{} 3cm \%,continuous,0 to 100,Percent cover of rocks
+  \textgreater{} 3cm? inside quadrat
+\item
+  Rocks \textless{} 3cm \%,continuous,0 to 100,Percent cover of rocks
+  \textless{} 3cm? inside quadrat
+\item
+  Shrubs \%,continuous,0 to 100,Percent cover of shrubs inside quadrat
+\item
+  Grass \%,continuous,0 to 100,Percent cover of grass inside quadrat
+\item
+  Branches \%,continuous,0 to 100,Percent cover of branches on ground
+  inside quadrat
+\item
+  Distance,continuous,0 to 100,``Distance from main trunk, converted to
+  percent of crown radius at that azimuth''
+\item
+  Azimuth,continuous,0 to 360,Compass direction from main trunk
+\item
+  Slope,continuous,0 to 90,Topographical steepness
+\item
+  Aspect,continuous,0 to 360,Compass direction of slope
+\item
+  Light,continuous,,Amount of light available to epiliths
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## Data are in ../data/scrl}
+\NormalTok{l.dat <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"./data/spp_env_combined.csv"}\NormalTok{)}
+
+\NormalTok{## Fix species names}
+\KeywordTok{colnames}\NormalTok{(l.dat)[}\KeywordTok{colnames}\NormalTok{(l.dat) }\OperatorTok{==}\StringTok{ "Acasup"}\NormalTok{] <-}\StringTok{ "Acaame"}
+
+\NormalTok{## Summary of data}
+\KeywordTok{summary}\NormalTok{(l.dat)}
+
+\NormalTok{## remove dead trees}
+\NormalTok{l.dat <-}\StringTok{ }\NormalTok{l.dat[l.dat[, }\StringTok{"Live.Dead"}\NormalTok{] }\OperatorTok{!=}\StringTok{ }\DecValTok{0}\NormalTok{, ]}
+
+\NormalTok{## Lichen species list}
+\NormalTok{spp.l <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Acacon"}\NormalTok{, }\StringTok{"Acaame"}\NormalTok{, }\StringTok{"Acaobp"}\NormalTok{, }\StringTok{"Sterile.sp"}\NormalTok{, }\StringTok{"Brown.cr"}\NormalTok{,}
+\StringTok{"Lobalp"}\NormalTok{, }\StringTok{"Canros"}\NormalTok{, }\StringTok{"Calare"}\NormalTok{, }\StringTok{"Phydub"}\NormalTok{, }\StringTok{"Rhichr"}\NormalTok{, }\StringTok{"Xanlin"}\NormalTok{, }\StringTok{"Xanpli"}\NormalTok{,}
+\StringTok{"Xanele"}\NormalTok{, }\StringTok{"GrBr.cr"}\NormalTok{, }\StringTok{"Gray.cr"}\NormalTok{)}
+\NormalTok{spp.moss <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Synrur"}\NormalTok{, }\StringTok{"Cerpur.Bryarg"}\NormalTok{)}
+
+\NormalTok{## Create a community matrix}
+\NormalTok{com <-}\StringTok{ }\NormalTok{l.dat[, }\KeywordTok{colnames}\NormalTok{(l.dat) }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(spp.l, spp.moss)]}
+\NormalTok{com.moss <-}\StringTok{ }\NormalTok{l.dat[, }\KeywordTok{colnames}\NormalTok{(l.dat) }\OperatorTok{%in%}\StringTok{ }\NormalTok{spp.moss]}
+
+\NormalTok{## Add the tree labels to the rownames}
+\KeywordTok{rownames}\NormalTok{(com) <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(l.dat[, }\StringTok{"Moth"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(com.moss) <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(l.dat[, }\StringTok{"Moth"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(l.dat) <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(l.dat[, }\StringTok{"Moth"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{## Paired environmental differences}
+\NormalTok{total.rocks  <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(l.dat[, }\KeywordTok{c}\NormalTok{(}\StringTok{"Big.rocks.."}\NormalTok{, }\StringTok{"Small.rocks.."}\NormalTok{)], }\DecValTok{1}\NormalTok{, sum)}
+\NormalTok{env <-}\StringTok{ }\NormalTok{l.dat[, }\KeywordTok{c}\NormalTok{(}\StringTok{"Litter.."}\NormalTok{, }\StringTok{"Big.rocks.."}\NormalTok{, }\StringTok{"Small.rocks.."}\NormalTok{, }
+                           \StringTok{"Shrubs.."}\NormalTok{, }\StringTok{"Grass.."}\NormalTok{, }\StringTok{"Branches.."}\NormalTok{, }
+                           \StringTok{"Light...N"}\NormalTok{, }\StringTok{"Light...S"}\NormalTok{, }\StringTok{"Light...average"}\NormalTok{)]}
+\NormalTok{env <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(env, total.rocks)}
+\NormalTok{env.dif <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(env, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, p) }\KeywordTok{tapply}\NormalTok{(x, p, diff), }\DataTypeTok{p =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Saxicole communities were sufficiently
+sampled}\label{saxicole-communities-were-sufficiently-sampled}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spa.all <-}\StringTok{ }\KeywordTok{specaccum}\NormalTok{(com, }\DataTypeTok{method =} \StringTok{"exact"}\NormalTok{)}
+\NormalTok{spa.res <-}\StringTok{ }\KeywordTok{specaccum}\NormalTok{(com[l.dat[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, ], }\DataTypeTok{method =} \StringTok{"exact"}\NormalTok{)}
+\NormalTok{spa.sus <-}\StringTok{ }\KeywordTok{specaccum}\NormalTok{(com[l.dat[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{, ], }\DataTypeTok{method =} \StringTok{"exact"}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(spa.all,}
+     \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{),}
+     \DataTypeTok{xlab =} \StringTok{"Cumulative Trees Sampled"}\NormalTok{,}
+     \DataTypeTok{ylab =} \StringTok{"Species Observed"}\NormalTok{, }
+     \DataTypeTok{col =} \StringTok{"grey"}\NormalTok{, }\DataTypeTok{ci.col =} \StringTok{'lightgrey'}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"poly"}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{0}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(spa.res, }\DataTypeTok{ci.col =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"bar"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(spa.sus, }\DataTypeTok{ci.col =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"bar"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }
+       \DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"All"}\NormalTok{, }\StringTok{"Resistant"}\NormalTok{, }\StringTok{"Susceptible"}\NormalTok{), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{lwd =} \KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"lightgrey"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"black"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scrl_report_files/figure-latex/specacum-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pdf}\NormalTok{(}\StringTok{"./results/scrl_spp-accum.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{5}\NormalTok{, }\DataTypeTok{height =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(spa.all,}
+     \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{),}
+     \DataTypeTok{xlab =} \StringTok{"Cumulative Trees Sampled"}\NormalTok{,}
+     \DataTypeTok{ylab =} \StringTok{"Species Observed"}\NormalTok{, }
+     \DataTypeTok{col =} \StringTok{"grey"}\NormalTok{, }\DataTypeTok{ci.col =} \StringTok{'lightgrey'}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"poly"}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{0}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(spa.res, }\DataTypeTok{ci.col =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"bar"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(spa.sus, }\DataTypeTok{ci.col =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{ci.type =} \StringTok{"bar"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ci.lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }
+       \DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"All"}\NormalTok{, }\StringTok{"Resistant"}\NormalTok{, }\StringTok{"Susceptible"}\NormalTok{), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{lwd =} \KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"lightgrey"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"black"}\NormalTok{))}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\subsection{Moth trees have different
+microenvironments}\label{moth-trees-have-different-microenvironments}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{env.test.l <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(env.dif, }\DecValTok{2}\NormalTok{, t.test)}
+\NormalTok{env.test.l <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(env.test.l, unlist)}
+\NormalTok{env.test.tab <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind, env.test.l)}
+\NormalTok{env.test.tab <-}\StringTok{ }\NormalTok{env.test.tab[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)]}
+\NormalTok{env.test.tab <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(env.test.tab, }\DecValTok{2}\NormalTok{, as.numeric)}
+\KeywordTok{rownames}\NormalTok{(env.test.tab) <-}\StringTok{ }\KeywordTok{names}\NormalTok{(env.test.l)}
+\KeywordTok{colnames}\NormalTok{(env.test.tab) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"t"}\NormalTok{, }\StringTok{"df"}\NormalTok{, }\StringTok{"p-value"}\NormalTok{, }\StringTok{"Mean Difference"}\NormalTok{, }\StringTok{"Lower CI 95%"}\NormalTok{, }\StringTok{"Upper CI 95%"}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(env.test.tab, }\DataTypeTok{digits =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrrr@{}}
+\toprule
+& t & df & p-value & Mean Difference & Lower CI 95\% & Upper CI
+95\%\tabularnewline
+\midrule
+\endhead
+Litter.. & 2.8665 & 29 & 0.0077 & 15.0700 & 4.3178 &
+25.8222\tabularnewline
+Big.rocks.. & -2.4617 & 29 & 0.0200 & -9.6837 & -17.7289 &
+-1.6384\tabularnewline
+Small.rocks.. & -2.0792 & 29 & 0.0466 & -4.9750 & -9.8688 &
+-0.0812\tabularnewline
+Shrubs.. & -1.7605 & 29 & 0.0889 & -0.5147 & -1.1126 &
+0.0832\tabularnewline
+Grass.. & -1.0000 & 29 & 0.3256 & -0.0493 & -0.1502 &
+0.0516\tabularnewline
+Branches.. & 1.0000 & 29 & 0.3256 & 0.1420 & -0.1484 &
+0.4324\tabularnewline
+Light\ldots{}N & -8.0191 & 29 & 0.0000 & -15.9767 & -20.0514 &
+-11.9019\tabularnewline
+Light\ldots{}S & -7.5187 & 29 & 0.0000 & -14.2900 & -18.1772 &
+-10.4028\tabularnewline
+Light\ldots{}average & -9.2728 & 29 & 0.0000 & -15.1333 & -18.4712 &
+-11.7955\tabularnewline
+total.rocks & -2.8178 & 29 & 0.0086 & -14.6587 & -25.2983 &
+-4.0190\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{Moth trees have different lichen
+communities}\label{moth-trees-have-different-lichen-communities}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{abun <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(com, }\DecValTok{1}\NormalTok{, sum)}
+\NormalTok{rich <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(com, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{sign}\NormalTok{(x)))}
+\NormalTok{shan <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(com, }\DecValTok{1}\NormalTok{, diversity, }\DataTypeTok{index =} \StringTok{"shannon"}\NormalTok{)}
+\NormalTok{tt.a <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(abun, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\NormalTok{tt.r <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(rich, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\NormalTok{tt.h <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(shan, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\NormalTok{tt.arh <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind, }
+                  \KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{unlist}\NormalTok{(tt.a), }\DataTypeTok{r =} \KeywordTok{unlist}\NormalTok{(tt.r), }\DataTypeTok{h =} \KeywordTok{unlist}\NormalTok{(tt.h)))}
+\KeywordTok{data.frame}\NormalTok{(tt.arh)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         statistic.t parameter.df             p.value          conf.int1
+## a -2.24872719194069           29  0.0322967805096532  -2.94827641857598
+## r -2.95490149904486           29 0.00615219062629224   -4.2867753443144
+## h -2.44676815758056           29  0.0207112921139992 -0.802255887812151
+##             conf.int2 estimate.mean.of.x null.value.mean            stderr
+## a  -0.139723581424019             -1.544               0 0.686610632687508
+## r  -0.779891322352267  -2.53333333333333               0 0.857332582541993
+## h -0.0717134452340906 -0.436984666523121               0  0.17859667871239
+##   alternative            method                                 data.name
+## a   two.sided One Sample t-test tapply(abun, l.dat[, "Tree.pairs"], diff)
+## r   two.sided One Sample t-test tapply(rich, l.dat[, "Tree.pairs"], diff)
+## h   two.sided One Sample t-test tapply(shan, l.dat[, "Tree.pairs"], diff)
+\end{verbatim}
+
+composition is different (PERMANOVA, in text and supplement)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{com.ds <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(com, }\DataTypeTok{ds =} \KeywordTok{rep}\NormalTok{(}\FloatTok{0.0001}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(com)))}
+\NormalTok{com.ds.rel <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(com, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{/}\KeywordTok{max}\NormalTok{(x))}
+\NormalTok{com.ds.rel <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(com.ds.rel, }\DataTypeTok{ds =} \KeywordTok{rep}\NormalTok{(}\FloatTok{0.0001}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(com)))}
+\NormalTok{com.ds.rel[}\KeywordTok{is.na}\NormalTok{(com.ds.rel)] <-}\StringTok{ }\DecValTok{0}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.moth <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds}\OperatorTok{~}\StringTok{ }\NormalTok{Moth, }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                    \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                    \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.moth.rel <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds.rel }\OperatorTok{~}\StringTok{ }\NormalTok{Moth, }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                         \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                         \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+
+\KeywordTok{kable}\NormalTok{(ptab.moth)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Moth & 1 & 0.8329281 & 0.0389768 & 2.352343 & 0.023\tabularnewline
+Residual & 58 & 20.5368939 & 0.9610232 & NA & NA\tabularnewline
+Total & 59 & 21.3698219 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.moth.rel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Moth & 1 & 0.8791695 & 0.0405034 & 2.448363 & 0.021\tabularnewline
+Residual & 58 & 20.8269063 & 0.9594966 & NA & NA\tabularnewline
+Total & 59 & 21.7060758 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+three main species were reduced by moths (FDR paired t-tests, in text +
+supplement)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ind.spp <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(com, }\ControlFlowTok{function}\NormalTok{(x, p) }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(x, p, diff)), }\DataTypeTok{p =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{])}
+\NormalTok{isp <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{do.call}\NormalTok{(rbind, }\KeywordTok{lapply}\NormalTok{(ind.spp, unlist)), }\DecValTok{2}\NormalTok{, as.numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+
+## Warning in apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+
+## Warning in apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rownames}\NormalTok{(isp) <-}\StringTok{ }\KeywordTok{names}\NormalTok{(ind.spp)}
+\NormalTok{isp[, }\StringTok{"p.value"}\NormalTok{] <-}\StringTok{ }\KeywordTok{p.adjust}\NormalTok{(isp[, }\StringTok{"p.value"}\NormalTok{], }\DataTypeTok{method =} \StringTok{"fdr"}\NormalTok{)}
+\NormalTok{isp.all <-}\StringTok{ }\NormalTok{isp[, }\OperatorTok{!}\NormalTok{(}\KeywordTok{apply}\NormalTok{(isp, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{all}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x))))]}
+\NormalTok{isp <-}\StringTok{ }\NormalTok{isp[}\KeywordTok{order}\NormalTok{(isp[, }\StringTok{"p.value"}\NormalTok{]), ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isp.all <-}\StringTok{ }\NormalTok{isp.all[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)]}
+\KeywordTok{colnames}\NormalTok{(isp.all) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"t"}\NormalTok{, }\StringTok{"df"}\NormalTok{, }\StringTok{"p-value"}\NormalTok{, }\StringTok{"Mean Difference"}\NormalTok{, }\StringTok{"Lower CI 95%"}\NormalTok{, }\StringTok{"Upper CI 95%"}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(isp.all, }\DataTypeTok{digits =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrrr@{}}
+\toprule
+& t & df & p-value & Mean Difference & Lower CI 95\% & Upper CI
+95\%\tabularnewline
+\midrule
+\endhead
+Acacon & -3.3776 & 29 & 0.0159 & -0.0447 & -0.0717 &
+-0.0176\tabularnewline
+Acaame & -3.2421 & 29 & 0.0159 & -0.1607 & -0.2620 &
+-0.0593\tabularnewline
+Acaobp & -1.0747 & 29 & 0.4341 & -0.2860 & -0.8303 &
+0.2583\tabularnewline
+Sterile.sp & -1.0000 & 29 & 0.4341 & -0.0020 & -0.0061 &
+0.0021\tabularnewline
+Brown.cr & NaN & 29 & NaN & 0.0000 & NaN & NaN\tabularnewline
+Lobalp & -2.0414 & 29 & 0.2016 & -0.0047 & -0.0093 &
+0.0000\tabularnewline
+Canros & -3.5819 & 29 & 0.0159 & -0.3837 & -0.6027 &
+-0.1646\tabularnewline
+Calare & -1.6076 & 29 & 0.2563 & -0.0307 & -0.0697 &
+0.0083\tabularnewline
+Phydub & -1.9226 & 29 & 0.2061 & -0.1053 & -0.2174 &
+0.0067\tabularnewline
+Rhichr & -1.5803 & 29 & 0.2563 & -0.2310 & -0.5300 &
+0.0680\tabularnewline
+Xanlin & -0.6170 & 29 & 0.6672 & -0.2267 & -0.9781 &
+0.5247\tabularnewline
+Xanpli & -0.2598 & 29 & 0.8500 & -0.0277 & -0.2455 &
+0.1901\tabularnewline
+Xanele & -1.5662 & 29 & 0.2563 & -0.0473 & -0.1091 &
+0.0145\tabularnewline
+GrBr.cr & 1.0000 & 29 & 0.4341 & 0.0013 & -0.0014 &
+0.0041\tabularnewline
+Gray.cr & 0.1093 & 29 & 0.9137 & 0.0003 & -0.0059 &
+0.0066\tabularnewline
+Synrur & 0.3628 & 29 & 0.8221 & 0.0220 & -0.1020 & 0.1460\tabularnewline
+Cerpur.Bryarg & -1.2357 & 29 & 0.4027 & -0.0173 & -0.0460 &
+0.0114\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{write.csv}\NormalTok{(}\KeywordTok{round}\NormalTok{(isp.all, }\DecValTok{5}\NormalTok{), }\DataTypeTok{file =} \StringTok{"results/scrl_isp_table.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Calculate the average abundances of the indicators
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isp.names <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(isp[isp[, }\StringTok{"p.value"}\NormalTok{] }\OperatorTok{<}\StringTok{ }\FloatTok{0.05}\NormalTok{, ])))}
+\NormalTok{isp.com <-}\StringTok{ }\NormalTok{com[,}\KeywordTok{colnames}\NormalTok{(com) }\OperatorTok{%in%}\StringTok{ }\NormalTok{isp.names]}
+\NormalTok{isp.dif <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(isp.com, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x,y) }\KeywordTok{tapply}\NormalTok{(x, y, diff), }\DataTypeTok{y =}\NormalTok{ l.dat[ ,}\StringTok{"Tree.pairs"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+Create a multi-bar plot figure for the community.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{isp.dat <-}\StringTok{ }\KeywordTok{melt}\NormalTok{(isp.dif)}
+\KeywordTok{colnames}\NormalTok{(isp.dat) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Tree.pairs"}\NormalTok{, }\StringTok{"Species"}\NormalTok{, }\StringTok{"diff"}\NormalTok{)}
+\NormalTok{isp.mu <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(isp.dat[, }\StringTok{"diff"}\NormalTok{], isp.dat[, }\StringTok{"Species"}\NormalTok{], mean)}
+\NormalTok{isp.se <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(isp.dat[, }\StringTok{"diff"}\NormalTok{], isp.dat[, }\StringTok{"Species"}\NormalTok{], se)}
+\NormalTok{ard.dif <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(abun, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+                 \KeywordTok{tapply}\NormalTok{(rich, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+                 \KeywordTok{tapply}\NormalTok{(shan, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\KeywordTok{colnames}\NormalTok{(ard.dif) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Abundance"}\NormalTok{, }\StringTok{"Richness"}\NormalTok{, }\StringTok{"Diversity"}\NormalTok{)}
+\NormalTok{ard.dat <-}\StringTok{ }\KeywordTok{melt}\NormalTok{(ard.dif)}
+\KeywordTok{colnames}\NormalTok{(ard.dat) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Tree.pairs"}\NormalTok{, }\StringTok{"Stat"}\NormalTok{, }\StringTok{"diff"}\NormalTok{)}
+\NormalTok{ard.mu <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(ard.dat[, }\StringTok{"diff"}\NormalTok{], ard.dat[, }\StringTok{"Stat"}\NormalTok{], mean)}
+\NormalTok{ard.se <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(ard.dat[, }\StringTok{"diff"}\NormalTok{], ard.dat[, }\StringTok{"Stat"}\NormalTok{], se)}
+
+\KeywordTok{pdf}\NormalTok{(}\DataTypeTok{file =} \StringTok{"./results/scrl_isp_ard.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{9}\NormalTok{, }\DataTypeTok{height =} \DecValTok{5}\NormalTok{)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{bp.out <-}\StringTok{ }\KeywordTok{barplot}\NormalTok{(ard.mu, }\DataTypeTok{col =} \StringTok{"darkgrey"}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                  \DataTypeTok{ylab =} \StringTok{"Difference (S - R)"}\NormalTok{, }\DataTypeTok{border =} \StringTok{"NA"}\NormalTok{)}
+\KeywordTok{segments}\NormalTok{(bp.out[, }\DecValTok{1}\NormalTok{], ard.mu }\OperatorTok{+}\StringTok{ }\NormalTok{ard.se,}
+\NormalTok{         bp.out[, }\DecValTok{1}\NormalTok{], ard.mu }\OperatorTok{-}\StringTok{ }\NormalTok{ard.se, }
+         \DataTypeTok{lwd =} \FloatTok{1.5}\NormalTok{)}
+\NormalTok{bp.out <-}\StringTok{ }\KeywordTok{barplot}\NormalTok{(isp.mu, }\DataTypeTok{col =} \StringTok{"darkgrey"}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.5}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                  \DataTypeTok{ylab =} \StringTok{"Difference (S - R)"}\NormalTok{, }\DataTypeTok{border =} \StringTok{"NA"}\NormalTok{,}
+            \DataTypeTok{axisnames =} \OtherTok{TRUE}\NormalTok{, }
+            \DataTypeTok{names.arg =} \KeywordTok{sapply}\NormalTok{(}\KeywordTok{names}\NormalTok{(isp.mu), }
+                \ControlFlowTok{function}\NormalTok{(x) }
+                                    \KeywordTok{paste}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{substr}\NormalTok{(x, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                                            \KeywordTok{substr}\NormalTok{(x, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{)), }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)))}
+\KeywordTok{segments}\NormalTok{(bp.out[, }\DecValTok{1}\NormalTok{], isp.mu }\OperatorTok{+}\StringTok{ }\NormalTok{isp.se,}
+\NormalTok{         bp.out[, }\DecValTok{1}\NormalTok{], isp.mu }\OperatorTok{-}\StringTok{ }\NormalTok{isp.se, }
+         \DataTypeTok{lwd =} \FloatTok{1.5}\NormalTok{)}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+Create a plot of the two most indicative species
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pdf}\NormalTok{(}\DataTypeTok{file =} \StringTok{"./results/scrl_complot.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{7}\NormalTok{, }\DataTypeTok{height =} \DecValTok{7}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(com[, }\KeywordTok{c}\NormalTok{(}\StringTok{"Acaame"}\NormalTok{, }\StringTok{"Canros"}\NormalTok{)], }\DataTypeTok{pch =}\NormalTok{ l.dat[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{cex =} \DecValTok{3}\NormalTok{, }\DataTypeTok{col =}\NormalTok{ l.dat[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"Tree Type"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Resistant"}\NormalTok{, }\StringTok{"Susceptible"}\NormalTok{), }\DataTypeTok{pch =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+Create plot with indicator taxa
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pdf}\NormalTok{(}\DataTypeTok{file =} \StringTok{"./results/scrl_pdif.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{7}\NormalTok{, }\DataTypeTok{height =} \DecValTok{7}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{melt}\NormalTok{(isp.dif)[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"Species"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Abundance Reduction"}\NormalTok{)}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\subsection{Litter covering rocks was the main
+driver}\label{litter-covering-rocks-was-the-main-driver}
+
+Although light did significantly explain variation in the lichen
+community, this was not significant once the variation in litter was
+controlled for.
+
+There was high correlation among environmental variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{heatmap}\NormalTok{(}\KeywordTok{abs}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{cor}\NormalTok{(env.dif), }\DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scrl_report_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Litter.. }\OperatorTok{+}\StringTok{  }\NormalTok{Light...average, }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Litter.. & 1 & 1.0035484 & 0.0469610 & 2.972456 & 0.007\tabularnewline
+Light\ldots{}average & 1 & 0.4114619 & 0.0192543 & 1.218728 &
+0.243\tabularnewline
+Residual & 57 & 19.2441042 & 0.9005271 & NA & NA\tabularnewline
+Total & 59 & 21.3698219 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Light...average }\OperatorTok{+}\StringTok{ }\NormalTok{Litter.. , }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Light\ldots{}average & 1 & 0.4114619 & 0.0192543 & 1.218728 &
+0.243\tabularnewline
+Litter.. & 1 & 1.0035484 & 0.0469610 & 2.972456 & 0.007\tabularnewline
+Residual & 57 & 19.2441042 & 0.9005271 & NA & NA\tabularnewline
+Total & 59 & 21.3698219 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{total.rocks ,}
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+total.rocks & 1 & 1.664876 & 0.0779078 & 4.900435 & 0.002\tabularnewline
+Residual & 58 & 19.704946 & 0.9220922 & NA & NA\tabularnewline
+Total & 59 & 21.369822 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Big.rocks.. , }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Big.rocks.. & 1 & 2.428473 & 0.1136403 & 7.436188 & 0.001\tabularnewline
+Residual & 58 & 18.941349 & 0.8863597 & NA & NA\tabularnewline
+Total & 59 & 21.369822 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Small.rocks.. , }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Small.rocks.. & 1 & 0.2204425 & 0.0103156 & 0.604541 &
+0.782\tabularnewline
+Residual & 58 & 21.1493794 & 0.9896844 & NA & NA\tabularnewline
+Total & 59 & 21.3698219 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Litter.. , }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                   \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                   \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(ptab.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Litter.. & 1 & 1.714256 & 0.0802185 & 5.058457 & 0.002\tabularnewline
+Residual & 58 & 19.655566 & 0.9197815 & NA & NA\tabularnewline
+Total & 59 & 21.369822 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+Because light was significantly, negatively correlated with litter and
+large rocks.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(env.dif[, }\StringTok{"Big.rocks.."}\NormalTok{], env.dif[, }\StringTok{"Litter.."}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  env.dif[, "Big.rocks.."] and env.dif[, "Litter.."]
+## t = -11.106, df = 28, p-value = 9.054e-12
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.9530598 -0.8039735
+## sample estimates:
+##        cor 
+## -0.9027609
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pdf}\NormalTok{(}\StringTok{"./results/scrl_litterVbigrocks.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{5}\NormalTok{, }\DataTypeTok{height =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff)), }
+    \DataTypeTok{main =} \StringTok{""}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff)),}
+    \DataTypeTok{lwd =} \FloatTok{0.5}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(env.dif[, }\StringTok{"Big.rocks.."}\NormalTok{] }\OperatorTok{~}\StringTok{ }\NormalTok{env.dif[, }\StringTok{"Litter.."}\NormalTok{], }
+     \DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Rock Cover (size >3 cm) Difference (S - R)"}\NormalTok{,}
+     \DataTypeTok{pch =} \DecValTok{19}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{1.5}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\KeywordTok{lm}\NormalTok{(env.dif[, }\StringTok{"Big.rocks.."}\NormalTok{] }\OperatorTok{~}\StringTok{ }\NormalTok{env.dif[, }\StringTok{"Litter.."}\NormalTok{]))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+    \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Light...average"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+    \DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Light Difference (S - R)"}\NormalTok{,}
+    \DataTypeTok{pch =} \DecValTok{19}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scrl_report_files/figure-latex/litter-plot-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pdf}\NormalTok{(}\StringTok{"./results/scrl_litter_effects.pdf"}\NormalTok{, }\DataTypeTok{width =} \DecValTok{10}\NormalTok{, }\DataTypeTok{height =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff)), }
+    \DataTypeTok{main =} \StringTok{""}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff)),}
+    \DataTypeTok{lwd =} \FloatTok{0.5}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(env.dif[, }\StringTok{"Big.rocks.."}\NormalTok{] }\OperatorTok{~}\StringTok{ }\NormalTok{env.dif[, }\StringTok{"Litter.."}\NormalTok{], }
+     \DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Rock Cover (size >3 cm) Difference (S - R)"}\NormalTok{,}
+     \DataTypeTok{pch =} \DecValTok{19}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{1.5}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\KeywordTok{lm}\NormalTok{(env.dif[, }\StringTok{"Big.rocks.."}\NormalTok{] }\OperatorTok{~}\StringTok{ }\NormalTok{env.dif[, }\StringTok{"Litter.."}\NormalTok{]))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+    \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Light...average"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff), }
+    \DataTypeTok{xlab =} \StringTok{"Litter Difference (S - R)"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Light Difference (S - R)"}\NormalTok{,}
+    \DataTypeTok{pch =} \DecValTok{19}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{1.5}\NormalTok{)}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nmds.out <-}\StringTok{ }\KeywordTok{nmds}\NormalTok{(}\KeywordTok{vegdist}\NormalTok{(com.ds), }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{ord <-}\StringTok{ }\KeywordTok{nmds.min}\NormalTok{(nmds.out, }\DataTypeTok{dims =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Minimum stress for given dimensionality:  0.2169355 
+## r^2 for minimum stress configuration:  0.6416469
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ord.pch <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"R"}\NormalTok{, }\StringTok{"S"}\NormalTok{)[(l.dat[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+\KeywordTok{plot}\NormalTok{(X2}\OperatorTok{~}\StringTok{ }\NormalTok{X1, }\DataTypeTok{data =}\NormalTok{ ord, }\DataTypeTok{pch =}\NormalTok{ ord.pch)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scrl_report_files/figure-latex/ord-com-plot-1.pdf}
+
+Litter not light was correlated with large rocks (dist cor, in text).
+Thus, higher amounts of litter under trees was not related to the
+penetration of light under the tree canopy.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Big.rocks.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff),}
+         \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  tapply(l.dat[, "Big.rocks.."], l.dat[, "Tree.pairs"], diff) and tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
+## t = -11.106, df = 28, p-value = 9.054e-12
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.9530598 -0.8039735
+## sample estimates:
+##        cor 
+## -0.9027609
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Big.rocks.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff),}
+         \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Light...average"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  tapply(l.dat[, "Big.rocks.."], l.dat[, "Tree.pairs"], diff) and tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)
+## t = 0.71624, df = 28, p-value = 0.4798
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.2376184  0.4716125
+## sample estimates:
+##       cor 
+## 0.1341335
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff),}
+         \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Light...average"}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff) and tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)
+## t = -0.92053, df = 28, p-value = 0.3652
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.5007401  0.2013096
+## sample estimates:
+##        cor 
+## -0.1713898
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Small.rocks.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff),}
+         \KeywordTok{tapply}\NormalTok{(l.dat[, }\StringTok{"Litter.."}\NormalTok{], l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff) and tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
+## t = -4.994, df = 28, p-value = 2.819e-05
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.8391386 -0.4332285
+## sample estimates:
+##        cor 
+## -0.6863699
+\end{verbatim}
+
+\section{Vegetation Analysis}\label{vegetation-analysis}
+
+\subsection{From Richard Michalet}\label{from-richard-michalet}
+
+\begin{quote}
+First sheet is the vegetation matrix with all relevés.
+\end{quote}
+
+\begin{quote}
+Second sheet are values of vegetation cover, rock cover and species
+richness in all replicates of all treatments + mean values of treatments
+and corresponding graphs.
+\end{quote}
+
+\begin{quote}
+From what I remember the methods were simple, quadrats of 1square meter
+in four treatments with a full factorial design, exposure (north and
+south of the tree), mortality (alive vs dead shrubs), tree
+susceptibility (resistant vs susceptible) and tree presence (below the
+canopy or outside the canopy in open conditions at the close vicinity of
+the trees).
+\end{quote}
+
+\begin{quote}
+You can see that without stats results are obvious: strong effect of
+tree susceptibility only below the tree and in both exposure for both
+alive and dead trees.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readxl)}
+
+\NormalTok{veg <-}\StringTok{ }\NormalTok{readxl}\OperatorTok{::}\KeywordTok{read_xlsx}\NormalTok{(}\StringTok{"data/Vegetation.xlsx"}\NormalTok{)}
+\NormalTok{veg <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(veg)}
+\NormalTok{l.raw <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/rawdata Sunset Crater for Matt.csv"}\NormalTok{)}
+\NormalTok{l.raw <-}\StringTok{ }\NormalTok{l.raw[}\OperatorTok{!}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"cover"}\NormalTok{, l.raw[,}\DecValTok{1}\NormalTok{])),]}
+\NormalTok{le.raw <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/rawdata Sunset Crater for Matt_env.csv"}\NormalTok{)}
+\NormalTok{le.raw <-}\StringTok{ }\NormalTok{le.raw[}\OperatorTok{!}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"cover"}\NormalTok{, le.raw[,}\DecValTok{1}\NormalTok{])),]}
+\NormalTok{le.raw <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(le.raw)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Observation checks}\label{observation-checks}
+
+Do the saxicole community and environment data match?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all}\NormalTok{(l.raw[,}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{le.raw[,}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+Are all of the trees in the saxicole dataset represented in the veg
+dataset?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(l.raw[, }\StringTok{"Tree.ID"}\NormalTok{], grepl, }\DataTypeTok{x =}\NormalTok{ veg[, }\StringTok{"Tree ID"}\NormalTok{]), any)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\subsection{Coalesce datasets}\label{coalesce-datasets}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(l.raw)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Tree.ID  Q  C Acacon Acasub Acaobp Sterile.sp Brown.cr Lobalp Canros Calare
+## 1     1RA Q1 A1      0      0      0          0        0      0      0      0
+## 2     1RA Q1 A2      0      0      0          0        0      0      0      0
+## 3     1RA Q1 A3      0      0      0          0        0      0      0      0
+## 4     1RA Q1 B1      0      0      0          0        0      0      0      0
+## 5     1RA Q1 B2      0      0      0          0        0      0      0      0
+## 6     1RA Q1 B3      0      0      0          0        0      0      0      0
+##   Phydub Rhichr Xanlin Xanpli Xanele GrBr.cr Gray.cr Synrur Cerpur.Bryarg
+## 1      0      0      0      0      0       0       0      0             0
+## 2      0      0      0      0      0       0       0      0             0
+## 3      0      0      0      0      0       0       0      0             0
+## 4      0      0      0      0      0       0       0      0             0
+## 5      0      0      0      0      0       0       0      0             0
+## 6      0      0      0      0      0       0       0      0             0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(le.raw[, }\OperatorTok{-}\DecValTok{2}\OperatorTok{:-}\DecValTok{3}\NormalTok{], l.raw[, }\OperatorTok{-}\DecValTok{1}\OperatorTok{:-}\DecValTok{3}\NormalTok{])}
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{split}\NormalTok{(l.d, l.d[, }\StringTok{"Tree.ID"}\NormalTok{])}
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(l.d, }\ControlFlowTok{function}\NormalTok{(x) x[, }\OperatorTok{-}\DecValTok{1}\NormalTok{])}
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(l.d, apply, }\DecValTok{2}\NormalTok{, mean)}
+\NormalTok{l.df <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind, l.d)}
+\NormalTok{trt <-}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(l.df), }\StringTok{""}\NormalTok{)}
+\NormalTok{moth.alive <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(trt, }\ControlFlowTok{function}\NormalTok{(x) x[x }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(letters, LETTERS)])}
+\NormalTok{moth.alive <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind, moth.alive)}
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(trt, }\ControlFlowTok{function}\NormalTok{(x) x[}\OperatorTok{!}\NormalTok{(x }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(letters, LETTERS))])}
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(tree, paste, }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)))}
+\NormalTok{l.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Tree.pairs =}\NormalTok{ tree, }
+                   \DataTypeTok{Moth =}\NormalTok{ moth.alive[, }\DecValTok{1}\NormalTok{], }
+                   \DataTypeTok{Live.Dead =}\NormalTok{ moth.alive[, }\DecValTok{2}\NormalTok{], }
+\NormalTok{                   l.df)}
+\NormalTok{l.df <-}\StringTok{ }\NormalTok{l.df[l.df[, }\StringTok{"Live.Dead"}\NormalTok{] }\OperatorTok{==}\StringTok{ "A"}\NormalTok{, ]}
+\NormalTok{l.df[l.df[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{==}\StringTok{ "R"}\NormalTok{, }\StringTok{"Moth"}\NormalTok{] <-}\StringTok{ }\DecValTok{1}
+\NormalTok{l.df[l.df[, }\StringTok{"Moth"}\NormalTok{] }\OperatorTok{==}\StringTok{ "S"}\NormalTok{, }\StringTok{"Moth"}\NormalTok{] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{moth.tree <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(l.df[, }\StringTok{"Moth"}\NormalTok{], l.df[, }\StringTok{"Tree.pairs"}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{l.df <-}\StringTok{ }\NormalTok{l.df[}\KeywordTok{match}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(l.dat), moth.tree), ]}
+\end{Highlighting}
+\end{Shaded}
+
+Check that \texttt{l.dat} and \texttt{l.df} are correctly coalesced:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all}\NormalTok{(l.df[, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{l.dat[, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(l.dat[, }\OperatorTok{-}\DecValTok{10}\OperatorTok{:-}\DecValTok{12}\NormalTok{]) }\OperatorTok{==}\StringTok{ }\KeywordTok{colnames}\NormalTok{(l.df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+## [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [25]  TRUE  TRUE
+\end{verbatim}
+
+Check that the values of the variables match, excluding light:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l.dat[, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\OperatorTok{:-}\DecValTok{3}\NormalTok{, }\OperatorTok{-}\DecValTok{10}\OperatorTok{:-}\DecValTok{12}\NormalTok{)] }\OperatorTok{-}\StringTok{ }\NormalTok{l.df[, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\OperatorTok{:-}\DecValTok{3}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Litter..   Big.rocks.. Small.rocks..      Shrubs..      Grass..
+## 1_1   0.0025925926 -0.0007407407  0.0000000000 -0.0018518519  0.000000000
+## 0_1  -0.0018518519  0.0018518519  0.0000000000  0.0000000000  0.000000000
+## 1_2  -0.0022222222 -0.0011111111  0.0033333333  0.0000000000  0.000000000
+## 0_2   0.0007407407 -0.0007407407  0.0000000000  0.0000000000  0.000000000
+## 1_3  -0.0007407407  0.0007407407  0.0000000000  0.0000000000  0.000000000
+## 0_3   0.0029629630 -0.0029629630  0.0000000000  0.0000000000  0.000000000
+## 1_4  -0.0040740741  0.0000000000  0.0000000000  0.0040740741  0.000000000
+## 0_4  -0.0022222222  0.0022222222  0.0000000000  0.0000000000  0.000000000
+## 1_5   0.0007407407  0.0011111111  0.0000000000 -0.0018518519  0.000000000
+## 0_5   0.0025925926 -0.0033333333  0.0000000000  0.0000000000  0.000000000
+## 1_6   0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.000000000
+## 0_6  -0.0040740741  0.0040740741  0.0000000000  0.0000000000  0.000000000
+## 1_7   0.0022222222 -0.0022222222  0.0000000000  0.0000000000  0.000000000
+## 0_7  -0.0025925926  0.0025925926  0.0000000000  0.0000000000  0.000000000
+## 1_8  -0.0029629630  0.0040740741 -0.0011111111  0.0000000000  0.000000000
+## 0_8   0.0007407407 -0.0007407407  0.0000000000  0.0000000000  0.000000000
+## 1_9  -0.0018518519  0.0044444444  0.0000000000 -0.0025925926  0.000000000
+## 0_9   0.0048148148  0.0003703704  0.0000000000  0.0048148148  0.000000000
+## 1_10 -0.0040740741  0.0040740741  0.0000000000  0.0000000000  0.000000000
+## 0_10  0.0037037037 -0.0018518519  0.0000000000 -0.0018518519  0.000000000
+## 1_11 -0.0003703704  0.0011111111  0.0000000000 -0.0007407407  0.000000000
+## 0_11  0.0040740741 -0.0040740741  0.0000000000  0.0000000000  0.000000000
+## 1_12  0.0022222222 -0.0014814815  0.0000000000 -0.0007407407  0.000000000
+## 0_12  0.0011111111 -0.0011111111  0.0000000000  0.0000000000  0.000000000
+## 1_13  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.000000000
+## 0_13 -0.0003703704  0.0003703704  0.0000000000  0.0000000000  0.000000000
+## 1_14  0.0048148148  0.0014814815  0.0025925926  0.0011111111  0.000000000
+## 0_14  0.0037037037 -0.0007407407 -0.0029629630  0.0000000000  0.000000000
+## 1_15 -0.0011111111  0.0018518519 -0.0007407407  0.0000000000  0.000000000
+## 0_15  0.0007407407 -0.0033333333  0.0025925926  0.0000000000  0.000000000
+## 1_16 -0.0048148148  0.0000000000  0.0000000000  0.0048148148  0.000000000
+## 0_16  0.0040740741  0.0018518519  0.0040740741  0.0000000000  0.000000000
+## 1_17 -0.0025925926  0.0029629630 -0.0003703704  0.0000000000  0.000000000
+## 0_17  0.0037037037  0.0048148148  0.0014814815  0.0000000000  0.000000000
+## 1_18 -0.0048148148  0.0048148148  0.0000000000  0.0000000000  0.000000000
+## 0_18  0.0011111111 -0.0011111111  0.0000000000  0.0000000000  0.000000000
+## 1_19  0.0048148148 -0.0048148148  0.0000000000  0.0000000000  0.000000000
+## 0_19  0.0014814815 -0.0014814815  0.0000000000  0.0000000000  0.000000000
+## 1_20 -0.0014814815  0.0037037037 -0.0022222222  0.0000000000  0.000000000
+## 0_20  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.000000000
+## 1_21  0.0040740741  0.0040740741  0.0033333333  0.0000000000 -0.001481481
+## 0_21  0.0022222222 -0.0022222222  0.0000000000  0.0000000000  0.000000000
+## 1_22  0.0018518519 -0.0033333333  0.0014814815  0.0000000000  0.000000000
+## 0_22 -0.0018518519  0.0018518519  0.0000000000  0.0000000000  0.000000000
+## 1_23  0.0033333333  0.0037037037  0.0000000000  0.0029629630  0.000000000
+## 0_23 -0.0044444444 -0.0011111111  0.0029629630  0.0025925926  0.000000000
+## 1_24  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.000000000
+## 0_24  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.000000000
+## 1_25 -0.0018518519  0.0029629630 -0.0011111111  0.0000000000  0.000000000
+## 0_25  0.0014814815 -0.0011111111 -0.0003703704  0.0000000000  0.000000000
+## 1_26 -0.0044444444  0.0029629630  0.0014814815  0.0000000000  0.000000000
+## 0_26 -0.0014814815  0.0014814815  0.0000000000  0.0000000000  0.000000000
+## 1_27 -0.0003703704 -0.0025925926 -0.0029629630 -0.0040740741  0.000000000
+## 0_27 -0.0037037037  0.0037037037  0.0000000000  0.0000000000  0.000000000
+## 1_28  0.0029629630  0.0029629630  0.0007407407  0.0000000000  0.000000000
+## 0_28  0.0037037037  0.0037037037  0.0025925926  0.0000000000  0.000000000
+## 1_29 -0.0033333333  0.0033333333  0.0000000000  0.0000000000  0.000000000
+## 0_29 -0.0025925926  0.0025925926  0.0000000000  0.0000000000  0.000000000
+## 1_30  0.0033333333 -0.0033333333  0.0000000000  0.0000000000  0.000000000
+## 0_30  0.0000000000 -0.0033333333  0.0033333333  0.0000000000  0.000000000
+##        Branches..        Acacon        Acaame       Acaobp  Sterile.sp Brown.cr
+## 1_1  0.0000000000  0.0000000000  0.0033333333  0.000000000 0.004444444        0
+## 0_1  0.0000000000  0.0000000000  0.0048148148  0.000000000 0.000000000        0
+## 1_2  0.0000000000  0.0014814815 -0.0022222222  0.004444444 0.000000000        0
+## 0_2  0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_3  0.0000000000  0.0018518519 -0.0011111111  0.000000000 0.000000000        0
+## 0_3  0.0000000000  0.0000000000  0.0000000000  0.001481481 0.000000000        0
+## 1_4  0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_4  0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_5  0.0000000000  0.0014814815  0.0014814815  0.000000000 0.000000000        0
+## 0_5  0.0007407407  0.0000000000 -0.0025925926  0.000000000 0.000000000        0
+## 1_6  0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_6  0.0000000000  0.0000000000 -0.0040740741  0.000000000 0.000000000        0
+## 1_7  0.0000000000  0.0000000000 -0.0048148148  0.002962963 0.000000000        0
+## 0_7  0.0000000000  0.0000000000  0.0044444444  0.000000000 0.000000000        0
+## 1_8  0.0000000000  0.0029629630  0.0000000000  0.001851852 0.000000000        0
+## 0_8  0.0000000000  0.0014814815 -0.0014814815  0.002962963 0.000000000        0
+## 1_9  0.0000000000  0.0000000000 -0.0025925926  0.000000000 0.000000000        0
+## 0_9  0.0000000000  0.0000000000  0.0029629630  0.000000000 0.000000000        0
+## 1_10 0.0000000000 -0.0011111111 -0.0018518519  0.000000000 0.000000000        0
+## 0_10 0.0000000000  0.0029629630  0.0018518519  0.000000000 0.000000000        0
+## 1_11 0.0000000000  0.0029629630  0.0033333333  0.000000000 0.000000000        0
+## 0_11 0.0000000000  0.0014814815  0.0029629630  0.000000000 0.000000000        0
+## 1_12 0.0000000000  0.0000000000  0.0014814815  0.001481481 0.000000000        0
+## 0_12 0.0000000000  0.0000000000  0.0029629630  0.000000000 0.000000000        0
+## 1_13 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_13 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_14 0.0000000000 -0.0025925926 -0.0040740741  0.004444444 0.000000000        0
+## 0_14 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_15 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_15 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_16 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_16 0.0000000000  0.0000000000 -0.0011111111 -0.004074074 0.000000000        0
+## 1_17 0.0000000000  0.0007407407  0.0003703704  0.000000000 0.000000000        0
+## 0_17 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_18 0.0000000000  0.0014814815  0.0018518519  0.004444444 0.000000000        0
+## 0_18 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_19 0.0000000000  0.0000000000 -0.0025925926  0.000000000 0.000000000        0
+## 0_19 0.0000000000  0.0000000000  0.0014814815  0.004444444 0.000000000        0
+## 1_20 0.0000000000  0.0033333333  0.0037037037 -0.002592593 0.000000000        0
+## 0_20 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_21 0.0000000000  0.0000000000  0.0029629630  0.000000000 0.000000000        0
+## 0_21 0.0000000000  0.0000000000 -0.0007407407  0.000000000 0.000000000        0
+## 1_22 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 0_22 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_23 0.0000000000  0.0000000000  0.0044444444  0.001481481 0.000000000        0
+## 0_23 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_24 0.0000000000  0.0033333333  0.0029629630 -0.002592593 0.000000000        0
+## 0_24 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_25 0.0000000000  0.0029629630  0.0029629630  0.000000000 0.000000000        0
+## 0_25 0.0000000000  0.0029629630  0.0048148148  0.000000000 0.000000000        0
+## 1_26 0.0000000000  0.0014814815  0.0044444444  0.000000000 0.000000000        0
+## 0_26 0.0000000000  0.0014814815  0.0000000000  0.000000000 0.000000000        0
+## 1_27 0.0000000000 -0.0040740741 -0.0033333333 -0.004074074 0.000000000        0
+## 0_27 0.0000000000  0.0029629630 -0.0040740741  0.000000000 0.000000000        0
+## 1_28 0.0000000000  0.0048148148  0.0033333333 -0.002592593 0.000000000        0
+## 0_28 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_29 0.0000000000 -0.0011111111  0.0029629630  0.001481481 0.000000000        0
+## 0_29 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+## 1_30 0.0000000000  0.0000000000  0.0003703704  0.000000000 0.000000000        0
+## 0_30 0.0000000000  0.0000000000  0.0000000000  0.000000000 0.000000000        0
+##           Lobalp        Canros       Calare        Phydub        Rhichr
+## 1_1  0.000000000 -0.0018518519  0.004444444  0.0000000000  0.0044444444
+## 0_1  0.000000000 -0.0033333333  0.001481481  0.0000000000 -0.0018518519
+## 1_2  0.001481481 -0.0048148148  0.004444444  0.0048148148 -0.0040740741
+## 0_2  0.000000000  0.0018518519  0.000000000  0.0000000000  0.0000000000
+## 1_3  0.000000000  0.0011111111 -0.004074074  0.0029629630  0.0000000000
+## 0_3  0.000000000 -0.0040740741  0.001481481  0.0000000000  0.0048148148
+## 1_4  0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_4  0.000000000  0.0018518519 -0.004074074  0.0000000000 -0.0022222222
+## 1_5  0.000000000  0.0033333333  0.000000000  0.0000000000 -0.0040740741
+## 0_5  0.000000000  0.0007407407  0.000000000 -0.0025925926 -0.0040740741
+## 1_6  0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_6  0.000000000 -0.0003703704  0.000000000 -0.0040740741  0.0000000000
+## 1_7  0.002962963 -0.0025925926  0.002962963 -0.0018518519  0.0025925926
+## 0_7  0.000000000  0.0007407407  0.000000000  0.0044444444 -0.0014814815
+## 1_8  0.000000000  0.0040740741  0.000000000  0.0025925926 -0.0040740741
+## 0_8  0.000000000  0.0014814815  0.000000000  0.0000000000  0.0029629630
+## 1_9  0.000000000  0.0044444444  0.000000000 -0.0011111111 -0.0025925926
+## 0_9  0.000000000  0.0044444444  0.000000000  0.0029629630 -0.0040740741
+## 1_10 0.000000000 -0.0003703704  0.000000000 -0.0037037037  0.0044444444
+## 0_10 0.000000000 -0.0029629630  0.000000000  0.0033333333  0.0044444444
+## 1_11 0.000000000 -0.0011111111  0.002962963  0.0048148148  0.0014814815
+## 0_11 0.000000000  0.0018518519  0.000000000  0.0000000000 -0.0025925926
+## 1_12 0.000000000  0.0048148148  0.000000000 -0.0040740741  0.0048148148
+## 0_12 0.000000000  0.0044444444  0.000000000 -0.0022222222  0.0000000000
+## 1_13 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_13 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_14 0.000000000  0.0033333333  0.000000000  0.0048148148 -0.0044444444
+## 0_14 0.000000000  0.0029629630  0.000000000  0.0000000000  0.0000000000
+## 1_15 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_15 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_16 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_16 0.000000000  0.0048148148  0.001481481  0.0044444444  0.0029629630
+## 1_17 0.002962963  0.0011111111  0.000000000  0.0000000000  0.0048148148
+## 0_17 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_18 0.002962963  0.0025925926  0.004444444  0.0000000000  0.0033333333
+## 0_18 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_19 0.000000000 -0.0048148148  0.000000000  0.0014814815 -0.0011111111
+## 0_19 0.000000000  0.0014814815  0.000000000  0.0000000000  0.0044444444
+## 1_20 0.000000000  0.0029629630  0.001481481 -0.0048148148 -0.0025925926
+## 0_20 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_21 0.000000000 -0.0025925926  0.000000000  0.0000000000  0.0000000000
+## 0_21 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_22 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 0_22 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_23 0.000000000 -0.0007407407  0.000000000  0.0000000000  0.0000000000
+## 0_23 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_24 0.000000000 -0.0048148148 -0.002592593 -0.0018518519 -0.0040740741
+## 0_24 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_25 0.000000000  0.0044444444  0.000000000  0.0000000000  0.0000000000
+## 0_25 0.000000000  0.0003703704  0.000000000  0.0044444444 -0.0040740741
+## 1_26 0.000000000  0.0044444444  0.000000000  0.0000000000  0.0000000000
+## 0_26 0.000000000 -0.0040740741  0.000000000  0.0029629630  0.0029629630
+## 1_27 0.000000000 -0.0037037037  0.002962963  0.0018518519  0.0044444444
+## 0_27 0.000000000  0.0014814815  0.000000000  0.0000000000  0.0000000000
+## 1_28 0.000000000 -0.0011111111 -0.004074074 -0.0037037037  0.0044444444
+## 0_28 0.000000000  0.0014814815  0.000000000  0.0000000000  0.0000000000
+## 1_29 0.000000000  0.0014814815  0.000000000  0.0044444444  0.0003703704
+## 0_29 0.000000000  0.0000000000  0.000000000  0.0000000000  0.0000000000
+## 1_30 0.000000000 -0.0014814815  0.000000000  0.0003703704 -0.0018518519
+## 0_30 0.000000000  0.0014814815  0.000000000  0.0000000000  0.0000000000
+##             Xanlin        Xanpli        Xanele     GrBr.cr      Gray.cr
+## 1_1   0.0025925926  0.0018518519  0.0000000000 0.000000000  0.000000000
+## 0_1  -0.0029629630  0.0007407407  0.0000000000 0.000000000  0.002962963
+## 1_2   0.0022222222  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_2   0.0000000000  0.0003703704  0.0000000000 0.000000000  0.000000000
+## 1_3   0.0014814815  0.0014814815  0.0000000000 0.000000000  0.000000000
+## 0_3  -0.0014814815  0.0044444444  0.0000000000 0.000000000  0.000000000
+## 1_4   0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_4   0.0048148148  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_5   0.0000000000  0.0011111111  0.0000000000 0.000000000  0.000000000
+## 0_5  -0.0040740741 -0.0040740741 -0.0011111111 0.002962963  0.002962963
+## 1_6   0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_6   0.0037037037  0.0037037037  0.0000000000 0.000000000  0.000000000
+## 1_7   0.0044444444  0.0000000000 -0.0007407407 0.000000000 -0.004074074
+## 0_7   0.0048148148  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_8   0.0040740741  0.0000000000 -0.0048148148 0.000000000  0.000000000
+## 0_8   0.0000000000 -0.0007407407  0.0000000000 0.000000000  0.000000000
+## 1_9   0.0048148148  0.0007407407  0.0018518519 0.000000000  0.000000000
+## 0_9   0.0003703704  0.0000000000  0.0018518519 0.000000000  0.000000000
+## 1_10  0.0007407407  0.0000000000  0.0014814815 0.000000000  0.000000000
+## 0_10 -0.0014814815 -0.0033333333  0.0000000000 0.000000000  0.000000000
+## 1_11 -0.0011111111  0.0040740741  0.0000000000 0.000000000  0.000000000
+## 0_11  0.0029629630 -0.0007407407  0.0000000000 0.000000000  0.000000000
+## 1_12 -0.0007407407  0.0000000000  0.0048148148 0.000000000  0.000000000
+## 0_12  0.0000000000  0.0018518519  0.0000000000 0.000000000  0.000000000
+## 1_13  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_13  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_14 -0.0007407407  0.0044444444 -0.0025925926 0.000000000  0.000000000
+## 0_14  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_15  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_15  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_16  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_16  0.0011111111  0.0033333333  0.0033333333 0.000000000  0.000000000
+## 1_17  0.0007407407  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_17  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_18 -0.0025925926  0.0000000000  0.0029629630 0.000000000  0.000000000
+## 0_18  0.0000000000 -0.0040740741  0.0000000000 0.000000000  0.000000000
+## 1_19  0.0014814815  0.0029629630  0.0000000000 0.000000000  0.000000000
+## 0_19  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_20  0.0003703704  0.0014814815  0.0000000000 0.000000000  0.000000000
+## 0_20  0.0000000000  0.0000000000  0.0014814815 0.000000000  0.000000000
+## 1_21  0.0048148148  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_21  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_22  0.0014814815  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_22  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_23  0.0033333333  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_23  0.0000000000  0.0011111111  0.0000000000 0.000000000  0.000000000
+## 1_24  0.0040740741  0.0007407407  0.0000000000 0.000000000  0.000000000
+## 0_24  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_25  0.0000000000  0.0011111111  0.0000000000 0.000000000  0.000000000
+## 0_25  0.0000000000  0.0003703704  0.0000000000 0.000000000  0.000000000
+## 1_26  0.0014814815  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 0_26  0.0000000000 -0.0037037037  0.0000000000 0.000000000  0.000000000
+## 1_27  0.0022222222  0.0000000000 -0.0011111111 0.000000000  0.000000000
+## 0_27  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_28 -0.0044444444  0.0000000000 -0.0022222222 0.000000000  0.000000000
+## 0_28  0.0029629630  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_29 -0.0025925926 -0.0040740741  0.0000000000 0.000000000  0.000000000
+## 0_29  0.0000000000  0.0000000000  0.0000000000 0.000000000  0.000000000
+## 1_30  0.0048148148  0.0033333333  0.0000000000 0.000000000  0.000000000
+## 0_30  0.0000000000  0.0048148148  0.0000000000 0.000000000  0.000000000
+##             Synrur Cerpur.Bryarg
+## 1_1   0.0000000000   0.000000000
+## 0_1  -0.0037037037   0.000000000
+## 1_2  -0.0007407407   0.000000000
+## 0_2   0.0000000000   0.000000000
+## 1_3   0.0000000000   0.000000000
+## 0_3   0.0000000000   0.000000000
+## 1_4   0.0000000000   0.000000000
+## 0_4   0.0000000000   0.000000000
+## 1_5   0.0000000000   0.000000000
+## 0_5   0.0000000000   0.000000000
+## 1_6   0.0000000000   0.000000000
+## 0_6   0.0000000000   0.000000000
+## 1_7   0.0000000000  -0.001111111
+## 0_7   0.0000000000   0.000000000
+## 1_8  -0.0011111111   0.002592593
+## 0_8   0.0000000000   0.000000000
+## 1_9   0.0048148148   0.000000000
+## 0_9   0.0000000000   0.000000000
+## 1_10  0.0029629630   0.000000000
+## 0_10  0.0000000000   0.000000000
+## 1_11  0.0029629630   0.000000000
+## 0_11  0.0000000000   0.000000000
+## 1_12  0.0000000000   0.000000000
+## 0_12  0.0000000000   0.000000000
+## 1_13  0.0000000000   0.000000000
+## 0_13  0.0000000000   0.000000000
+## 1_14 -0.0044444444   0.000000000
+## 0_14  0.0000000000   0.000000000
+## 1_15  0.0000000000   0.000000000
+## 0_15  0.0000000000   0.000000000
+## 1_16  0.0000000000   0.000000000
+## 0_16 -0.0011111111   0.000000000
+## 1_17  0.0000000000   0.000000000
+## 0_17  0.0000000000   0.000000000
+## 1_18  0.0000000000   0.000000000
+## 0_18  0.0000000000   0.000000000
+## 1_19  0.0000000000   0.000000000
+## 0_19  0.0000000000   0.000000000
+## 1_20  0.0000000000   0.000000000
+## 0_20  0.0000000000   0.000000000
+## 1_21  0.0000000000   0.000000000
+## 0_21  0.0000000000   0.000000000
+## 1_22  0.0000000000   0.000000000
+## 0_22  0.0000000000   0.000000000
+## 1_23  0.0000000000   0.000000000
+## 0_23  0.0000000000   0.000000000
+## 1_24  0.0000000000   0.000000000
+## 0_24  0.0000000000   0.000000000
+## 1_25  0.0000000000   0.000000000
+## 0_25  0.0000000000   0.000000000
+## 1_26  0.0000000000   0.000000000
+## 0_26  0.0000000000   0.000000000
+## 1_27  0.0000000000   0.000000000
+## 0_27  0.0000000000   0.000000000
+## 1_28 -0.0025925926   0.000000000
+## 0_28  0.0000000000   0.000000000
+## 1_29  0.0000000000   0.000000000
+## 0_29  0.0000000000   0.000000000
+## 1_30  0.0000000000   0.000000000
+## 0_30  0.0000000000   0.000000000
+\end{verbatim}
+
+The following vector should work to match-up the saxicoles with the veg
+data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m.v <-}\StringTok{ }\KeywordTok{rownames}\NormalTok{(l.df)}
+\NormalTok{v.dat <-}\StringTok{ }\NormalTok{veg[}\KeywordTok{match}\NormalTok{(m.v, veg[, }\StringTok{"Tree ID"}\NormalTok{]), ]}
+\NormalTok{v.dat[}\KeywordTok{is.na}\NormalTok{(v.dat)] <-}\StringTok{ }\DecValTok{0}
+
+\NormalTok{v.tp <-}\StringTok{ }\NormalTok{v.dat[, }\StringTok{"Tree ID"}\NormalTok{]}
+\NormalTok{v.tp <-}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(v.tp, }\StringTok{""}\NormalTok{)}
+\NormalTok{v.tp <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(v.tp, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{paste}\NormalTok{(x[x }\OperatorTok{%in%}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{9}\NormalTok{], }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)))}
+\NormalTok{v.dat <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(v.dat[, }\DecValTok{1}\OperatorTok{:}\DecValTok{7}\NormalTok{], }\StringTok{"Tree Pair"}\NormalTok{ =}\StringTok{ }\NormalTok{v.tp, v.dat[, }\DecValTok{8}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(v.dat)])}
+\end{Highlighting}
+\end{Shaded}
+
+Checking the vegetation and rock cover correlations. We find that
+vegetation cover is is significantly, but not strongly correlated with
+rock cover. Large rock cover measurements in the saxicole dataset is
+strongly correlated with total rock cover in the plant dataset.
+
+Both vegetation and rock cover are strongly affected by moth
+susceptibility.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(v.dat[, }\StringTok{"Vegetation.cover"}\NormalTok{], v.dat[, }\StringTok{"Rock.cover"}\NormalTok{], }\DataTypeTok{alt =} \StringTok{"greater"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  v.dat[, "Vegetation.cover"] and v.dat[, "Rock.cover"]
+## t = 1.8835, df = 58, p-value = 0.03233
+## alternative hypothesis: true correlation is greater than 0
+## 95 percent confidence interval:
+##  0.0269872 1.0000000
+## sample estimates:
+##       cor 
+## 0.2400809
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor.test}\NormalTok{(l.dat[, }\StringTok{"Big.rocks.."}\NormalTok{], v.dat[, }\StringTok{"Rock.cover"}\NormalTok{], }\DataTypeTok{alt =} \StringTok{"greater"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  l.dat[, "Big.rocks.."] and v.dat[, "Rock.cover"]
+## t = 9.5342, df = 58, p-value = 8.816e-14
+## alternative hypothesis: true correlation is greater than 0
+## 95 percent confidence interval:
+##  0.6809688 1.0000000
+## sample estimates:
+##       cor 
+## 0.7813334
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(v.dat[, }\StringTok{"Rock.cover"}\NormalTok{], v.dat[, }\StringTok{"Tree.Pair"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  tapply(v.dat[, "Rock.cover"], v.dat[, "Tree.Pair"], diff)
+## t = -3.3582, df = 29, p-value = 0.002208
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -27.621617  -6.711716
+## sample estimates:
+## mean of x 
+## -17.16667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(v.dat[, }\StringTok{"Vegetation.cover"}\NormalTok{], v.dat[, }\StringTok{"Tree.Pair"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  tapply(v.dat[, "Vegetation.cover"], v.dat[, "Tree.Pair"], diff)
+## t = -7.2026, df = 29, p-value = 6.269e-08
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -28.67505 -15.99162
+## sample estimates:
+## mean of x 
+## -22.33333
+\end{verbatim}
+
+Both plant richness and Shannon's Diversity index were significantly
+affected by moth susceptibility.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v.rich <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(v.com, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{sign}\NormalTok{(x)))}
+\NormalTok{v.shan <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(v.com, }\DecValTok{1}\NormalTok{, diversity)}
+
+\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(v.rich, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  tapply(v.rich, l.dat[, "Tree.pairs"], diff)
+## t = -7.477, df = 29, p-value = 3.062e-08
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -1.6555988 -0.9444012
+## sample estimates:
+## mean of x 
+##      -1.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(v.shan, l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], diff))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  tapply(v.shan, l.dat[, "Tree.pairs"], diff)
+## t = -4.2192, df = 29, p-value = 0.00022
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.4386895 -0.1522394
+## sample estimates:
+##  mean of x 
+## -0.2954645
+\end{verbatim}
+
+This is a multivariate analysis of the plant community response to moth
+susceptibility (PERMANOVA). This analysis uses a modified Bray-Curtis
+Dissimilarity metric, which permits the inclusion of quadrats that had
+no plants in them. The analysis also accounts for the paired structure
+of the data (i.e.~pairs of moth susceptible and resistant trees).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v.com <-}\StringTok{ }\NormalTok{v.dat[, }\DecValTok{9}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(v.dat)]}
+\NormalTok{v.com <-}\StringTok{ }\NormalTok{v.com[, }\KeywordTok{apply}\NormalTok{(v.com, }\DecValTok{2}\NormalTok{, sum) }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{]}
+
+\NormalTok{v.com.ds <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(v.com, }\DataTypeTok{ds =} \KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(v.com)))}
+\NormalTok{v.com.ds.rel <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(v.com, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{/}\KeywordTok{max}\NormalTok{(x))}
+\NormalTok{v.com.ds.rel <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(v.com.ds.rel, }\DataTypeTok{ds =} \KeywordTok{rep}\NormalTok{(}\FloatTok{0.0001}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(v.com)))}
+\NormalTok{v.com.ds.rel[}\KeywordTok{is.na}\NormalTok{(v.com.ds.rel)] <-}\StringTok{ }\DecValTok{0}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.moth <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Moth, }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                    \DataTypeTok{strata =}\NormalTok{ v.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                    \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.moth.rel <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds.rel }\OperatorTok{~}\StringTok{ }\NormalTok{Moth, }\DataTypeTok{data =}\NormalTok{ l.dat, }
+                         \DataTypeTok{strata =}\NormalTok{ v.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                         \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Here are the results of the multivariate plant community response.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.moth)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Moth & 1 & 5.174376 & 0.3081168 & 25.82917 & 0.001\tabularnewline
+Residual & 58 & 11.619181 & 0.6918832 & NA & NA\tabularnewline
+Total & 59 & 16.793557 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+Here are the results of the multivariate plant community response after
+relativizing by species max.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.moth.rel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Moth & 1 & 5.989174 & 0.288048 & 23.46617 & 0.001\tabularnewline
+Residual & 58 & 14.803100 & 0.711952 & NA & NA\tabularnewline
+Total & 59 & 20.792275 & 1.000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+Do light or rock cover influence plant communities?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.env <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Light...average }\OperatorTok{+}\StringTok{ }\NormalTok{Litter.. }\OperatorTok{+}\StringTok{ }\NormalTok{Big.rocks..,}
+                      \DataTypeTok{data =}\NormalTok{ l.dat, }
+                      \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                      \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.env.rel <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds.rel }\OperatorTok{~}\StringTok{ }\NormalTok{Light...average }\OperatorTok{+}\StringTok{ }\NormalTok{Litter.. }\OperatorTok{+}\StringTok{ }\NormalTok{Big.rocks..,}
+                          \DataTypeTok{data =}\NormalTok{ l.dat, }
+                          \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                          \DataTypeTok{by =} \StringTok{"margin"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Light has a strong effect on the plant community. Litter also has an
+effect but it is small and marginally significant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.env)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Light\ldots{}average & 1 & 2.8692870 & 0.1708564 & 12.696810 &
+0.001\tabularnewline
+Litter.. & 1 & 0.6890028 & 0.0410278 & 3.048889 & 0.049\tabularnewline
+Big.rocks.. & 1 & 0.3621592 & 0.0215654 & 1.602582 &
+0.189\tabularnewline
+Residual & 56 & 12.6551530 & 0.7535719 & NA & NA\tabularnewline
+Total & 59 & 16.7935571 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.env.rel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Light\ldots{}average & 1 & 3.2173963 & 0.1547400 & 11.469106 &
+0.001\tabularnewline
+Litter.. & 1 & 0.7307945 & 0.0351474 & 2.605075 & 0.061\tabularnewline
+Big.rocks.. & 1 & 0.5197916 & 0.0249993 & 1.852910 &
+0.138\tabularnewline
+Residual & 56 & 15.7095234 & 0.7555462 & NA & NA\tabularnewline
+Total & 59 & 20.7922745 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.env.seq <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds }\OperatorTok{~}\StringTok{ }\NormalTok{Light...average }\OperatorTok{+}\StringTok{ }\NormalTok{Litter.. }\OperatorTok{+}\StringTok{ }\NormalTok{Big.rocks..,}
+                      \DataTypeTok{data =}\NormalTok{ l.dat, }
+                      \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                      \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ptab.v.env.rel.seq <-}\StringTok{ }\KeywordTok{adonis2}\NormalTok{(v.com.ds.rel }\OperatorTok{~}\StringTok{ }\NormalTok{Light...average }\OperatorTok{+}\StringTok{ }\NormalTok{Litter.. }\OperatorTok{+}\StringTok{ }\NormalTok{Big.rocks..,}
+                          \DataTypeTok{data =}\NormalTok{ l.dat, }
+                          \DataTypeTok{strata =}\NormalTok{ l.dat[, }\StringTok{"Tree.pairs"}\NormalTok{], }
+                          \DataTypeTok{by =} \StringTok{"term"}\NormalTok{, }\DataTypeTok{nperm =} \DecValTok{100000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+After controlling for the effect of light, the effect of litter is no
+longer significant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.env.seq)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Light\ldots{}average & 1 & 3.2765116 & 0.1951053 & 14.498809 &
+0.001\tabularnewline
+Litter.. & 1 & 0.4997333 & 0.0297574 & 2.211358 & 0.103\tabularnewline
+Big.rocks.. & 1 & 0.3621592 & 0.0215654 & 1.602582 &
+0.189\tabularnewline
+Residual & 56 & 12.6551530 & 0.7535719 & NA & NA\tabularnewline
+Total & 59 & 16.7935571 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(ptab.v.env.rel.seq)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule
+& Df & SumOfSqs & R2 & F & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+Light\ldots{}average & 1 & 3.8762571 & 0.1864278 & 13.81776 &
+0.001\tabularnewline
+Litter.. & 1 & 0.6867025 & 0.0330268 & 2.44790 & 0.059\tabularnewline
+Big.rocks.. & 1 & 0.5197916 & 0.0249993 & 1.85291 & 0.138\tabularnewline
+Residual & 56 & 15.7095234 & 0.7555462 & NA & NA\tabularnewline
+Total & 59 & 20.7922745 & 1.0000000 & NA & NA\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Indicator species
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ind.spp.v <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(v.com, }\ControlFlowTok{function}\NormalTok{(x, p) }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{tapply}\NormalTok{(x, p, diff)), }
+                    \DataTypeTok{p =}\NormalTok{ v.dat[, }\StringTok{"Tree.Pair"}\NormalTok{])}
+\NormalTok{isp.v <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{do.call}\NormalTok{(rbind, }\KeywordTok{lapply}\NormalTok{(ind.spp.v, unlist)), }\DecValTok{2}\NormalTok{, as.numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in apply(do.call(rbind, lapply(ind.spp.v, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+
+## Warning in apply(do.call(rbind, lapply(ind.spp.v, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+
+## Warning in apply(do.call(rbind, lapply(ind.spp.v, unlist)), 2, as.numeric): NAs
+## introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rownames}\NormalTok{(isp.v) <-}\StringTok{ }\KeywordTok{names}\NormalTok{(ind.spp.v)}
+\NormalTok{isp.v[, }\StringTok{"p.value"}\NormalTok{] <-}\StringTok{ }\KeywordTok{p.adjust}\NormalTok{(isp.v[, }\StringTok{"p.value"}\NormalTok{], }\DataTypeTok{method =} \StringTok{"fdr"}\NormalTok{)}
+\NormalTok{isp.all.v <-}\StringTok{ }\NormalTok{isp.v[, }\OperatorTok{!}\NormalTok{(}\KeywordTok{apply}\NormalTok{(isp.v, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{all}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x))))]}
+\NormalTok{isp.v <-}\StringTok{ }\NormalTok{isp.v[}\KeywordTok{order}\NormalTok{(isp.v[, }\StringTok{"p.value"}\NormalTok{]), ]}
+\NormalTok{isp.all.v <-}\StringTok{ }\NormalTok{isp.all.v[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)]}
+\NormalTok{isp.all.v <-}\StringTok{ }\NormalTok{isp.all.v[}\KeywordTok{order}\NormalTok{(isp.all.v[, }\StringTok{"estimate.mean of x"}\NormalTok{]), ]}
+\KeywordTok{colnames}\NormalTok{(isp.all.v) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"t"}\NormalTok{, }\StringTok{"df"}\NormalTok{, }\StringTok{"p-value"}\NormalTok{, }
+                         \StringTok{"Mean Difference"}\NormalTok{, }\StringTok{"Lower CI 95%"}\NormalTok{, }\StringTok{"Upper CI 95%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+There are two species that are responding to moth susceptibility, Apahe
+plume and \emph{Asteraceae ovales}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(isp.all.v[, }\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{], }\DataTypeTok{digits =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrrr@{}}
+\toprule
+& t & df & p-value & Mean Difference & Lower CI 95\% & Upper CI
+95\%\tabularnewline
+\midrule
+\endhead
+Apache.plume & -4.6010 & 29 & 0.0007 & -10.2667 & -14.8304 &
+-5.7029\tabularnewline
+Asteraceae.ovales & -3.9581 & 29 & 0.0020 & -8.1333 & -12.3360 &
+-3.9307\tabularnewline
+Rhus.trilobata & -1.8410 & 29 & 0.1869 & -3.1667 & -6.6847 &
+0.3514\tabularnewline
+Rabbit.brush & -1.0000 & 29 & 0.3256 & -0.6667 & -2.0302 &
+0.6968\tabularnewline
+Avena & -1.7951 & 29 & 0.1869 & -0.2000 & -0.4279 &
+0.0279\tabularnewline
+Juniperus.monosperma & -1.0000 & 29 & 0.3256 & -0.1667 & -0.5075 &
+0.1742\tabularnewline
+Plante.grise.allongée & -1.0000 & 29 & 0.3256 & -0.1000 & -0.3045 &
+0.1045\tabularnewline
+Scarlet.glia & -1.0000 & 29 & 0.3256 & -0.0667 & -0.2030 &
+0.0697\tabularnewline
+Pinus.edulis.R & 1.0000 & 29 & 0.3256 & 0.3333 & -0.3484 &
+1.0151\tabularnewline
+\bottomrule
+\end{longtable}
+
+There is no significant multivariate correlation between the veg and
+saxicole communities, regardless of whether the community data are
+relativized. This is likely a result of the two communities responded to
+different variables with low correlation (i.e.~rocks = saxicoles and
+light = plants).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v.d <-}\StringTok{ }\KeywordTok{vegdist}\NormalTok{(v.com.ds)}
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{vegdist}\NormalTok{(com.ds)}
+
+\KeywordTok{mantel}\NormalTok{(v.d }\OperatorTok{~}\StringTok{ }\NormalTok{l.d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mantelr        pval1        pval2        pval3    llim.2.5%   ulim.97.5% 
+## -0.002762319  0.513000000  0.488000000  0.914000000 -0.034504235  0.032707393
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v.d <-}\StringTok{ }\KeywordTok{vegdist}\NormalTok{(v.com.ds.rel)}
+\NormalTok{l.d <-}\StringTok{ }\KeywordTok{vegdist}\NormalTok{(com.ds.rel)}
+
+\KeywordTok{mantel}\NormalTok{(v.d }\OperatorTok{~}\StringTok{ }\NormalTok{l.d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     mantelr       pval1       pval2       pval3   llim.2.5%  ulim.97.5% 
+##  0.02328021  0.21200000  0.78900000  0.44300000 -0.01176642  0.05838093
+\end{verbatim}
+
+\end{document}

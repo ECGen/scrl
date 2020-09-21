@@ -460,7 +460,7 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 
 
-# Vegentation Analysis
+# Vegetation Analysis
 
 ## From Richard Michalet
 
@@ -570,14 +570,53 @@ m.v <- rownames(l.df)
 v.dat <- veg[match(m.v, veg[, "Tree ID"]), ]
 v.dat[is.na(v.dat)] <- 0
 
+v.tp <- v.dat[, "Tree ID"]
+v.tp <- strsplit(v.tp, "")
+v.tp <- unlist(lapply(v.tp, function(x) paste(x[x %in% 0:9], collapse = "")))
+v.dat <- data.frame(v.dat[, 1:7], "Tree Pair" = v.tp, v.dat[, 8:ncol(v.dat)])
+
 ```
 
-Quick community analysis:
+Checking the vegetation and rock cover correlations. We find that
+vegetation cover is is significantly, but not strongly correlated with
+rock cover. Large rock cover measurements in the saxicole dataset is
+strongly correlated with total rock cover in the plant dataset.
+
+Both vegetation and rock cover are strongly affected by moth
+susceptibility. 
+
+```{r veg-cover}
+
+cor.test(v.dat[, "Vegetation.cover"], v.dat[, "Rock.cover"], alt = "greater")
+cor.test(l.dat[, "Big.rocks.."], v.dat[, "Rock.cover"], alt = "greater")
+t.test(tapply(v.dat[, "Rock.cover"], v.dat[, "Tree.Pair"], diff))
+t.test(tapply(v.dat[, "Vegetation.cover"], v.dat[, "Tree.Pair"], diff))
+
+```
+
+Both plant richness and Shannon's Diversity index were significantly
+affected by moth susceptibility.
+
+```{r veg-diversity}
+
+v.rich <- apply(v.com, 1, function(x) sum(sign(x)))
+v.shan <- apply(v.com, 1, diversity)
+
+t.test(tapply(v.rich, l.dat[, "Tree.pairs"], diff))
+t.test(tapply(v.shan, l.dat[, "Tree.pairs"], diff))
+
+```
+
+This is a multivariate analysis of the plant community response to
+moth susceptibility (PERMANOVA). This analysis uses a modified Bray-Curtis
+Dissimilarity metric, which permits the inclusion of quadrats that had
+no plants in them. The analysis also accounts for the paired structure
+of the data (i.e. pairs of moth susceptible and resistant trees). 
 
 
-```{r}
+```{r veg-moth-perm}
 
-v.com <- v.dat[, 8:ncol(v.dat)]
+v.com <- v.dat[, 9:ncol(v.dat)]
 v.com <- v.com[, apply(v.com, 2, sum) > 0]
 
 v.com.ds <- cbind(v.com, ds = rep(1, nrow(v.com)))
@@ -586,25 +625,142 @@ v.com.ds.rel <- cbind(v.com.ds.rel, ds = rep(0.0001, nrow(v.com)))
 v.com.ds.rel[is.na(v.com.ds.rel)] <- 0
 
 set.seed(123)
-ptab.v.moth <- adonis2(v.com.ds~ Moth, data = l.dat, 
-                    strata = l.dat[, "Tree.pairs"], 
+ptab.v.moth <- adonis2(v.com.ds ~ Moth, data = l.dat, 
+                    strata = v.dat[, "Tree.pairs"], 
                     by = "margin", nperm = 100000)
 set.seed(123)
 ptab.v.moth.rel <- adonis2(v.com.ds.rel ~ Moth, data = l.dat, 
-                         strata = l.dat[, "Tree.pairs"], 
+                         strata = v.dat[, "Tree.pairs"], 
                          by = "margin", nperm = 100000)
 
+```
+
+Here are the results of the multivariate plant community response.
+
+```{r veg-moth-permtab}
+
 kable(ptab.v.moth)
+
+```
+
+Here are the results of the multivariate plant community response
+after relativizing by species max.
+
+```{r veg-rel-moth-permtab}
+
 kable(ptab.v.moth.rel)
 
 ```
 
-More analyses
+Do light or rock cover influence plant communities?
 
-- plant univariate (cover, richness, diversity)
-- Correspondence analysis? / ordination
+```{r veg-env}
+
+set.seed(123)
+ptab.v.env <- adonis2(v.com.ds ~ Light...average + Litter.. + Big.rocks..,
+                      data = l.dat, 
+                      strata = l.dat[, "Tree.pairs"], 
+                      by = "margin", nperm = 100000)
+set.seed(123)
+ptab.v.env.rel <- adonis2(v.com.ds.rel ~ Light...average + Litter.. + Big.rocks..,
+                          data = l.dat, 
+                          strata = l.dat[, "Tree.pairs"], 
+                          by = "margin", nperm = 100000)
+
+```
+
+Light has a strong effect on the plant community. Litter also has an
+effect but it is small and marginally significant.
+
+
+```{r veg-env-permtab}
+
+kable(ptab.v.env)
+
+```
+
+```{r veg-rel-env-permtab}
+
+kable(ptab.v.env.rel)
+
+```
+
+```{r veg-env-seq}
+
+set.seed(123)
+ptab.v.env.seq <- adonis2(v.com.ds ~ Light...average + Litter.. + Big.rocks..,
+                      data = l.dat, 
+                      strata = l.dat[, "Tree.pairs"], 
+                      by = "term", nperm = 100000)
+set.seed(123)
+ptab.v.env.rel.seq <- adonis2(v.com.ds.rel ~ Light...average + Litter.. + Big.rocks..,
+                          data = l.dat, 
+                          strata = l.dat[, "Tree.pairs"], 
+                          by = "term", nperm = 100000)
+
+```
+
+After controlling for the effect of light, the effect of litter is no
+longer significant.
+
+```{r veg-env-seq-permtab}
+
+kable(ptab.v.env.seq)
+
+```
+
+```{r veg-rel-env-seq-permtab}
+
+kable(ptab.v.env.rel.seq)
+
+```
+
+
 - Indicator species
-- Mantel using paired distances
+
+```{r isp-veg}
 
 
+ind.spp.v <- lapply(v.com, function(x, p) t.test(tapply(x, p, diff)), 
+                    p = v.dat[, "Tree.Pair"])
+isp.v <- apply(do.call(rbind, lapply(ind.spp.v, unlist)), 2, as.numeric)
+rownames(isp.v) <- names(ind.spp.v)
+isp.v[, "p.value"] <- p.adjust(isp.v[, "p.value"], method = "fdr")
+isp.all.v <- isp.v[, !(apply(isp.v, 2, function(x) all(is.na(x))))]
+isp.v <- isp.v[order(isp.v[, "p.value"]), ]
+isp.all.v <- isp.all.v[, c(1, 2, 3, 6, 4, 5)]
+isp.all.v <- isp.all.v[order(isp.all.v[, "estimate.mean of x"]), ]
+colnames(isp.all.v) <- c("t", "df", "p-value", 
+                         "Mean Difference", "Lower CI 95%", "Upper CI 95%")
 
+```
+
+There are two species that are responding to moth
+susceptibility, Apahe plume and *Asteraceae ovales*. 
+
+
+```{r isp-veg-table}
+
+kable(isp.all.v[, 1:6], digits = 4)
+
+```
+
+There is no significant multivariate correlation between the veg and
+saxicole communities, regardless of whether the community data are
+relativized. This is likely a result of the two communities responded
+to different variables with low correlation (i.e. rocks = saxicoles
+and light = plants). 
+
+```{r lv-mantel}
+
+v.d <- vegdist(v.com.ds)
+l.d <- vegdist(com.ds)
+
+mantel(v.d ~ l.d)
+
+v.d <- vegdist(v.com.ds.rel)
+l.d <- vegdist(com.ds.rel)
+
+mantel(v.d ~ l.d)
+
+```
