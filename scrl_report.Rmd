@@ -41,10 +41,6 @@ keep_md: yes
   decreasing rock (i.e. habitat) availability through increased leaf
   abscission and accumulation on rocks under trees.
 
-# Plant Analysis Summary
-
-- 
-
 # Analysis and Results
 
 Analyses were conducted in the **R** statistical programming
@@ -462,9 +458,29 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 ```
 
-
-
 # Vegetation Analysis
+
+## Results Summary
+
+- Both vegetation and light from the plant dataset respond to moth
+  susceptibility (see t-tests below)
+- Plant cover, richness and Shannon's diversity respond to moth
+  susceptibility (see t-tests below)
+- Plant community composition using Bray-Curtis dissimiliarity and a
+  PERMANOVA model that accounts for tree pairs is significantly
+  affected by moth susceptibility (Tables 11-12)
+- Using the light, littter and rock cover from the saxicole dataset,
+  plant community composition is significantly correlated with light
+  and litter but not rock cover. Light has a strong effect but the
+  effect of litter is weak and is non-significant after controlling
+  for the effect of light, suggesting that the effect of litter is due
+  to the covariance between light and litter (Tables 13-16) 
+- Two main species of plant were indicators of moth susceptibility:
+  Apache plume and *Asteraceae ovales*. Both showed reduced cover
+  under moth susceptible trees (Table 17)
+- Saxicole and plant communities were not multivariately correlated
+  based on Mantel Tests on both un-relatvized and species max
+  relativized cover (see Mantel Test below)
 
 ## From Richard Michalet
 
@@ -504,7 +520,7 @@ le.raw <- na.omit(le.raw)
 
 Do the saxicole community and environment data match?
 
-```{r}
+```{r , echo = FALSE}
 
 all(apply(l.raw[,1:3], 2, as.character) == apply(le.raw[,1:3], 2, as.character))
 
@@ -512,7 +528,7 @@ all(apply(l.raw[,1:3], 2, as.character) == apply(le.raw[,1:3], 2, as.character))
 
 Are all of the trees in the saxicole dataset represented in the veg dataset?
 
-```{r}
+```{r, echo = FALSE}
 
 all(unlist(lapply(lapply(l.raw[, "Tree.ID"], grepl, x = veg[, "Tree ID"]), any)))
 
@@ -522,8 +538,6 @@ all(unlist(lapply(lapply(l.raw[, "Tree.ID"], grepl, x = veg[, "Tree ID"]), any))
 
 
 ```{r}
-
-head(l.raw)
 
 l.d <- data.frame(le.raw[, -2:-3], l.raw[, -1:-3])
 l.d <- split(l.d, l.d[, "Tree.ID"])
@@ -552,7 +566,7 @@ l.df <- l.df[match(rownames(l.dat), moth.tree), ]
 Check that `l.dat` and `l.df` are correctly coalesced:
 
 
-```{r}
+```{r, echo = FALSE}
 
 all(l.df[, 1:2] == l.dat[, 1:2])
 colnames(l.dat[, -10:-12]) == colnames(l.df)
@@ -561,16 +575,16 @@ colnames(l.dat[, -10:-12]) == colnames(l.df)
 
 Check that the values of the variables match, excluding light:
 
-```{r}
+```{r, echo = FALSE, results = "hide"}
 
-l.dat[, c(-1:-3, -10:-12)] - l.df[, c(-1:-3)]
+head(l.dat[, c(-1:-3, -10:-12)] - l.df[, c(-1:-3)])
 
 ```
 
 The following vector should work to match-up the saxicoles with the
 veg data:
 
-```{r}
+```{r, echo = FALSE}
 
 m.v <- rownames(l.df)
 v.dat <- veg[match(m.v, veg[, "Tree ID"]), ]
@@ -598,6 +612,7 @@ strongly correlated with total rock cover in the plant dataset.
 
 Both vegetation and rock cover are strongly affected by moth
 susceptibility. 
+
 
 ```{r veg-cover}
 
@@ -643,22 +658,22 @@ ptab.v.moth.rel <- adonis2(v.com.ds.rel ~ Moth, data = l.dat,
 
 Here are the results of the multivariate plant community response.
 
-```{r veg-moth-permtab}
+```{r veg-moth-permtab, echo = FALSE}
 
-kable(ptab.v.moth)
+kable(ptab.v.moth, caption = "PERMANOVA of plant community response to moth.")
 
 ```
 
 Here are the results of the multivariate plant community response
 after relativizing by species max.
 
-```{r veg-rel-moth-permtab}
+```{r veg-rel-moth-permtab, echo = FALSE}
 
-kable(ptab.v.moth.rel)
+kable(ptab.v.moth.rel, caption = "PERMANOVA of relativized plant community response to moth.")
 
 ```
 
-Do light or rock cover influence plant communities?
+Do light, litter or rock cover influence plant communities?
 
 ```{r veg-env}
 
@@ -676,20 +691,22 @@ ptab.v.env.rel <- adonis2(v.com.ds.rel ~ Light...average + Litter.. + Big.rocks.
 ```
 
 Light has a strong effect on the plant community. Litter also has an
-effect but it is small and marginally significant.
+effect but it is small and marginally significant, either
+un-relativized or relativized, respectively.
 
 
-```{r veg-env-permtab}
+```{r veg-env-permtab, echo = FALSE}
 
-kable(ptab.v.env)
+kable(ptab.v.env, caption = "PERMANOVA of plant community response to several environmental variables.")
+
+```
+
+```{r veg-rel-env-permtab, echo = FALSE}
+
+kable(ptab.v.env.rel, caption = "PERMANOVA of relativized plant community response to several environmental variables.")
 
 ```
 
-```{r veg-rel-env-permtab}
-
-kable(ptab.v.env.rel)
-
-```
 
 ```{r veg-env-seq}
 
@@ -707,24 +724,24 @@ ptab.v.env.rel.seq <- adonis2(v.com.ds.rel ~ Light...average + Litter.. + Big.ro
 ```
 
 After controlling for the effect of light, the effect of litter is no
-longer significant.
+longer significant, un-relatvizied or relativized, respectivley.
 
-```{r veg-env-seq-permtab}
+```{r veg-env-seq-permtab, echo = FALSE}
 
-kable(ptab.v.env.seq)
+kable(ptab.v.env.seq, caption = "Sequential PERMANOVA of plant community response to several environmental variables. Variance is explained sequentially by factors entered into the model from top to bottom.")
 
 ```
 
-```{r veg-rel-env-seq-permtab}
+```{r veg-rel-env-seq-permtab, echo = FALSE}
 
-kable(ptab.v.env.rel.seq)
+kable(ptab.v.env.rel.seq, caption = "Sequential PERMANOVA of relativized plant community response to several environmental variables. Variance is explained sequentially by factors entered into the model from top to bottom.")
 
 ```
 
 
 - Indicator species
 
-```{r isp-veg}
+```{r isp-veg, echo = FALSE}
 
 
 ind.spp.v <- lapply(v.com, function(x, p) t.test(tapply(x, p, diff)), 
@@ -742,20 +759,23 @@ colnames(isp.all.v) <- c("t", "df", "p-value",
 ```
 
 There are two species that are responding to moth
-susceptibility, Apahe plume and *Asteraceae ovales*. 
+susceptibility, Apache plume and *Asteraceae ovales*. 
 
 
-```{r isp-veg-table}
+```{r isp-veg-table, echo = FALSE}
 
-kable(isp.all.v[, 1:6], digits = 4)
+kable(isp.all.v[, 1:6], digits = 4, caption = "Indicator Species Analysis using False Discovery Rate (FDR) adjusted p-values from t-tests of paired differences between resistant and susceptible trees (Resistant - Susceptible).")
 
 ```
+
+## Multivariate Correlation of Plants and Saxicoles
 
 There is no significant multivariate correlation between the veg and
 saxicole communities, regardless of whether the community data are
 relativized. This is likely a result of the two communities responded
 to different variables with low correlation (i.e. rocks = saxicoles
-and light = plants). 
+and light = plants). This was true either without or with
+relativization by species max.
 
 ```{r lv-mantel}
 
