@@ -228,7 +228,7 @@ three main species were reduced by moths (FDR paired t-tests, in text + suppleme
 
 ```{R}
 
-ind.spp <- lapply(com, function(x, p) t.test(tapply(x, p, diff)), p = l.dat[, "Tree.pairs"])
+ind.spp <- apply(com, 2, function(x, p) t.test(tapply(x, p, diff)), p = l.dat[, "Tree.pairs"])
 isp <- apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric)
 rownames(isp) <- names(ind.spp)
 isp[, "p.value"] <- p.adjust(isp[, "p.value"], method = "fdr")
@@ -594,9 +594,7 @@ v.tp <- v.dat[, "Tree ID"]
 v.tp <- strsplit(v.tp, "")
 v.tp <- unlist(lapply(v.tp, function(x) paste(x[x %in% 0:9], collapse = "")))
 v.dat <- data.frame(v.dat[, 1:7], "Tree Pair" = v.tp, v.dat[, 8:ncol(v.dat)])
-
 v.com <- v.dat[, 9:ncol(v.dat)]
-v.com <- v.com[, apply(v.com, 2, sum) > 0]
 
 v.com.ds <- cbind(v.com, ds = rep(1, nrow(v.com)))
 v.com.ds.rel <- apply(v.com, 2, function(x) x/max(x))
