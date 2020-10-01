@@ -749,8 +749,8 @@ rownames(isp.v) <- names(ind.spp.v)
 isp.v[, "p.value"] <- p.adjust(isp.v[, "p.value"], method = "fdr")
 isp.all.v <- isp.v[, !(apply(isp.v, 2, function(x) all(is.na(x))))]
 isp.v <- isp.v[order(isp.v[, "p.value"]), ]
+isp.all.v <- isp.all.v[order(isp.all.v[, "p.value"], decreasing = FALSE), ]
 isp.all.v <- isp.all.v[, c(1, 2, 3, 6, 4, 5)]
-isp.all.v <- isp.all.v[order(isp.all.v[, "estimate.mean of x"]), ]
 colnames(isp.all.v) <- c("t", "df", "p-value", 
                          "Mean Difference", "Lower CI 95%", "Upper CI 95%")
 
