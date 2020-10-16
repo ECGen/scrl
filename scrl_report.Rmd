@@ -1,6 +1,7 @@
 ---
 title: "Rock Lichen data from Sunset Crater"
 author: M.K. Lau 
+date: 
 output: 
 html_document: 
 keep_md: yes
@@ -407,7 +408,7 @@ summary(lm(Light...average ~ Big.rocks.., data = data.frame(env.dif)))
 
 
 
-```{R, litter-plot, cache = TRUE, fig.width = 10, fig.height = 5}
+```{R moth-effect, cache = TRUE, fig.width = 10, fig.height = 5}
 
 par(mfrow = c(1,3))
 plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
@@ -425,9 +426,9 @@ plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff),
 
 ```
 
-```{R, pdf-litter-plot, cache = TRUE}
+```{R, light-plot-pdf, cache = TRUE}
 
-pdf("./results/scrl_litter_effects.pdf", width = 10, height = 5)
+pdf("./results/scrl_moth_effects_1x3.pdf", width = 10, height = 5)
 par(mfrow = c(1,3))
 plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
 	main = "", xlab = "Litter Difference (S - R)")
@@ -459,9 +460,9 @@ plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Light...average"],
 ```
 
 
-```{R, pdf-light-plot, cache = TRUE, eval = TRUE, results = "hide", echo = FALSE}
+```{R, moth-effect-pdf, cache = TRUE, eval = TRUE, results = "hide", echo = FALSE}
 
-pdf("./results/scrl_light_effects.pdf", width = 10, height = 5)
+pdf("./results/scrl_moth_effects1.pdf", width = 10, height = 5)
 par(mfrow = c(1,2))
 plot(density(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)), 
 	main = "", xlab = "Light Difference (S - R)")
@@ -470,6 +471,97 @@ abline(v = mean(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff))
 plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Light...average"], 
      xlab = "Light Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
      pch = 19, cex = 1.5)
+dev.off()
+
+```
+
+```{r fig-light-litter-2x2, cache = TRUE, fig.width = 10, fig.height = 10}
+
+par(mfrow = c(2,2))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Difference (S - R)", ylim = c(0, 0.065))
+lines(density(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)), lty = 2)
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1)
+abline(v = mean(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1, lty = 2)
+legend("topright", legend = c("Average Litter", "Average Light"), lty = c(1, 2))
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
+plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff), 
+	tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff), 
+	xlab = "Litter Difference (S - R)", ylab = "Light Difference (S - R)",
+	pch = 19, cex = 1.5)
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Light...average"], 
+     xlab = "Light Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+
+```
+
+```{r fig-light-litter-2x2-pdf, cache = TRUE, results = "hide", echo = FALSE}
+
+pdf("./results/scrl_moth_effects_2x2.pdf", width = 8, height = 8)
+par(mfrow = c(2,2))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Difference (S - R)", ylim = c(0, 0.065))
+lines(density(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)), lty = 2)
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1)
+abline(v = mean(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1, lty = 2)
+legend("topright", legend = c("Average Litter", "Average Light"), lty = c(1, 2))
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
+plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff), 
+	tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff), 
+	xlab = "Litter Difference (S - R)", ylab = "Light Difference (S - R)",
+	pch = 19, cex = 1.5)
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Light...average"], 
+     xlab = "Light Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+dev.off()
+
+```
+
+```{r fig-light-litter-1x2, cache = TRUE, fig.width = 10, fig.height = 5}
+
+par(mfrow = c(1,2))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Difference (S - R)", ylim = c(0, 0.065))
+lines(density(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)), lty = 2)
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1)
+abline(v = mean(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1, lty = 2)
+legend("topright", legend = c("Average Litter", "Average Light"), lty = c(1, 2))
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
+
+```
+
+
+```{r fig-light-litter-1x2-pdf, cache = TRUE, results = "hide", echo = FALSE}
+
+pdf("./results/scrl_moth_effects_1x2.pdf", width = 9, height = 5)
+par(mfrow = c(1,2))
+plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
+	main = "", xlab = "Difference (S - R)", ylim = c(0, 0.065))
+lines(density(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)), lty = 2)
+abline(v = mean(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1)
+abline(v = mean(tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)),
+       lwd = 1, lty = 2)
+legend("topright", legend = c("Average Litter", "Average Light"), lty = c(1, 2))
+plot(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."], 
+     xlab = "Litter Difference (S - R)", ylab = "Rock Cover (size >3 cm) Difference (S - R)",
+     pch = 19, cex = 1.5)
+abline(lm(env.dif[, "Big.rocks.."] ~ env.dif[, "Litter.."]))
 dev.off()
 
 ```
@@ -995,3 +1087,5 @@ ord.pch.v <- c("R", "S")[(l.dat[, "Moth"] + 1)]
 plot(X2 ~ X1, data = ord.v, pch = ord.pch.v)
 
 ```
+
+
