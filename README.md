@@ -13,6 +13,6 @@ Sunset Crater Rock Lichen/Moss Project
 ```{r}
 
 install.packages("rmarkdown")
-rmarkdown::render("scrl_report.Rmd")
+rmarkdown::render("scrl_report.Rmd", "pdf_document")
 
 ```
