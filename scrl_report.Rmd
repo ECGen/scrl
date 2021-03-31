@@ -209,8 +209,8 @@ ard.se <- rbind(tapply(abun, l.dat[, "Moth"], se),
                 tapply(shan, l.dat[, "Moth"], se))
 ard.tab <- cbind(ard.mu[, "0"], ard.se[, "0"],
                  ard.mu[, "1"], ard.se[, "1"])
-colnames(ard.tab) <- c("Susceptible - Mean", "Susceptible - SE",
-                       "Resistant - Mean", "Resistant - SE")
+colnames(ard.tab) <- c("Susceptible Mean", "Susceptible SE",
+                       "Resistant Mean", "Resistant SE")
 rownames(ard.tab) <- c("Abundance", "Richness", "Diversity (Shannon)")
 
 ```
@@ -661,6 +661,28 @@ t.test(tapply(v.shan, l.dat[, "Tree.pairs"], diff))
 
 ```
 
+```{r veg-table-comstats}
+
+v.ard.mu <- rbind(tapply(v.dat[, "Vegetation.cover"], l.dat[, "Moth"], mean),
+                tapply(rich, l.dat[, "Moth"], mean),
+                tapply(shan, l.dat[, "Moth"], mean))
+v.ard.se <- rbind(tapply(v.dat[, "Vegetation.cover"], l.dat[, "Moth"], se),
+                tapply(rich, l.dat[, "Moth"], se),
+                tapply(shan, l.dat[, "Moth"], se))
+v.ard.tab <- cbind(v.ard.mu[, "0"], v.ard.se[, "0"],
+                   v.ard.mu[, "1"], v.ard.se[, "1"])
+colnames(v.ard.tab) <- c("Susceptible Mean", "Susceptible SE",
+                         "Resistant Mean", "Resistant SE")
+rownames(v.ard.tab) <- c("Abundance", "Richness", "Diversity (Shannon)")
+
+```
+
+```{r table-veg-ard, results = "asis"}
+
+kable(v.ard.tab, digits = 3)
+
+```
+
 This is a multivariate analysis of the plant community response to
 moth susceptibility (PERMANOVA). This analysis uses a modified Bray-Curtis
 Dissimilarity metric, which permits the inclusion of quadrats that had
@@ -768,7 +790,6 @@ kable(ptab.v.env.rel.seq, caption = "Sequential PERMANOVA of relativized plant c
 
 ```{r isp-veg, echo = FALSE}
 
-
 ind.spp.v <- lapply(v.com, function(x, p) t.test(tapply(x, p, diff)), 
                     p = v.dat[, "Tree.Pair"])
 isp.v <- apply(do.call(rbind, lapply(ind.spp.v, unlist)), 2, as.numeric)
@@ -813,5 +834,16 @@ v.d <- vegdist(v.com.ds.rel)
 l.d <- vegdist(com.ds.rel)
 
 mantel(v.d ~ l.d)
+
+```
+
+
+
+# Structural Equation Modeling
+
+
+
+
+```{r exp-dist}
 
 ```
