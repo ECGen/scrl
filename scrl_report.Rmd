@@ -653,6 +653,7 @@ affected by moth susceptibility.
 
 ```{r veg-diversity}
 
+v.abun <- v.dat[, "Vegetation.cover"]
 v.rich <- apply(v.com, 1, function(x) sum(sign(x)))
 v.shan <- apply(v.com, 1, diversity)
 
@@ -801,6 +802,7 @@ isp.all.v <- isp.all.v[, c(1, 2, 3, 6, 4, 5)]
 isp.all.v <- isp.all.v[order(isp.all.v[, "estimate.mean of x"]), ]
 colnames(isp.all.v) <- c("t", "df", "p-value", 
                          "Mean Difference", "Lower CI 95%", "Upper CI 95%")
+v.isp.com <- v.com[, colnames(v.com) %in% rownames(isp.all.v)[isp.all.v[, "p-value"] < 0.05]]
 
 ```
 
@@ -839,6 +841,9 @@ mantel(v.d ~ l.d)
 
 
 
+
+
+
 # Structural Equation Modeling
 
 
@@ -846,4 +851,227 @@ mantel(v.d ~ l.d)
 
 ```{r exp-dist}
 
+library(piecewiseSEM)
+library(distantia)
+
+com.prepared <- cbind(id = l.dat[, "Moth"], tree  = l.dat[, "Tree.pairs"], com)
+v.com.prepared <- cbind(id = l.dat[, "Moth"], tree  = l.dat[, "Tree.pairs"], v.com)
+
+l.dist.euc <- distancePairedSamples(
+    sequences = com.prepared,
+    grouping.column = "id",
+    time.column = "tree",
+    exclude.columns = NULL,
+    method = "euclidean",
+    sum.distances = FALSE,
+    parallel.execution = FALSE
+)
+
+l.dist.man <- distancePairedSamples(
+    sequences = com.prepared,
+    grouping.column = "id",
+    time.column = "tree",
+    exclude.columns = NULL,
+    method = "manhattan",
+    sum.distances = FALSE,
+    parallel.execution = FALSE
+)
+
+v.dist.euc <- distancePairedSamples(
+    sequences = v.com.prepared,
+    grouping.column = "id",
+    time.column = "tree",
+    exclude.columns = NULL,
+    method = "euclidean",
+    sum.distances = FALSE,
+    parallel.execution = FALSE
+)
+
+v.dist.man <- distancePairedSamples(
+    sequences = v.com.prepared,
+    grouping.column = "id",
+    time.column = "tree",
+    exclude.columns = NULL,
+    method = "manhattan",
+    sum.distances = FALSE,
+    parallel.execution = FALSE
+)
+
+cor(l.dist.man[[1]], l.dist.euc[[1]])
+cor(v.dist.man[[1]], v.dist.euc[[1]])
+
 ```
+
+
+
+```{r exp-sem-lichen}
+
+d.litter <- tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
+d.rocks <- tapply((l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."]), 
+                  l.dat[, "Tree.pairs"], diff)
+d.light <- tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)
+d.com <- l.dist.man[[1]]
+d.abun <- tapply(abun, l.dat[, "Tree.pairs"], diff)
+d.rich <- tapply(rich, l.dat[, "Tree.pairs"], diff)
+d.shan <- tapply(shan, l.dat[, "Tree.pairs"], diff)
+d.isp <- apply(isp.com, 2, function(x, f) tapply(x, f, diff), f = l.dat[, "Tree.pairs"])
+colnames(d.isp) <- paste("d", colnames(isp.com), sep = ".")
+
+round(cor(cbind(d.litter, d.rocks, d.light, d.abun, d.rich, d.shan, d.com)), 3)
+
+sem.dat <- data.frame(d.litter, d.rocks, d.light, d.abun, d.rich, d.shan, d.com, d.isp)
+sem.path <- matrix(c(0, 1, 1, 0, 
+                     1, 0, 0, 1, 
+                     0, 0, 0, 1, 
+                     0, 0, 0, 0), 4, 4, byrow = TRUE)
+rownames(sem.path) <- colnames(sem.path) <- c("d.litter", "d.light", "d.rocks", "d.com")
+
+model.com  <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.com ~ d.light + d.rocks, sem.dat))
+model.com1  <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.com ~ d.litter + d.light + d.rocks, sem.dat))
+model.abun <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.abun ~ d.light + d.rocks, sem.dat))
+model.rich <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.rich ~ d.light + d.rocks, sem.dat))
+model.shan <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.shan ~ d.light + d.rocks, sem.dat))
+model.Acacon <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.Acacon ~ d.light + d.rocks, sem.dat))
+model.Acaame <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.Acaame ~ d.light + d.rocks, sem.dat))
+model.Canros <- psem(lm(d.rocks ~ d.litter, sem.dat), lm(d.Canros ~ d.light + d.rocks, sem.dat))
+model.Canros1 <- psem(lm(d.rocks ~ d.litter, sem.dat),  lm(d.Canros ~ d.light + d.rocks, sem.dat))
+
+```
+
+```{r exp-sem-veg}
+
+d.litter <- tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
+d.rocks <- tapply((l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."]), 
+                  l.dat[, "Tree.pairs"], diff)
+d.light <- tapply(l.dat[, "Light...average"], l.dat[, "Tree.pairs"], diff)
+
+d.v.com <- v.dist.man[[1]]
+d.v.abun <- tapply(v.abun, l.dat[, "Tree.pairs"], diff)
+d.v.rich <- tapply(v.rich, l.dat[, "Tree.pairs"], diff)
+d.v.shan <- tapply(v.shan, l.dat[, "Tree.pairs"], diff)
+d.v.isp <- apply(v.isp.com, 2, function(x, f) tapply(x, f, diff), f = l.dat[, "Tree.pairs"])
+colnames(d.v.isp) <- paste("d", colnames(v.isp.com), sep = ".")
+v.sem.dat <- data.frame(d.litter, d.rocks, d.light, d.v.abun, d.v.rich, d.v.shan, d.v.com, d.v.isp)
+
+model.v.com  <- psem(lm(d.rocks ~ d.litter, v.sem.dat), lm(d.v.com ~ d.light + d.rocks, v.sem.dat))
+model.v.com1  <- psem(lm(d.rocks ~ d.litter, v.sem.dat), lm(d.v.com ~ d.litter + d.light + d.rocks, v.sem.dat))
+model.v.abun <- psem(lm(d.rocks ~ d.litter, v.sem.dat), lm(d.v.abun ~ d.light + d.rocks, v.sem.dat))
+model.v.rich <- psem(lm(d.rocks ~ d.litter, v.sem.dat), lm(d.v.rich ~ d.light + d.rocks, v.sem.dat))
+model.v.shan <- psem(lm(d.rocks ~ d.litter, v.sem.dat), lm(d.v.shan ~ d.light + d.rocks, v.sem.dat))
+model.v.Apache.plume <- psem(lm(d.rocks ~ d.litter, v.sem.dat), 
+                             lm(d.Apache.plume ~ d.light + d.rocks, v.sem.dat))
+model.v.Asteraceae.ovales <- psem(lm(d.rocks ~ d.litter, v.sem.dat), 
+                                  lm(d.Asteraceae.ovales ~ d.light + d.rocks, v.sem.dat))
+
+```
+
+
+# Independent Test Method
+
+Using indeendent tests for different effects along the hypothesized
+causal model that moth susceptibility affects tree traits (litter
+production), which affect the local environment (light, rocks), which
+in turn affect lichen, bryophyte and plant communities (abundance,
+richness, diversity, indicator species, composition).
+
+moth-susceptibility -> tree traits -> local environment -> community
+
+We can do this by parsing independent tests for each effect OR by
+using a structural equation model (SEM).
+
+
+Testing for the effect of moth susceptibility:
+
+```{r itm-moth-tree}
+
+t.test(d.litter)
+t.test(d.light)
+t.test(d.rocks)
+
+```
+
+Effects of tree traits on local environment and environment correlations:
+
+```{r itm-tree-env}
+
+cor.test(d.light, d.litter)
+cor.test(d.rocks, d.light)
+summary(lm(d.rocks ~ d.litter))
+
+```
+
+Effects of local environment on lichen, and possible direct effects of tree traits:
+
+```{r itm-lichen}
+
+summary(lm(d.abun ~ d.rocks))
+summary(lm(d.rich ~ d.rocks))
+summary(lm(d.shan ~ d.rocks))
+summary(lm(d.Acacon ~ d.rocks, sem.dat))
+summary(lm(d.Acaame ~ d.rocks, sem.dat))
+summary(lm(d.Canros ~ d.rocks, sem.dat))
+
+summary(lm(d.abun ~ d.light))
+summary(lm(d.rich ~ d.light))
+summary(lm(d.shan ~ d.light))
+summary(lm(d.Acacon ~ d.light, sem.dat))
+summary(lm(d.Acaame ~ d.light, sem.dat))
+summary(lm(d.Canros ~ d.light, sem.dat))
+
+summary(lm(d.abun ~ d.litter))
+summary(lm(d.rich ~ d.litter))
+summary(lm(d.shan ~ d.litter))
+summary(lm(d.Acacon ~ d.litter, sem.dat))
+summary(lm(d.Acaame ~ d.litter, sem.dat))
+summary(lm(d.Canros ~ d.litter, sem.dat))
+
+
+```
+
+SEM testing for this pathway, note that here community distance is the
+sum of squared differences for each tree pair (susceptible -
+resistant) for all species:
+
+```{r sem-lichen}
+
+summary(model.abun, .progressBar = FALSE)
+summary(model.rich, .progressBar = FALSE)
+summary(model.shan, .progressBar = FALSE)
+summary(model.com, .progressBar = FALSE)
+summary(model.Acacon, .progressBar = FALSE)
+summary(model.Acaame, .progressBar = FALSE)
+summary(model.Canros, .progressBar = FALSE)
+
+```
+
+
+
+```{r itm-veg}
+
+summary(lm(d.v.abun ~ d.rocks))
+summary(lm(d.v.rich ~ d.rocks))
+summary(lm(d.v.shan ~ d.rocks))
+summary(lm(d.Apache.plume ~ d.rocks, v.sem.dat))
+summary(lm(d.Asteraceae.ovales ~ d.rocks, v.sem.dat))
+
+summary(lm(d.v.abun ~ d.litter))
+summary(lm(d.v.rich ~ d.litter))
+summary(lm(d.v.shan ~ d.litter))
+summary(lm(d.Apache.plume ~ d.litter, v.sem.dat))
+summary(lm(d.Asteraceae.ovales ~ d.litter, v.sem.dat))
+
+summary(lm(d.v.abun ~ d.light))
+summary(lm(d.v.rich ~ d.light))
+summary(lm(d.v.shan ~ d.light))
+summary(lm(d.Apache.plume ~ d.light, v.sem.dat))
+summary(lm(d.Asteraceae.ovales ~ d.light, v.sem.dat))
+
+summary(model.v.com, .progressBar = FALSE)
+summary(model.v.abun, .progressBar = FALSE)
+summary(model.v.rich, .progressBar = FALSE)
+summary(model.v.shan, .progressBar = FALSE)
+summary(model.v.Apache.plume, .progressBar = FALSE)
+summary(model.v.Asteraceae.ovales, .progressBar = FALSE)
+
+```
+
