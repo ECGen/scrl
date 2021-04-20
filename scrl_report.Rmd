@@ -49,7 +49,7 @@ functions used in the analysis.
 
 ## Dependencies
 
-```{r, echo = TRUE, results = "hide", eval = TRUE}
+```{r, echo = TRUE, results = "hide", eval = TRUE, cache = TRUE}
 
 cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr",
                "semPlot", "lavaan", "piecewiseSEM", "distantia", 
@@ -93,7 +93,7 @@ The following are variable descriptions (Variable, Type, Range, Definition):
 - Aspect,continuous,0 to 360,Compass direction of slope
 - Light,continuous,,Amount of light available to epiliths
 
-```{r results = "hide"}
+```{r results = "hide", cache = TRUE}
 
 ## Data are in ../data/scrl
 l.dat <- read.csv("./data/spp_env_combined.csv")
@@ -134,7 +134,7 @@ env.dif <- apply(env, 2, function(x, p) tapply(x, p, diff), p = l.dat[, "Tree.pa
 
 ## Saxicole communities were sufficiently sampled
 
-```{r specacum}
+```{r specacum, cache = TRUE}
 
 spa.all <- specaccum(com, method = "exact")
 spa.res <- specaccum(com[l.dat[, "Moth"] == 1, ], method = "exact")
@@ -153,7 +153,7 @@ legend("bottomright",
 
 ```
 
-```{R, specaccum-plot}
+```{R, specaccum-plot, cache = TRUE}
 
 pdf("./results/scrl_spp-accum.pdf", width = 5, height = 5)
 plot(spa.all,
@@ -173,7 +173,7 @@ dev.off()
 
 ## Moth trees have different microenvironments 
 
-```{R }
+```{R , cache = TRUE}
 
 env.test.l <- apply(env.dif, 2, t.test)
 env.test.l <- lapply(env.test.l, unlist)
@@ -190,7 +190,7 @@ kable(env.test.tab, digits = 4)
 ## Moth trees have different lichen communities 
 
 
-```{R }
+```{R , cache = TRUE}
 
 abun <- apply(com, 1, sum)
 rich <- apply(com, 1, function(x) sum(sign(x)))
@@ -217,13 +217,13 @@ rownames(ard.tab) <- c("Abundance", "Richness", "Diversity (Shannon)")
 
 ```
 
-```{r , results = "asis"}
+```{r , results = "asis", cache = TRUE}
 
 kable(ard.tab, digits = 3)
 
 ```
 
-```{r , results = "asis"}
+```{r , results = "asis", cache = TRUE}
 
 kable(tt.arh, digits = 3)
 
@@ -232,7 +232,7 @@ kable(tt.arh, digits = 3)
 
 Composition is different (PERMANOVA, in text and supplement)
 
-```{r, cache  = TRUE}
+```{r, cache = TRUE}
 
 com.ds <- cbind(com, ds = rep(0.0001, nrow(com)))
 com.ds.rel <- apply(com, 2, function(x) x/max(x))
@@ -255,7 +255,7 @@ kable(ptab.moth.rel)
 
 three main species were reduced by moths (FDR paired t-tests, in text + supplement)
 
-```{r}
+```{r, cache = TRUE}
 
 ind.spp <- apply(com, 2, function(x, p) t.test(tapply(x, p, diff)), p = l.dat[, "Tree.pairs"])
 isp <- apply(do.call(rbind, lapply(ind.spp, unlist)), 2, as.numeric)
@@ -266,7 +266,7 @@ isp <- isp[order(isp[, "p.value"]), ]
 
 ```
 
-```{r}
+```{r, cache = TRUE}
 
 isp.all <- isp.all[, c(1, 2, 3, 6, 4, 5)]
 colnames(isp.all) <- c("t", "df", "p-value", "Mean Difference", "Lower CI 95%", "Upper CI 95%")
@@ -274,7 +274,7 @@ kable(isp.all, digits = 4)
 
 ```
 
-```{r}
+```{r, cache = TRUE}
 
 write.csv(round(isp.all, 5), file = "results/scrl_isp_table.csv")
 
@@ -282,7 +282,7 @@ write.csv(round(isp.all, 5), file = "results/scrl_isp_table.csv")
 
 Calculate the average abundances of the indicators
 
-```{r }
+```{r , cache = TRUE}
 
 isp.names <- as.character(na.omit(rownames(isp[isp[, "p.value"] < 0.05, ])))
 isp.com <- com[,colnames(com) %in% isp.names]
@@ -294,7 +294,7 @@ isp.dif <- apply(isp.com, 2, function(x,y) tapply(x, y, diff), y = l.dat[ ,"Tree
 
 Create a multi-bar plot figure for the community.
 
-```{r}
+```{r, cache = TRUE}
 
 isp.dat <- melt(isp.dif)
 colnames(isp.dat) <- c("Tree.pairs", "Species", "diff")
@@ -333,7 +333,7 @@ dev.off()
 
 Create a plot of the two most indicative species
 
-```{r}
+```{r, cache = TRUE}
 
 pdf(file = "./results/scrl_complot.pdf", width = 7, height = 7)
 plot(com[, c("Acaame", "Canros")], pch = l.dat[, "Moth"] + 1, cex = 3, col = l.dat[, "Moth"] + 1)
@@ -344,7 +344,7 @@ dev.off()
 
 Create plot with indicator taxa
 
-```{r}
+```{r, cache = TRUE}
 
 pdf(file = "./results/scrl_pdif.pdf", width = 7, height = 7)
 plot(melt(isp.dif)[-1], xlab = "Species", ylab = "Abundance Reduction")
@@ -361,14 +361,14 @@ controlled for.
 
 There was high correlation among environmental variables.
 
-```{r}
+```{r, cache = TRUE}
 
 heatmap(abs(round(cor(env.dif), 3)))
 
 ```
 
 
-```{r, cache = FALSE}
+```{r, cache = TRUE}
 
 
 set.seed(123)
@@ -419,7 +419,7 @@ kable(ptab.env)
 Because light was significantly, negatively correlated with litter and
 large rocks.
 
-```{r, corplot-bigrocks-litter, cache = FALSE}
+```{r, corplot-bigrocks-litter, cache = TRUE}
 
 cor.test(env.dif[, "Big.rocks.."], env.dif[, "Litter.."])
 
@@ -429,7 +429,7 @@ dev.off()
 ```
 
 
-```{r, litter-plot, cache = FALSE, fig.width = 10, fig.height = 5}
+```{r, litter-plot, cache = TRUE, fig.width = 10, fig.height = 5}
 
 par(mfrow = c(1,3))
 plot(density(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)), 
@@ -447,7 +447,7 @@ plot(tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff),
 
 ```
 
-```{r, pdf-litter-plot, cache = FALSE}
+```{r, pdf-litter-plot, cache = TRUE}
 
 pdf("./results/scrl_litter_effects.pdf", width = 10, height = 5)
 par(mfrow = c(1,3))
@@ -467,7 +467,7 @@ dev.off()
 
 ```
 
-```{r ord-com-plot, cache = FALSE, width = 5, height = 5, dpi = 400}
+```{r ord-com-plot, cache = TRUE, width = 5, height = 5, dpi = 400}
 
 nmds.out <- nmds(vegdist(com.ds), 2, 2)
 ord <- nmds.min(nmds.out, dims = 2)
@@ -480,7 +480,7 @@ Litter not light was correlated with large rocks (dist cor, in text).
 Thus, higher amounts of litter under trees was not related to the
 penetration of light under the tree canopy.
 
-```{r}
+```{r, cache = TRUE}
 
 cor.test(tapply(l.dat[, "Big.rocks.."], l.dat[, "Tree.pairs"], diff),
          tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff))
@@ -538,7 +538,7 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 > tree susceptibility only below the tree and in both exposure for both
 > alive and dead trees.
 
-```{r}
+```{r, cache = TRUE}
 
 veg <- readxl::read_xlsx("data/Vegetation.xlsx")
 veg <- as.data.frame(veg)
@@ -554,7 +554,7 @@ le.raw <- na.omit(le.raw)
 
 Do the saxicole community and environment data match?
 
-```{r , echo = FALSE}
+```{r , echo = FALSE, cache = TRUE}
 
 all(apply(l.raw[,1:3], 2, as.character) == apply(le.raw[,1:3], 2, as.character))
 
@@ -562,7 +562,7 @@ all(apply(l.raw[,1:3], 2, as.character) == apply(le.raw[,1:3], 2, as.character))
 
 Are all of the trees in the saxicole dataset represented in the veg dataset?
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, cache = TRUE}
 
 all(unlist(lapply(lapply(l.raw[, "Tree.ID"], grepl, x = veg[, "Tree ID"]), any)))
 
@@ -571,7 +571,7 @@ all(unlist(lapply(lapply(l.raw[, "Tree.ID"], grepl, x = veg[, "Tree ID"]), any))
 ## Coalesce datasets
 
 
-```{r}
+```{r, cache = TRUE}
 
 l.d <- data.frame(le.raw[, -2:-3], l.raw[, -1:-3])
 l.d <- split(l.d, l.d[, "Tree.ID"])
@@ -646,7 +646,7 @@ Both vegetation and rock cover are strongly affected by moth
 susceptibility. 
 
 
-```{r veg-cover}
+```{r veg-cover, cache = TRUE}
 
 cor.test(v.dat[, "Vegetation.cover"], v.dat[, "Rock.cover"], alt = "greater")
 cor.test(l.dat[, "Big.rocks.."], v.dat[, "Rock.cover"], alt = "greater")
@@ -658,7 +658,7 @@ t.test(tapply(v.dat[, "Vegetation.cover"], v.dat[, "Tree.Pair"], diff))
 Both plant richness and Shannon's Diversity index were significantly
 affected by moth susceptibility.
 
-```{r veg-diversity}
+```{r veg-diversity, cache = TRUE}
 
 v.abun <- v.dat[, "Vegetation.cover"]
 v.rich <- apply(v.com, 1, function(x) sum(sign(x)))
@@ -669,7 +669,7 @@ t.test(tapply(v.shan, l.dat[, "Tree.pairs"], diff))
 
 ```
 
-```{r veg-table-comstats}
+```{r veg-table-comstats, cache = TRUE}
 
 v.ard.mu <- rbind(tapply(v.dat[, "Vegetation.cover"], l.dat[, "Moth"], mean),
                 tapply(rich, l.dat[, "Moth"], mean),
@@ -685,7 +685,7 @@ rownames(v.ard.tab) <- c("Abundance", "Richness", "Diversity (Shannon)")
 
 ```
 
-```{r table-veg-ard, results = "asis"}
+```{r table-veg-ard, results = "asis", cache = TRUE}
 
 kable(v.ard.tab, digits = 3)
 
@@ -698,7 +698,7 @@ no plants in them. The analysis also accounts for the paired structure
 of the data (i.e. pairs of moth susceptible and resistant trees). 
 
 
-```{r veg-moth-perm}
+```{r veg-moth-perm, cache = TRUE}
 
 set.seed(123)
 ptab.v.moth <- adonis2(v.com.ds ~ Moth, data = l.dat, 
@@ -713,7 +713,7 @@ ptab.v.moth.rel <- adonis2(v.com.ds.rel ~ Moth, data = l.dat,
 
 Here are the results of the multivariate plant community response.
 
-```{r veg-moth-permtab, echo = FALSE}
+```{r veg-moth-permtab, echo = TRUE}
 
 kable(ptab.v.moth, caption = "PERMANOVA of plant community response to moth.")
 
@@ -722,7 +722,7 @@ kable(ptab.v.moth, caption = "PERMANOVA of plant community response to moth.")
 Here are the results of the multivariate plant community response
 after relativizing by species max.
 
-```{r veg-rel-moth-permtab, echo = FALSE}
+```{r veg-rel-moth-permtab, echo = FALSE, cache = TRUE}
 
 kable(ptab.v.moth.rel, caption = "PERMANOVA of relativized plant community response to moth.")
 
@@ -730,7 +730,7 @@ kable(ptab.v.moth.rel, caption = "PERMANOVA of relativized plant community respo
 
 Do light, litter or rock cover influence plant communities?
 
-```{r veg-env}
+```{r veg-env, cache = TRUE}
 
 set.seed(123)
 ptab.v.env <- adonis2(v.com.ds ~ Light...average + Litter.. + Big.rocks..,
@@ -771,20 +771,20 @@ effect but it is small and marginally significant, either
 un-relativized or relativized, respectively.
 
 
-```{r veg-env-permtab, echo = FALSE}
+```{r veg-env-permtab, echo = FALSE, cache = TRUE}
 
 kable(ptab.v.env, caption = "PERMANOVA of plant community response to several environmental variables.")
 
 ```
 
-```{r veg-rel-env-permtab, echo = FALSE}
+```{r veg-rel-env-permtab, echo = FALSE, cache = TRUE}
 
 kable(ptab.v.env.rel, caption = "PERMANOVA of relativized plant community response to several environmental variables.")
 
 ```
 
 
-```{r veg-env-seq}
+```{r veg-env-seq, cache = TRUE}
 
 set.seed(123)
 ptab.v.env.seq <- adonis2(v.com.ds ~ Light...average + Litter.. + total.rocks,
@@ -802,13 +802,13 @@ ptab.v.env.rel.seq <- adonis2(v.com.ds.rel ~ Light...average + Litter.. + total.
 After controlling for the effect of light, the effect of litter is no
 longer significant, un-relatvizied or relativized, respectivley.
 
-```{r veg-env-seq-permtab, echo = FALSE}
+```{r veg-env-seq-permtab, echo = FALSE, cache = TRUE}
 
 kable(ptab.v.env.seq, caption = "Sequential PERMANOVA of plant community response to several environmental variables. Variance is explained sequentially by factors entered into the model from top to bottom.")
 
 ```
 
-```{r veg-rel-env-seq-permtab, echo = FALSE}
+```{r veg-rel-env-seq-permtab, echo = FALSE, cache = TRUE}
 
 kable(ptab.v.env.rel.seq, caption = "Sequential PERMANOVA of relativized plant community response to several environmental variables. Variance is explained sequentially by factors entered into the model from top to bottom.")
 
@@ -817,7 +817,7 @@ kable(ptab.v.env.rel.seq, caption = "Sequential PERMANOVA of relativized plant c
 
 - Indicator species
 
-```{r isp-veg, echo = FALSE}
+```{r isp-veg, echo = FALSE, cache = TRUE}
 
 ind.spp.v <- lapply(v.com, function(x, p) t.test(tapply(x, p, diff)), 
                     p = v.dat[, "Tree.Pair"])
@@ -838,7 +838,7 @@ There are two species that are responding to moth
 susceptibility, Apache plume and *Asteraceae ovales*. 
 
 
-```{r isp-veg-table, echo = FALSE}
+```{r isp-veg-table, echo = FALSE, cache = TRUE}
 
 kable(isp.all.v[, 1:6], digits = 4, caption = "Indicator Species Analysis using False Discovery Rate (FDR) adjusted p-values from t-tests of paired differences between resistant and susceptible trees (Resistant - Susceptible).")
 
@@ -853,7 +853,7 @@ to different variables with low correlation (i.e. rocks = saxicoles
 and light = plants). This was true either without or with
 relativization by species max.
 
-```{r lv-mantel}
+```{r lv-mantel, cache = TRUE}
 
 v.d <- vegdist(v.com.ds)
 l.d <- vegdist(com.ds)
@@ -877,7 +877,7 @@ mantel(v.d ~ l.d)
 
 
 
-```{r exp-dist}
+```{r exp-dist, cache = TRUE}
 
 
 com.prepared <- cbind(id = l.dat[, "Moth"], tree  = l.dat[, "Tree.pairs"], com)
@@ -930,7 +930,7 @@ cor(v.dist.man[[1]], v.dist.euc[[1]])
 
 
 
-```{r exp-sem-lichen}
+```{r exp-sem-lichen, cache = TRUE}
 
 d.litter <- tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
 d.rocks <- tapply((l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."]), 
@@ -964,7 +964,7 @@ model.Canros1 <- psem(lm(d.rocks ~ d.litter, sem.dat),  lm(d.Canros ~ d.light + 
 
 ```
 
-```{r exp-sem-veg}
+```{r exp-sem-veg, cache = TRUE}
 
 d.litter <- tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)
 d.rocks <- tapply((l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."]), 
@@ -1008,7 +1008,7 @@ using a structural equation model (SEM).
 
 Testing for the effect of moth susceptibility:
 
-```{r itm-moth-tree}
+```{r itm-moth-tree, cache = TRUE}
 
 t.test(d.litter)
 t.test(d.light)
@@ -1018,7 +1018,7 @@ t.test(d.rocks)
 
 Effects of tree traits on local environment and environment correlations:
 
-```{r itm-tree-env}
+```{r itm-tree-env, cache = TRUE}
 
 cor.test(d.light, d.litter)
 cor.test(d.rocks, d.light)
@@ -1028,7 +1028,7 @@ summary(lm(d.rocks ~ d.litter))
 
 Effects of local environment on lichen, and possible direct effects of tree traits:
 
-```{r itm-lichen}
+```{r itm-lichen, cache = TRUE}
 
 summary(lm(d.abun ~ d.rocks))
 summary(lm(d.rich ~ d.rocks))
@@ -1058,7 +1058,7 @@ SEM testing for this pathway, note that here community distance is the
 sum of squared differences for each tree pair (susceptible -
 resistant) for all species:
 
-```{r sem-lichen}
+```{r sem-lichen, cache = TRUE}
 
 summary(model.abun, .progressBar = FALSE)
 summary(model.rich, .progressBar = FALSE)
@@ -1072,7 +1072,7 @@ summary(model.Canros, .progressBar = FALSE)
 
 
 
-```{r itm-veg}
+```{r itm-veg, cache = TRUE}
 
 summary(lm(d.v.abun ~ d.rocks))
 summary(lm(d.v.rich ~ d.rocks))
@@ -1111,7 +1111,7 @@ Pair    S/R     Crown    Litter     Lichen
                          Light
 
 
-```{r org-data, eval = TRUE, echo = FALSE, results = "hide"}
+```{r org-data, eval = TRUE, echo = FALSE, results = "hide", cache = TRUE}
 
 tree.dim <- read.csv("data/tree dimensions.csv")
 colnames(tree.dim) <- paste(colnames(tree.dim), tree.dim[1, ])
@@ -1175,7 +1175,7 @@ names(ind.env.dif.d) <- colnames(env.dif)
 
 ## Both lichen and vegetation respond to moth susceptibility
 
-```{r moth-com, results = "asis"}
+```{r moth-com, results = "asis", cache = TRUE}
 
 set.seed(12345)
 xtable::xtable(adonis2(com.ds ~ Moth, 
@@ -1195,7 +1195,7 @@ xtable::xtable(adonis2(v.com.ds ~ Moth,
 ```
 
 
-```{r moth-ard, results = "asis"}
+```{r moth-ard, results = "asis", cache = TRUE}
 
 tab.ttest.ard <- do.call(rbind, 
                         lapply(
@@ -1212,7 +1212,7 @@ xtable::xtable(tab.ttest.ard, digits = 5)
 
 ## Moth impacts tree traits and the local environment
 
-```{r moth-env, results = "asis"}
+```{r moth-env, results = "asis", cache = TRUE}
 
 tab.ttest.envtra <- do.call(rbind, 
                         lapply(
@@ -1228,7 +1228,7 @@ xtable::xtable(tab.ttest.envtra, digits = 5)
 
 ## Tree environment correlate with community
 
-```{r tra-com}
+```{r tra-com, cache = TRUE}
 
 set.seed(12345)
 xtable::xtable(adonis2(com.ds ~ Big.rocks.. + Small.rocks.. + Light...average,
@@ -1307,7 +1307,7 @@ summary(lm(p.D ~ light +rocks.big + rocks.small,
 
 ## Structural Equation Models
 
-```{r sem-com-ord}
+```{r sem-com-ord, cache = TRUE}
 
 l.com.dif <- split(com, l.dat[, "Tree.pairs"])
 l.com.dif <- lapply(l.com.dif, function(x) x[2, ] - x[1, ])
@@ -1333,7 +1333,7 @@ colnames(v.com.dif.ord) <- paste0("p.", colnames(v.com.dif.ord))
 
 ```
 
-```{r }
+```{r , cache = TRUE}
 
 
 
@@ -1435,7 +1435,7 @@ summary(mod.v.all)
 
 
 
-```{r sem-lavaan}
+```{r sem-lavaan, cache = TRUE}
 
 lav.l.all <- 'litter ~ crown
               rocks.big ~ litter
@@ -1486,13 +1486,28 @@ summary(fit.v.all)
 ## SEM Plots
 
 
-```{r plot-sem-tidy-lichen}
+```{r plot-sem-tidy-lichen, cache = FALSE}
 
-graph_sem(fit.l.all)
+lay <- get_layout("crown", "litter", "",    "l.A",
+                  "",      "", "", "l.R",
+                  "",      "rocks.big", "", "l.D",
+                  "",      "", "",          "l.X1",
+                  "",      "light", "",     "l.X2",
+                  rows = 5)
+
+graph_sem(fit.l.all, layout = lay)
 
 ```
 
-```{r plot-sem-tidy-plant}
+```{r plot-sem-tidy-plant, cache = FALSE}
+
+lay <- get_layout("crown", "litter", "rocks.big",    "l.A",
+                  "",      "", "", "l.R",
+                  "",      "rocks.small", "", "l.D",
+                  "",      "", "",          "l.X1",
+                  "",      "light", "",     "l.X2",
+                  "",      "", "",          "l.X3",
+                  rows = 6)
 
 graph_sem(fit.v.all)
 
