@@ -1504,9 +1504,9 @@ graph_sem(fit.l.all, layout = lay)
 lay <- get_layout("light", "", "",            "p.A",
                   "crown",      "", "",       "p.R",
                   "",      "", "",            "p.D",
-                  "litter",      "", "",      "p.X1",
+                  "",      "litter", "",      "p.X1",
                   "",      "rocks.small", "", "p.X2",
-                  "rocks.big",    "", "",     "p.X3",
+                  "",    "", "",     "p.X3",
                   rows = 6)
 
 graph_sem(fit.v.all, layout = lay)
