@@ -1469,8 +1469,8 @@ lav.v.all <- 'litter ~ crown.radius
 
 std <- function(x){(x - mean(x)) / sd(x)}
 
-fit.l.all <- sem(lav.l.all, data = apply(sem.dat, 2, std))
-fit.v.all <- sem(lav.v.all, data = apply(sem.dat, 2, std))
+fit.l.all <- lavaan::sem(lav.l.all, data = apply(sem.dat, 2, std))
+fit.v.all <- lavaan::sem(lav.v.all, data = apply(sem.dat, 2, std))
 
 varTable(fit.l.all)
 varTable(fit.v.all)
@@ -1481,8 +1481,11 @@ summary(fit.v.all)
 ```
 
 
-```{r sem-plots}
+```{r sem-plots-lichen}
 
-semPaths(fit.l.all)
+layout(t(1:2))
+semPaths(fit.l.all, "std", curvePivot = TRUE)
+semPaths(fit.v.all, "std", curvePivot = TRUE)
 
 ```
+
