@@ -1435,7 +1435,7 @@ summary(mod.v.all)
 
 
 
-```{r sem-lavaan, cache = TRUE}
+```{r sem-lavaan, cache = FALSE}
 
 lav.l.all <- 'litter ~ crown
               rocks.big ~ litter
@@ -1456,9 +1456,9 @@ lav.v.all <- 'litter ~ crown
               rocks.big ~ litter
               rocks.small ~ litter
               rocks.big ~~ rocks.small
-              p.A ~ light + rocks.small
-              p.R ~ light + rocks.small + litter
-              p.D ~ light + rocks.small
+              p.A ~ rocks.small
+              p.R ~ rocks.small  + litter
+              p.D ~ rocks.small
               p.X1 ~ light + rocks.small
               p.X2 ~ light + rocks.small
               p.X3 ~ light + rocks.small
