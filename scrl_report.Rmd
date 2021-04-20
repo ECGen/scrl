@@ -1488,11 +1488,11 @@ summary(fit.v.all)
 
 ```{r plot-sem-tidy-lichen, cache = FALSE}
 
-lay <- get_layout("crown", "litter", "",    "l.A",
-                  "",      "", "", "l.R",
-                  "",      "rocks.big", "", "l.D",
-                  "",      "", "",          "l.X1",
-                  "",      "light", "",     "l.X2",
+lay <- get_layout("crown", "light", "",     "l.A",
+                  "",      "", "",          "l.R",
+                  "",      "", "",          "l.D",
+                  "litter",      "", "",    "l.X1",
+                  "",      "rocks.big", "", "l.X2",
                   rows = 5)
 
 graph_sem(fit.l.all, layout = lay)
@@ -1501,15 +1501,15 @@ graph_sem(fit.l.all, layout = lay)
 
 ```{r plot-sem-tidy-plant, cache = FALSE}
 
-lay <- get_layout("crown", "litter", "rocks.big",    "l.A",
-                  "",      "", "", "l.R",
-                  "",      "rocks.small", "", "l.D",
-                  "",      "", "",          "l.X1",
-                  "",      "light", "",     "l.X2",
-                  "",      "", "",          "l.X3",
+lay <- get_layout("crown", "light", "",       "l.A",
+                  "",      "", "",            "l.R",
+                  "",      "", "",            "l.D",
+                  "litter",      "", "",      "l.X1",
+                  "",      "rocks.small", "", "l.X2",
+                  "rocks.big",    "", "",     "l.X3",
                   rows = 6)
 
-graph_sem(fit.v.all)
+graph_sem(fit.v.all, layout = lay)
 
 ```
 
