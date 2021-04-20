@@ -51,7 +51,8 @@ functions used in the analysis.
 
 ```{r, echo = TRUE, results = "hide", eval = TRUE}
 
-cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr")
+cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr",
+               "semPlot", "lavaan", "piecewiseSEM", "distantia", "readxl")
 
 ## install packages that are not installed
 if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
@@ -538,8 +539,6 @@ cor.test(tapply(l.dat[, "Small.rocks.."], l.dat[, "Tree.pairs"], diff),
 
 ```{r}
 
-library(readxl)
-
 veg <- readxl::read_xlsx("data/Vegetation.xlsx")
 veg <- as.data.frame(veg)
 l.raw <- read.csv("data/rawdata Sunset Crater for Matt.csv")
@@ -879,8 +878,6 @@ mantel(v.d ~ l.d)
 
 ```{r exp-dist}
 
-library(piecewiseSEM)
-library(distantia)
 
 com.prepared <- cbind(id = l.dat[, "Moth"], tree  = l.dat[, "Tree.pairs"], com)
 v.com.prepared <- cbind(id = l.dat[, "Moth"], tree  = l.dat[, "Tree.pairs"], v.com)
@@ -1311,7 +1308,18 @@ summary(lm(plant.diversity ~ light +rocks.big + rocks.small,
 
 ```{r sem-com-ord}
 
-l.com.dif.nms <- nmds(com.dif.d, 1, 2)
+l.com.dif <- split(com, l.dat[, "Tree.pairs"])
+l.com.dif <- lapply(l.com.dif, function(x) x[2, ] - x[1, ])
+l.com.dif <- do.call(rbind, l.com.dif)
+
+v.com.dif <- split(v.com, l.dat[, "Tree.pairs"])
+v.com.dif <- lapply(v.com.dif, function(x) x[2, ] - x[1, ])
+v.com.dif <- do.call(rbind, v.com.dif)
+
+l.com.dif.d <- dist(l.com.dif)
+v.com.dif.d <- dist(v.com.dif)
+
+l.com.dif.nms <- nmds(l.com.dif.d, 1, 2)
 l.com.dif.ord <- nmds.min(l.com.dif.nms, 2)
 l.com.dif.vec <- envfit(l.com.dif.ord, data.frame(env.dif, tra.dif))
 
@@ -1326,7 +1334,7 @@ colnames(v.com.dif.ord) <- paste0("plant.", colnames(v.com.dif.ord))
 
 ```{r }
 
-library(piecewiseSEM)
+
 
 sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord)
 sem.path <- matrix(c(0, 1, 1, 0, 
@@ -1420,11 +1428,61 @@ summary(mod.v.com)
 summary(mod.l.all)
 summary(mod.v.all)
 
-model.Acacon <- psem(lm(d.rocks ~ d.litter, sem.dat), 
-                     lm(d.Acacon ~ d.light + d.rocks, sem.dat))
+```
 
-pdf("results/sem_v_all.pdf")
-plot(mod.v.all)
-dev.off()
+
+
+```{r sem-lavaan}
+
+lav.l.all <- 'litter ~ crown.radius
+              rocks.big ~ litter
+              lichen.abundance ~ light + rocks.big
+              lichen.richness ~ light + rocks.big
+              lichen.diversity ~ light + rocks.big
+              lichen.X1 ~ light + rocks.big
+              lichen.X2 ~ light + rocks.big
+              lichen.abundance ~~ lichen.richness
+              lichen.abundance ~~ lichen.diversity
+              lichen.richness ~~ lichen.diversity
+              lichen.abundance ~~ lichen.X1
+              lichen.richness ~~ lichen.X1
+             '
+
+
+lav.v.all <- 'litter ~ crown.radius
+              rocks.big ~ litter
+              rocks.small ~ litter
+              rocks.big ~~ rocks.small
+              plant.abundance ~ light + rocks.small
+              plant.richness ~ light + rocks.small + litter
+              plant.diversity ~ light + rocks.small
+              plant.X1 ~ light + rocks.small
+              plant.X2 ~ light + rocks.small
+              plant.X3 ~ light + rocks.small
+              plant.abundance ~~ plant.X2
+              plant.abundance ~~ plant.richness
+              plant.abundance ~~ plant.diversity
+              plant.richness ~~ plant.diversity
+              plant.abundance ~~ plant.X1
+              plant.richness ~~ plant.X1
+             '
+
+std <- function(x){(x - mean(x)) / sd(x)}
+
+fit.l.all <- sem(lav.l.all, data = apply(sem.dat, 2, std))
+fit.v.all <- sem(lav.v.all, data = apply(sem.dat, 2, std))
+
+varTable(fit.l.all)
+varTable(fit.v.all)
+
+summary(fit.l.all)
+summary(fit.v.all)
+
+```
+
+
+```{r sem-plots}
+
+semPaths(fit.l.all)
 
 ```
