@@ -1103,3 +1103,328 @@ summary(model.v.Asteraceae.ovales, .progressBar = FALSE)
 
 ```
 
+# Analyses for Revisions
+
+
+Tree -> Moth -> Trait -> Loc env -> Community (A, R, D, Comp)
+
+Pair    S/R     Crown    Litter     Lichen
+                         Rocks      Plants
+                         Light
+
+
+```{r org-data, eval = TRUE, echo = FALSE, results = "hide"}
+
+tree.dim <- read.csv("data/tree dimensions.csv")
+colnames(tree.dim) <- paste(colnames(tree.dim), tree.dim[1, ])
+tree.dim <- tree.dim[-1, ]
+tree.dim <- tree.dim[!(grepl("D", tree.dim[,1])), ]
+
+traits <- data.frame(trunk.radius = tree.dim[, "Trunk.2 Radius (cm)"],
+                      crown.radius = tree.dim[, "Average.radius with trunk (cm)"], 
+                      litter = l.dat[, "Litter.."])
+traits <- data.frame(apply(traits, 2, as.numeric))
+tra.dif <- split(traits, l.dat[, "Tree.pairs"])
+tra.dif <- lapply(tra.dif, function(x) x[2, ] - x[1, ])
+tra.dif <- do.call(rbind, tra.dif)
+
+env.dif <- data.frame(rocks = l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."],
+                      rocks.big = l.dat[, "Big.rocks.."],
+                      rocks.small = l.dat[, "Small.rocks.."],
+                      light = l.dat[, "Light...average"]
+                      )
+env.dif <- data.frame(apply(env.dif, 2, as.numeric))
+env.dif <- split(env.dif, l.dat[, "Tree.pairs"])
+env.dif <- lapply(env.dif, function(x) x[2, ] - x[1, ])
+env.dif <- do.call(rbind, env.dif)
+
+l.com.dif <- split(com, l.dat[, "Tree.pairs"])
+l.com.dif <- lapply(l.com.dif, function(x) x[2, ] - x[1, ])
+l.com.dif <- do.call(rbind, l.com.dif)
+
+v.com.dif <- split(v.com, l.dat[, "Tree.pairs"])
+v.com.dif <- lapply(v.com.dif, function(x) x[2, ] - x[1, ])
+v.com.dif <- do.call(rbind, v.com.dif)
+
+l.ard <- t(apply(com, 1, function(x) c(abundance = sum(x), 
+                                     richness = sum(sign(x)), 
+                                     diversity = diversity(x))))
+v.ard <- t(apply(v.com, 1, function(x) c(abundance = sum(x), 
+                                     richness = sum(sign(x)), 
+                                     diversity = diversity(x))))
+l.ard.dif <- apply(l.ard, 2, 
+                   function(x, f) 
+                       tapply(x, f, diff), 
+                   f = l.dat[, "Tree.pairs"])
+colnames(l.ard.dif) <- paste0("lichen.", colnames(l.ard.dif))
+v.ard.dif <- apply(v.ard, 2, 
+                   function(x, f) 
+                       tapply(x, f, diff), 
+                   f = l.dat[, "Tree.pairs"])
+colnames(v.ard.dif) <- paste0("plant.", colnames(v.ard.dif))
+
+tra.dif.d <- dist(tra.dif)
+l.com.dif.d <- dist(l.com.dif)
+v.com.dif.d <- dist(v.com.dif)
+env.dif.d <- dist(env.dif)
+
+ind.env.dif.d <- lapply(split(as.matrix(env.dif), col(env.dif)), dist)
+names(ind.env.dif.d) <- colnames(env.dif)
+
+
+
+```
+
+## Both lichen and vegetation respond to moth susceptibility
+
+```{r moth-com, results = "asis"}
+
+set.seed(12345)
+xtable::xtable(adonis2(com.ds ~ Moth, 
+                       strata = l.dat[, "Tree.pairs"], 
+                       data = l.dat, 
+                       perm = 9999)
+               )
+
+set.seed(12345)
+xtable::xtable(adonis2(v.com.ds ~ Moth, 
+                       strata = l.dat[, "Tree.pairs"], 
+                       data = l.dat, 
+                       perm = 9999)
+               )
+
+
+```
+
+
+```{r moth-ard, results = "asis"}
+
+tab.ttest.ard <- do.call(rbind, 
+                        lapply(
+                            apply(data.frame(l.ard.dif, v.ard.dif), 2, 
+                                  t.test), 
+                            unlist))[, c(1, 2, 6, 3)]
+tab.lab <- rownames(tab.ttest.ard)
+tab.ttest.ard <- apply(tab.ttest.ard, 2, as.numeric)
+rownames(tab.ttest.ard) <- tab.lab
+xtable::xtable(tab.ttest.ard, digits = 5)
+
+```
+
+
+## Moth impacts tree traits and the local environment
+
+```{r moth-env, results = "asis"}
+
+tab.ttest.envtra <- do.call(rbind, 
+                        lapply(
+                            apply(data.frame(tra.dif, env.dif), 2, 
+                                  t.test), 
+                            unlist))[, c(1, 2, 6, 3)]
+tab.lab <- rownames(tab.ttest.envtra)
+tab.ttest.envtra <- apply(tab.ttest.envtra, 2, as.numeric)
+rownames(tab.ttest.envtra) <- tab.lab
+xtable::xtable(tab.ttest.envtra, digits = 5)
+
+```
+
+## Tree environment correlate with community
+
+```{r tra-com}
+
+set.seed(12345)
+xtable::xtable(adonis2(com.ds ~ Big.rocks.. + Small.rocks.. + Light...average,
+                       strata = l.dat[, "Tree.pairs"], 
+                       by = "margin",
+                       data = data.frame(env, traits),
+                       perm = 9999, rank = TRUE)
+               )
+
+set.seed(12345)
+xtable::xtable(adonis2(v.com.ds ~ Light...average + Big.rocks.. + Small.rocks..,
+                       strata = l.dat[, "Tree.pairs"], 
+                       by = "margin",
+                       data = data.frame(env, traits),
+                       perm = 9999)
+               )
+
+
+summary(lm(lichen.abundance ~ rocks.big * rocks.small * light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.richness ~ rocks.big * rocks.small * light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.diversity ~ rocks.big * rocks.small * light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(lichen.abundance ~ light *rocks.big * rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.richness ~ light *rocks.big * rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.diversity ~ light *rocks.big * rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(lichen.abundance ~ rocks.big + rocks.small + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.richness ~ rocks.big + rocks.small + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.diversity ~ rocks.big + rocks.small + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(lichen.abundance ~ light +rocks.big + rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.richness ~ light +rocks.big + rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(lichen.diversity ~ light +rocks.big + rocks.small,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(plant.abundance ~ rocks.big * rocks.small * light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.richness ~ rocks.big * rocks.small * light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.diversity ~ rocks.big * rocks.small * light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+
+summary(lm(plant.abundance ~ light *rocks.big * rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.richness ~ light *rocks.big * rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.diversity ~ light *rocks.big * rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+
+summary(lm(plant.abundance ~ rocks.big + rocks.small + light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.richness ~ rocks.big + rocks.small + light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.diversity ~ rocks.big + rocks.small + light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+
+summary(lm(plant.abundance ~ light +rocks.big + rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.richness ~ light +rocks.big + rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(plant.diversity ~ light +rocks.big + rocks.small,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+
+```
+
+## Structural Equation Models
+
+```{r sem-com-ord}
+
+l.com.dif.nms <- nmds(com.dif.d, 1, 2)
+l.com.dif.ord <- nmds.min(l.com.dif.nms, 2)
+l.com.dif.vec <- envfit(l.com.dif.ord, data.frame(env.dif, tra.dif))
+
+v.com.dif.nms <- nmds(v.com.dif.d, 2, 3)
+v.com.dif.ord <- nmds.min(v.com.dif.nms, 3)
+v.com.dif.vec <- envfit(v.com.dif.ord, data.frame(env.dif, tra.dif))
+
+colnames(l.com.dif.ord) <- paste0("lichen.", colnames(l.com.dif.ord))
+colnames(v.com.dif.ord) <- paste0("plant.", colnames(v.com.dif.ord))
+
+```
+
+```{r }
+
+library(piecewiseSEM)
+
+sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord)
+sem.path <- matrix(c(0, 1, 1, 0, 
+                     1, 0, 0, 1, 
+                     0, 0, 0, 1, 
+                     0, 0, 0, 0), 4, 4, byrow = TRUE)
+rownames(sem.path) <- colnames(sem.path) <- c("d.litter", "d.light", "d.rocks", "d.com")
+
+mod.l.a <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(lichen.abundance ~ rocks.big, sem.dat))
+mod.l.r <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(lichen.richness ~ light + rocks.big, sem.dat))
+mod.l.d <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(lichen.diversity ~ light + rocks.big, sem.dat))
+mod.l.com <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(lichen.X1 ~ light + rocks.big, sem.dat),
+                lm(lichen.X2 ~ light + rocks.big, sem.dat))
+mod.l.all <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(lichen.abundance ~ light + rocks.big, sem.dat),
+                lm(lichen.richness ~ light + rocks.big, sem.dat),
+                lm(lichen.diversity ~ light + rocks.big, sem.dat),
+                lm(lichen.X1 ~ light + rocks.big, sem.dat),
+                lm(lichen.X2 ~ light + rocks.big, sem.dat), 
+                (lichen.abundance %~~% lichen.richness),
+                (lichen.abundance %~~% lichen.diversity),
+                (lichen.richness %~~% lichen.diversity),
+                (lichen.abundance %~~% lichen.X1),
+                (lichen.richness %~~% lichen.X1)
+                )
+
+
+summary(mod.l.a)
+summary(mod.l.r)
+summary(mod.l.d)
+summary(mod.l.com)
+summary(mod.l.all)
+
+mod.v.a <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(light ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(rocks.small ~ litter, sem.dat),
+                (rocks.big %~~% rocks.small),
+                lm(plant.abundance ~ rocks.big + rocks.small + light, sem.dat))
+mod.v.r <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(light ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(rocks.small ~ litter, sem.dat),
+                (rocks.big %~~% rocks.small),
+                lm(plant.richness ~ rocks.big + rocks.small + light, sem.dat))
+mod.v.d <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(light ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(rocks.small ~ litter, sem.dat),
+                (rocks.big %~~% rocks.small),
+                lm(plant.diversity ~ rocks.big + rocks.small + light, sem.dat))
+mod.v.com <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(rocks.small ~ litter, sem.dat),
+                (rocks.big %~~% rocks.small),
+                lm(plant.X1 ~ light + rocks.small, sem.dat),
+                lm(plant.X2 ~ light + rocks.small, sem.dat),
+                lm(plant.X3 ~ light + rocks.small, sem.dat))
+mod.v.all <- psem(lm(litter ~ crown.radius, sem.dat), 
+                lm(rocks.big ~ litter, sem.dat),
+                lm(rocks.small ~ litter, sem.dat),
+                (rocks.big %~~% rocks.small),
+                lm(plant.abundance ~ light + rocks.small, sem.dat),
+                lm(plant.richness ~ light + rocks.small + litter, sem.dat),
+                lm(plant.diversity ~ light + rocks.small, sem.dat),
+                lm(plant.X1 ~ light + rocks.small, sem.dat),
+                lm(plant.X2 ~ light + rocks.small, sem.dat), 
+                lm(plant.X3 ~ light + rocks.small, sem.dat), 
+                (plant.abundance %~~% plant.X2),
+                (plant.abundance %~~% plant.richness),
+                (plant.abundance %~~% plant.diversity),
+                (plant.richness %~~% plant.diversity),
+                (plant.abundance %~~% plant.X1),
+                (plant.richness %~~% plant.X1)
+                )
+
+summary(mod.v.a)
+summary(mod.v.r)
+summary(mod.v.d)
+summary(mod.v.com)
+
+summary(mod.l.all)
+summary(mod.v.all)
+
+model.Acacon <- psem(lm(d.rocks ~ d.litter, sem.dat), 
+                     lm(d.Acacon ~ d.light + d.rocks, sem.dat))
+
+pdf("results/sem_v_all.pdf")
+plot(mod.v.all)
+dev.off()
+
+```
