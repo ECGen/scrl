@@ -52,7 +52,8 @@ functions used in the analysis.
 ```{r, echo = TRUE, results = "hide", eval = TRUE}
 
 cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr",
-               "semPlot", "lavaan", "piecewiseSEM", "distantia", "readxl")
+               "semPlot", "lavaan", "piecewiseSEM", "distantia", 
+               "tidySEM", "readxl")
 
 ## install packages that are not installed
 if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
@@ -1480,12 +1481,35 @@ summary(fit.v.all)
 
 ```
 
+## SEM Plots
 
-```{r sem-plots-lichen}
+```{r plot-sem-semPlot}
 
 layout(t(1:2))
 semPaths(fit.l.all, "std", curvePivot = TRUE)
 semPaths(fit.v.all, "std", curvePivot = TRUE)
 
 ```
+
+```{r plot-sem-tidy-lichen}
+
+graph_sem(fit.l.all)
+
+```
+
+```{r plot-sem-tidy-plant}
+
+graph_sem(fit.v.all)
+
+```
+
+```{r plot-sem-tidy-side}
+
+layout(t(1:2))
+graph_sem(fit.l.all)
+graph_sem(fit.v.all)
+
+```
+
+
 
