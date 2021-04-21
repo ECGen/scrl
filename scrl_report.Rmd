@@ -1384,7 +1384,7 @@ lav.v.all <- 'light ~ crown
               litter ~ crown
               rock.sm ~ litter
               p.A ~ light + rock.sm 
-              p.R ~ light + rock.sm  
+              p.R ~ light + rock.sm  + litter 
               p.D ~ light + rock.sm 
               p.X1 ~ light + rock.sm 
               p.X2 ~ light + rock.sm 
@@ -1414,7 +1414,7 @@ lav.v.rot.all <- 'light ~ crown
                   litter ~ crown
                   rock.sm ~ litter
                   p.A ~ light + rock.sm 
-                  p.R ~ light + rock.sm  
+                  p.R ~ light + rock.sm  + litter 
                   p.D ~ light + rock.sm 
                   rot.p.X1 ~ light + rock.sm 
                   rot.p.X2 ~ light + rock.sm 
@@ -1511,8 +1511,8 @@ lay <- get_layout("crown", "light", "",     "l.A",
                   "",      "", "",    "",
                   "",      "", "",          "l.R",
                   "",      "litter", "",          "l.D",
-                  "",      "", "",    "",
-                  "",      "rock.lg", "", "rot.l.X1",
+                  "",      "", "",    "rot.l.X1",
+                  "",      "rock.lg", "", "",
                   rows = 6)
 
 graph_sem(fit.l.rot.all, layout = lay)
@@ -1525,8 +1525,8 @@ lay <- get_layout("crown", "light", "",            "p.A",
                   "",      "", "",       "p.R",
                   "",      "litter", "",            "p.D",
                   "", "", "", "", 
-                  "",      "", "", "",
-                  "",      "rock.sm", "", "rot.p.X1",
+                  "",      "", "", "rot.p.X1",
+                  "",      "rock.sm", "", "",
                   rows = 6)
 
 graph_sem(fit.v.rot.all, layout = lay)
