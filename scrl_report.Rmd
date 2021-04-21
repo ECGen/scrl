@@ -1127,8 +1127,8 @@ tra.dif <- lapply(tra.dif, function(x) x[2, ] - x[1, ])
 tra.dif <- do.call(rbind, tra.dif)
 
 env.dif <- data.frame(rocks = l.dat[, "Big.rocks.."] + l.dat[, "Small.rocks.."],
-                      rocks.big = l.dat[, "Big.rocks.."],
-                      rocks.small = l.dat[, "Small.rocks.."],
+                      rock.lg = l.dat[, "Big.rocks.."],
+                      rock.sm = l.dat[, "Small.rocks.."],
                       light = l.dat[, "Light...average"]
                       )
 env.dif <- data.frame(apply(env.dif, 2, as.numeric))
@@ -1247,60 +1247,60 @@ xtable::xtable(adonis2(v.com.ds ~ Light...average + Big.rocks.. + Small.rocks..,
                )
 
 
-summary(lm(l.A ~ rocks.big * rocks.small * light,
+summary(lm(l.A ~ rock.lg * rock.sm * light,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.R ~ rocks.big * rocks.small * light,
+summary(lm(l.R ~ rock.lg * rock.sm * light,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.D ~ rocks.big * rocks.small * light,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-
-summary(lm(l.A ~ light *rocks.big * rocks.small,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.R ~ light *rocks.big * rocks.small,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.D ~ light *rocks.big * rocks.small,
+summary(lm(l.D ~ rock.lg * rock.sm * light,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
 
-summary(lm(l.A ~ rocks.big + rocks.small + light,
+summary(lm(l.A ~ light *rock.lg * rock.sm,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.R ~ rocks.big + rocks.small + light,
+summary(lm(l.R ~ light *rock.lg * rock.sm,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.D ~ rocks.big + rocks.small + light,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-
-summary(lm(l.A ~ light +rocks.big + rocks.small,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.R ~ light +rocks.big + rocks.small,
-           data = data.frame(l.ard.dif, tra.dif, env.dif)))
-summary(lm(l.D ~ light +rocks.big + rocks.small,
+summary(lm(l.D ~ light *rock.lg * rock.sm,
            data = data.frame(l.ard.dif, tra.dif, env.dif)))
 
-summary(lm(p.A ~ rocks.big * rocks.small * light,
+summary(lm(l.A ~ rock.lg + rock.sm + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(l.R ~ rock.lg + rock.sm + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(l.D ~ rock.lg + rock.sm + light,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(l.A ~ light +rock.lg + rock.sm,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(l.R ~ light +rock.lg + rock.sm,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+summary(lm(l.D ~ light +rock.lg + rock.sm,
+           data = data.frame(l.ard.dif, tra.dif, env.dif)))
+
+summary(lm(p.A ~ rock.lg * rock.sm * light,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.R ~ rocks.big * rocks.small * light,
+summary(lm(p.R ~ rock.lg * rock.sm * light,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.D ~ rocks.big * rocks.small * light,
+summary(lm(p.D ~ rock.lg * rock.sm * light,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
 
-summary(lm(p.A ~ light *rocks.big * rocks.small,
+summary(lm(p.A ~ light *rock.lg * rock.sm,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.R ~ light *rocks.big * rocks.small,
+summary(lm(p.R ~ light *rock.lg * rock.sm,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.D ~ light *rocks.big * rocks.small,
-           data = data.frame(v.ard.dif, tra.dif, env.dif)))
-
-summary(lm(p.A ~ rocks.big + rocks.small + light,
-           data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.R ~ rocks.big + rocks.small + light,
-           data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.D ~ rocks.big + rocks.small + light,
+summary(lm(p.D ~ light *rock.lg * rock.sm,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
 
-summary(lm(p.A ~ light +rocks.big + rocks.small,
+summary(lm(p.A ~ rock.lg + rock.sm + light,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.R ~ light +rocks.big + rocks.small,
+summary(lm(p.R ~ rock.lg + rock.sm + light,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
-summary(lm(p.D ~ light +rocks.big + rocks.small,
+summary(lm(p.D ~ rock.lg + rock.sm + light,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+
+summary(lm(p.A ~ light +rock.lg + rock.sm,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(p.R ~ light +rock.lg + rock.sm,
+           data = data.frame(v.ard.dif, tra.dif, env.dif)))
+summary(lm(p.D ~ light +rock.lg + rock.sm,
            data = data.frame(v.ard.dif, tra.dif, env.dif)))
 
 ```
@@ -1335,8 +1335,8 @@ colnames(v.com.dif.ord) <- paste0("p.", colnames(v.com.dif.ord))
 
 ```{r proc-rot-ord}
 
-l.com.dif.ord.proc <- procrustes(env.dif[, "rocks.big"], l.com.dif.ord)$Yrot
-v.com.dif.ord.proc <- procrustes(env.dif[, "rocks.small"], v.com.dif.ord)$Yrot
+l.com.dif.ord.proc <- procrustes(env.dif[, "rock.lg"], l.com.dif.ord)$Yrot
+v.com.dif.ord.proc <- procrustes(env.dif[, "rock.sm"], v.com.dif.ord)$Yrot
 
 colnames(l.com.dif.ord.proc) <- paste0("rot.", colnames(l.com.dif.ord))
 colnames(v.com.dif.ord.proc) <- paste0("rot.", colnames(v.com.dif.ord))
@@ -1344,7 +1344,7 @@ colnames(v.com.dif.ord.proc) <- paste0("rot.", colnames(v.com.dif.ord))
 ```
 
 
-```{r sem-data, cache = TRUE}
+```{r sem-data, cache = FALSE}
 
 sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord, l.com.dif.ord.proc, v.com.dif.ord.proc)
 colnames(sem.dat)[colnames(sem.dat) == "crown.radius"] <- "crown"
@@ -1356,12 +1356,12 @@ colnames(sem.dat)[colnames(sem.dat) == "crown.radius"] <- "crown"
 ```{r sem-lavaan, cache = FALSE}
 
 lav.l.all <- 'litter ~ crown
-              rocks.big ~ litter
-              l.A ~ light + rocks.big
-              l.R ~ light + rocks.big
-              l.D ~ light + rocks.big
-              l.X1 ~ light + rocks.big
-              l.X2 ~ light + rocks.big
+              rock.lg ~ litter
+              l.A ~ light + rock.lg
+              l.R ~ light + rock.lg
+              l.D ~ light + rock.lg
+              l.X1 ~ light + rock.lg
+              l.X2 ~ light + rock.lg
               l.A ~~ l.R
               l.A ~~ l.D
               l.R ~~ l.D
@@ -1370,15 +1370,15 @@ lav.l.all <- 'litter ~ crown
              '
 
 lav.v.all <- 'litter ~ crown
-              rocks.big ~ litter
-              rocks.small ~ litter
-              rocks.big ~~ rocks.small
-              p.A ~ rocks.small
-              p.R ~ rocks.small  + litter
-              p.D ~ rocks.small
-              p.X1 ~ light + rocks.small
-              p.X2 ~ light + rocks.small
-              p.X3 ~ light + rocks.small
+              rock.lg ~ litter
+              rock.sm ~ litter
+              rock.lg ~~ rock.sm
+              p.A ~ rock.sm
+              p.R ~ rock.sm  + litter
+              p.D ~ rock.sm
+              p.X1 ~ light + rock.sm
+              p.X2 ~ light + rock.sm
+              p.X3 ~ light + rock.sm
               p.A ~~ p.X2
               p.A ~~ p.R
               p.A ~~ p.D
@@ -1388,12 +1388,12 @@ lav.v.all <- 'litter ~ crown
              '
 
 lav.l.rot.all <- 'litter ~ crown
-              rocks.big ~ litter
-              l.A ~ light + rocks.big
-              l.R ~ light + rocks.big
-              l.D ~ light + rocks.big
-              rot.l.X1 ~ light + rocks.big
-              rot.l.X2 ~ light + rocks.big
+              rock.lg ~ litter
+              l.A ~ light + rock.lg
+              l.R ~ light + rock.lg
+              l.D ~ light + rock.lg
+              rot.l.X1 ~ light + rock.lg
+              rot.l.X2 ~ light + rock.lg
               l.A ~~ l.R
               l.A ~~ l.D
               l.R ~~ l.D
@@ -1402,15 +1402,15 @@ lav.l.rot.all <- 'litter ~ crown
              '
 
 lav.v.rot.all <- 'litter ~ crown
-              rocks.big ~ litter
-              rocks.small ~ litter
-              rocks.big ~~ rocks.small
-              p.A ~ rocks.small
-              p.R ~ rocks.small  + litter
-              p.D ~ rocks.small
-              rot.p.X1 ~ light + rocks.small
-              rot.p.X2 ~ light + rocks.small
-              rot.p.X3 ~ light + rocks.small
+              rock.lg ~ litter
+              rock.sm ~ litter
+              rock.lg ~~ rock.sm
+              p.A ~ rock.sm
+              p.R ~ rock.sm  + litter
+              p.D ~ rock.sm
+              rot.p.X1 ~ light + rock.sm
+              rot.p.X2 ~ light + rock.sm
+              rot.p.X3 ~ light + rock.sm
               p.A ~~ rot.p.X2
               p.A ~~ p.R
               p.A ~~ p.D
@@ -1445,7 +1445,7 @@ lay <- get_layout("crown", "", "",     "l.A",
                   "",      "litter", "",          "l.R",
                   "",      "", "",          "l.D",
                   "",      "", "",    "l.X1",
-                  "",      "rocks.big", "", "l.X2",
+                  "",      "rock.lg", "", "l.X2",
                   rows = 5)
 
 graph_sem(fit.l.all, layout = lay)
@@ -1458,7 +1458,7 @@ lay <- get_layout("crown", "", "",            "p.A",
                   "",      "litter", "",       "p.R",
                   "",      "", "",            "p.D",
                   "",      "", "",      "p.X1",
-                  "",      "rocks.small", "", "p.X2",
+                  "",      "rock.sm", "", "p.X2",
                   "",    "", "",     "p.X3",
                   rows = 6)
 
@@ -1472,7 +1472,7 @@ lay <- get_layout("crown", "", "",     "l.A",
                   "",      "litter", "",          "l.R",
                   "",      "", "",          "l.D",
                   "",      "", "",    "",
-                  "",      "rocks.big", "", "rot.l.X1",
+                  "",      "rock.lg", "", "rot.l.X1",
                   rows = 5)
 
 graph_sem(fit.l.rot.all, layout = lay)
@@ -1486,7 +1486,7 @@ lay <- get_layout("crown", "", "",            "p.A",
                   "",      "litter", "",            "p.D",
                   "", "", "", "", 
                   "",      "", "", "",
-                  "",      "rocks.small", "", "rot.p.X1",
+                  "",      "rock.sm", "", "rot.p.X1",
                   rows = 6)
 
 graph_sem(fit.v.rot.all, layout = lay)
