@@ -1471,8 +1471,8 @@ graph_sem(fit.v.all, layout = lay)
 lay <- get_layout("crown", "", "",     "l.A",
                   "",      "litter", "",          "l.R",
                   "",      "", "",          "l.D",
-                  "",      "", "",    "l.X1",
-                  "",      "rocks.big", "", "l.X2",
+                  "",      "", "",    "rot.l.X1",
+                  "",      "rocks.big", "", "rot.l.X2",
                   rows = 5)
 
 graph_sem(fit.l.rot.all, layout = lay)
@@ -1484,9 +1484,9 @@ graph_sem(fit.l.rot.all, layout = lay)
 lay <- get_layout("crown", "", "",            "p.A",
                   "",      "litter", "",       "p.R",
                   "",      "", "",            "p.D",
-                  "",      "", "",      "p.X1",
-                  "",      "rocks.small", "", "p.X2",
-                  "",    "", "",     "p.X3",
+                  "",      "", "",      "rot.p.X1",
+                  "",      "rocks.small", "", "rot.p.X2",
+                  "",    "", "",     "rot.p.X3",
                   rows = 6)
 
 graph_sem(fit.v.rot.all, layout = lay)
