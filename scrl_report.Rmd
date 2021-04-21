@@ -1173,6 +1173,14 @@ names(ind.env.dif.d) <- colnames(env.dif)
 
 ```
 
+## Lichen and plant community resposnes are not correlated
+
+``{r mantel-l-v}
+
+mantel(l.com.dif.d ~ v.com.dif.d)
+
+```
+
 ## Both lichen and vegetation respond to moth susceptibility
 
 ```{r moth-com, results = "asis", cache = FALSE}
@@ -1534,3 +1542,18 @@ graph_sem(fit.v.rot.all, layout = lay)
 ```
 
 
+## Causal Pathway of Moth Susceptibility Effects on Communities
+
+
+- Moth susceptiblity indirectly influences plants and lichen
+   1. Canopy effect of moth increases litter effects but does not
+   affect light differences
+   2. Differences in litter between moth susceptible and resistant
+   trees decreases the differences of both large and small rocks
+   3. Differnces in large rocks increases lichen community differences
+      (abundance, richness, diversity, composition) and the difference
+      in small rocks decreases the plant community differences
+      (abundance richness, diversity and composition) between
+      susceptible and resistant trees
+- Both SEMs (lichen and plant) showed accetable goodness of fit
+- See SEM path diagrams
