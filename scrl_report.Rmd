@@ -1322,11 +1322,19 @@ v.com.dif.d <- dist(v.com.dif)
 
 l.com.dif.nms <- nmds(l.com.dif.d, 1, 2)
 l.com.dif.ord <- nmds.min(l.com.dif.nms, 2)
-l.com.dif.vec <- envfit(l.com.dif.ord, data.frame(env.dif, tra.dif))
+l.com.dif.vec <- envfit(l.com.dif.ord, 
+                        data.frame(env.dif, tra.dif)[, c("rock.lg",
+                                                         "rock.sm",
+                                                         "light",
+                                                         "litter")])
 
 v.com.dif.nms <- nmds(v.com.dif.d, 2, 3)
 v.com.dif.ord <- nmds.min(v.com.dif.nms, 3)
-v.com.dif.vec <- envfit(v.com.dif.ord, data.frame(env.dif, tra.dif))
+v.com.dif.vec <- envfit(v.com.dif.ord,
+                        data.frame(env.dif, tra.dif)[, c("rock.lg",
+                                                         "rock.sm",
+                                                         "light",
+                                                         "litter")])
 
 colnames(l.com.dif.ord) <- paste0("l.", colnames(l.com.dif.ord))
 colnames(v.com.dif.ord) <- paste0("p.", colnames(v.com.dif.ord))
@@ -1340,6 +1348,9 @@ v.com.dif.ord.proc <- procrustes(env.dif[, "rock.sm"], v.com.dif.ord)$Yrot
 
 colnames(l.com.dif.ord.proc) <- paste0("rot.", colnames(l.com.dif.ord))
 colnames(v.com.dif.ord.proc) <- paste0("rot.", colnames(v.com.dif.ord))
+
+l.com.dif.vec.rot <- envfit(l.com.dif.ord.proc, env.dif)
+v.com.dif.vec.rot <- envfit(v.com.dif.ord.proc, env.dif)
 
 ```
 
@@ -1358,29 +1369,26 @@ colnames(sem.dat)[colnames(sem.dat) == "crown.radius"] <- "crown"
 lav.l.all <- 'light ~ crown
               litter ~ crown
               rock.lg ~ litter
-              l.A ~ light + rock.lg
-              l.R ~ light + rock.lg
-              l.D ~ light + rock.lg
-              l.X1 ~ light + rock.lg
-              l.X2 ~ light + rock.lg
+              l.A ~ light + rock.lg 
+              l.R ~ light + rock.lg 
+              l.D ~ light + rock.lg 
+              l.X1 ~ light + rock.lg 
+              l.X2 ~ light + rock.lg 
               l.A ~~ l.R
               l.A ~~ l.D
               l.R ~~ l.D
               l.A ~~ l.X1
               l.R ~~ l.X1
              '
-
 lav.v.all <- 'light ~ crown
               litter ~ crown
-              rock.lg ~ litter
               rock.sm ~ litter
-              rock.lg ~~ rock.sm
-              p.A ~ rock.sm
-              p.R ~ rock.sm  + litter
-              p.D ~ rock.sm
-              p.X1 ~ light + rock.sm
-              p.X2 ~ light + rock.sm
-              p.X3 ~ light + rock.sm
+              p.A ~ light + rock.sm 
+              p.R ~ light + rock.sm  
+              p.D ~ light + rock.sm 
+              p.X1 ~ light + rock.sm 
+              p.X2 ~ light + rock.sm 
+              p.X3 ~ light + rock.sm 
               p.A ~~ p.X2
               p.A ~~ p.R
               p.A ~~ p.D
@@ -1388,33 +1396,29 @@ lav.v.all <- 'light ~ crown
               p.A ~~ p.X1
               p.R ~~ p.X1
              '
-
 lav.l.rot.all <- 'light ~ crown
                   litter ~ crown
                   rock.lg ~ litter
-                  l.A ~ light + rock.lg
-                  l.R ~ light + rock.lg
-                  l.D ~ light + rock.lg
-                  rot.l.X1 ~ light + rock.lg
-                  rot.l.X2 ~ light + rock.lg
+                  l.A ~ light + rock.lg 
+                  l.R ~ light + rock.lg 
+                  l.D ~ light + rock.lg 
+                  rot.l.X1 ~ light + rock.lg 
+                  rot.l.X2 ~ light + rock.lg 
                   l.A ~~ l.R
                   l.A ~~ l.D
                   l.R ~~ l.D
                   l.A ~~ rot.l.X1
                   l.R ~~ rot.l.X1
                  '
-
 lav.v.rot.all <- 'light ~ crown
                   litter ~ crown
-                  rock.lg ~ litter
                   rock.sm ~ litter
-                  rock.lg ~~ rock.sm
-                  p.A ~ rock.sm
-                  p.R ~ rock.sm  + litter
-                  p.D ~ rock.sm
-                  rot.p.X1 ~ light + rock.sm
-                  rot.p.X2 ~ light + rock.sm
-                  rot.p.X3 ~ light + rock.sm
+                  p.A ~ light + rock.sm 
+                  p.R ~ light + rock.sm  
+                  p.D ~ light + rock.sm 
+                  rot.p.X1 ~ light + rock.sm 
+                  rot.p.X2 ~ light + rock.sm 
+                  rot.p.X3 ~ light + rock.sm 
                   p.A ~~ rot.p.X2
                   p.A ~~ p.R
                   p.A ~~ p.D
@@ -1425,17 +1429,45 @@ lav.v.rot.all <- 'light ~ crown
 
 std <- function(x){(x - mean(x)) / sd(x)}
 
+fit.l.all.raw <- lavaan::sem(lav.l.all, data = sem.dat)
+fit.v.all.raw <- lavaan::sem(lav.v.all, data = sem.dat)
 fit.l.all <- lavaan::sem(lav.l.all, data = apply(sem.dat, 2, std))
 fit.v.all <- lavaan::sem(lav.v.all, data = apply(sem.dat, 2, std))
 fit.l.rot.all <- lavaan::sem(lav.l.rot.all, data = apply(sem.dat, 2, std))
 fit.v.rot.all <- lavaan::sem(lav.v.rot.all, data = apply(sem.dat, 2, std))
 
+summary(fit.l.all.raw)
+summary(fit.v.all.raw)
 summary(fit.l.all)
 summary(fit.v.all)
 summary(fit.l.rot.all)
 summary(fit.v.rot.all)
 
 ```
+
+## Ordination Plots
+
+
+```{r plot-ord}
+
+par(mfrow = c(1,2))
+plot(l.com.dif.ord[, 1:2], xlab = "Axis 1", ylab = "Axis 2", pch = 19)
+plot(l.com.dif.vec, add = TRUE)
+plot(v.com.dif.ord[, 1:2], xlab = "Axis 1", ylab = "Axis 2", pch = 19)
+plot(v.com.dif.vec, add = TRUE)
+
+```
+
+```{r plot-ord-rot}
+
+par(mfrow = c(1,2))
+plot(l.com.dif.ord.proc[, 1:2], xlab = "Axis 1", ylab = "Axis 2", pch = 19)
+plot(l.com.dif.vec.rot, add = TRUE)
+plot(v.com.dif.ord.proc[, 1:2], xlab = "Axis 1", ylab = "Axis 2", pch = 19)
+plot(v.com.dif.vec.rot, add = TRUE)
+
+```
+
 
 ## SEM Plots
 
@@ -1500,7 +1532,5 @@ lay <- get_layout("crown", "light", "",            "p.A",
 graph_sem(fit.v.rot.all, layout = lay)
 
 ```
-
-
 
 
