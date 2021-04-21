@@ -1333,103 +1333,21 @@ colnames(v.com.dif.ord) <- paste0("p.", colnames(v.com.dif.ord))
 
 ```
 
-```{r , cache = TRUE}
+```{r proc-rot-ord}
+
+l.com.dif.ord.proc <- procrustes(env.dif[, "rocks.big"], l.com.dif.ord)$Yrot
+v.com.dif.ord.proc <- procrustes(env.dif[, "rocks.small"], v.com.dif.ord)$Yrot
+
+colnames(l.com.dif.ord.proc) <- paste0("rot.", colnames(l.com.dif.ord))
+colnames(v.com.dif.ord.proc) <- paste0("rot.", colnames(v.com.dif.ord))
+
+```
 
 
+```{r sem-data, cache = TRUE}
 
-sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord)
+sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord, l.com.dif.ord.proc, v.com.dif.ord.proc)
 colnames(sem.dat)[colnames(sem.dat) == "crown.radius"] <- "crown"
-
-sem.path <- matrix(c(0, 1, 1, 0, 
-                     1, 0, 0, 1, 
-                     0, 0, 0, 1, 
-                     0, 0, 0, 0), 4, 4, byrow = TRUE)
-rownames(sem.path) <- colnames(sem.path) <- c("d.litter", "d.light", "d.rocks", "d.com")
-
-mod.l.a <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(l.A ~ rocks.big, sem.dat))
-mod.l.r <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(l.R ~ light + rocks.big, sem.dat))
-mod.l.d <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(l.D ~ light + rocks.big, sem.dat))
-mod.l.com <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(l.X1 ~ light + rocks.big, sem.dat),
-                lm(l.X2 ~ light + rocks.big, sem.dat))
-mod.l.all <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(l.A ~ light + rocks.big, sem.dat),
-                lm(l.R ~ light + rocks.big, sem.dat),
-                lm(l.D ~ light + rocks.big, sem.dat),
-                lm(l.X1 ~ light + rocks.big, sem.dat),
-                lm(l.X2 ~ light + rocks.big, sem.dat), 
-                (l.A %~~% l.R),
-                (l.A %~~% l.D),
-                (l.R %~~% l.D),
-                (l.A %~~% l.X1),
-                (l.R %~~% l.X1)
-                )
-
-
-summary(mod.l.a)
-summary(mod.l.r)
-summary(mod.l.d)
-summary(mod.l.com)
-summary(mod.l.all)
-
-mod.v.a <- psem(lm(litter ~ crown, sem.dat), 
-                lm(light ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(rocks.small ~ litter, sem.dat),
-                (rocks.big %~~% rocks.small),
-                lm(p.A ~ rocks.big + rocks.small + light, sem.dat))
-mod.v.r <- psem(lm(litter ~ crown, sem.dat), 
-                lm(light ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(rocks.small ~ litter, sem.dat),
-                (rocks.big %~~% rocks.small),
-                lm(p.R ~ rocks.big + rocks.small + light, sem.dat))
-mod.v.d <- psem(lm(litter ~ crown, sem.dat), 
-                lm(light ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(rocks.small ~ litter, sem.dat),
-                (rocks.big %~~% rocks.small),
-                lm(p.D ~ rocks.big + rocks.small + light, sem.dat))
-mod.v.com <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(rocks.small ~ litter, sem.dat),
-                (rocks.big %~~% rocks.small),
-                lm(p.X1 ~ light + rocks.small, sem.dat),
-                lm(p.X2 ~ light + rocks.small, sem.dat),
-                lm(p.X3 ~ light + rocks.small, sem.dat))
-mod.v.all <- psem(lm(litter ~ crown, sem.dat), 
-                lm(rocks.big ~ litter, sem.dat),
-                lm(rocks.small ~ litter, sem.dat),
-                (rocks.big %~~% rocks.small),
-                lm(p.A ~ light + rocks.small, sem.dat),
-                lm(p.R ~ light + rocks.small + litter, sem.dat),
-                lm(p.D ~ light + rocks.small, sem.dat),
-                lm(p.X1 ~ light + rocks.small, sem.dat),
-                lm(p.X2 ~ light + rocks.small, sem.dat), 
-                lm(p.X3 ~ light + rocks.small, sem.dat), 
-                (p.A %~~% p.X2),
-                (p.A %~~% p.R),
-                (p.A %~~% p.D),
-                (p.R %~~% p.D),
-                (p.A %~~% p.X1),
-                (p.R %~~% p.X1)
-                )
-
-summary(mod.v.a)
-summary(mod.v.r)
-summary(mod.v.d)
-summary(mod.v.com)
-
-summary(mod.l.all)
-summary(mod.v.all)
 
 ```
 
@@ -1451,7 +1369,6 @@ lav.l.all <- 'litter ~ crown
               l.R ~~ l.X1
              '
 
-
 lav.v.all <- 'litter ~ crown
               rocks.big ~ litter
               rocks.small ~ litter
@@ -1470,18 +1387,54 @@ lav.v.all <- 'litter ~ crown
               p.R ~~ p.X1
              '
 
+lav.l.rot.all <- 'litter ~ crown
+              rocks.big ~ litter
+              l.A ~ light + rocks.big
+              l.R ~ light + rocks.big
+              l.D ~ light + rocks.big
+              rot.l.X1 ~ light + rocks.big
+              rot.l.X2 ~ light + rocks.big
+              l.A ~~ l.R
+              l.A ~~ l.D
+              l.R ~~ l.D
+              l.A ~~ rot.l.X1
+              l.R ~~ rot.l.X1
+             '
+
+lav.v.rot.all <- 'litter ~ crown
+              rocks.big ~ litter
+              rocks.small ~ litter
+              rocks.big ~~ rocks.small
+              p.A ~ rocks.small
+              p.R ~ rocks.small  + litter
+              p.D ~ rocks.small
+              rot.p.X1 ~ light + rocks.small
+              rot.p.X2 ~ light + rocks.small
+              rot.p.X3 ~ light + rocks.small
+              p.A ~~ rot.p.X2
+              p.A ~~ p.R
+              p.A ~~ p.D
+              p.R ~~ p.D
+              p.A ~~ rot.p.X1
+              p.R ~~ rot.p.X1
+             '
+
 std <- function(x){(x - mean(x)) / sd(x)}
 
 fit.l.all <- lavaan::sem(lav.l.all, data = apply(sem.dat, 2, std))
 fit.v.all <- lavaan::sem(lav.v.all, data = apply(sem.dat, 2, std))
-
-varTable(fit.l.all)
-varTable(fit.v.all)
+fit.l.rot.all <- lavaan::sem(lav.l.rot.all, data = apply(sem.dat, 2, std))
+fit.v.rot.all <- lavaan::sem(lav.v.rot.all, data = apply(sem.dat, 2, std))
 
 summary(fit.l.all)
 summary(fit.v.all)
+summary(fit.l.rot.all)
+summary(fit.v.rot.all)
 
 ```
+
+
+
 
 ## SEM Plots
 
@@ -1510,6 +1463,33 @@ lay <- get_layout("crown", "", "",            "p.A",
                   rows = 6)
 
 graph_sem(fit.v.all, layout = lay)
+
+```
+
+```{r plot-sem-tidy-lichen-rot, cache = FALSE}
+
+lay <- get_layout("crown", "", "",     "l.A",
+                  "",      "litter", "",          "l.R",
+                  "",      "", "",          "l.D",
+                  "",      "", "",    "l.X1",
+                  "",      "rocks.big", "", "l.X2",
+                  rows = 5)
+
+graph_sem(fit.l.rot.all, layout = lay)
+
+```
+
+```{r plot-sem-tidy-plant-rot, cache = FALSE}
+
+lay <- get_layout("crown", "", "",            "p.A",
+                  "",      "litter", "",       "p.R",
+                  "",      "", "",            "p.D",
+                  "",      "", "",      "p.X1",
+                  "",      "rocks.small", "", "p.X2",
+                  "",    "", "",     "p.X3",
+                  rows = 6)
+
+graph_sem(fit.v.rot.all, layout = lay)
 
 ```
 
