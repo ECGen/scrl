@@ -1483,9 +1483,14 @@ summary(fit.v.rot.all)
 
 ## SEM Modification Indices
 
-```{r sem-mod-indices, results = "asis"}
+```{r sem-mod-indices-lichens, results = "asis"}
 
 xtable::xtable(modindices(fit.l.rot.all))
+
+```
+
+```{r sem-mod-indices-plants, results = "asis"}
+
 xtable::xtable(modindices(fit.v.rot.all))
 
 ```
