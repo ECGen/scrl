@@ -1,9 +1,10 @@
 ---
 title: "Rock Lichen data from Sunset Crater"
 author: M.K. Lau 
-output: 
-html_document: 
-keep_md: yes
+date: \today
+header-includes:
+  - \usepackage{placeins}
+output: pdf_document
 
 ---
 
@@ -1483,13 +1484,13 @@ summary(fit.v.rot.all)
 
 ## SEM Modification Indices
 
-```{r sem-mod-indices-lichens, results = "tex"}
+```{r sem-mod-indices-lichens, results = "asis"}
 
 xtable::xtable(modindices(fit.l.rot.all))
 
 ```
 
-```{r sem-mod-indices-plants, results = "tex"}
+```{r sem-mod-indices-plants, results = "asis"}
 
 xtable::xtable(modindices(fit.v.rot.all))
 
@@ -1509,7 +1510,7 @@ xtable::xtable(table_results(fit.v.rot.all))
 
 ## SEM Model Fit Measures
 
-```{r sem-fit-measures, results = "asis"}
+```{r sem-fit-measures, results = "asis", regfloat = FALSE}
 
 sem.fm.l.all <- fitMeasures(fit.l.all)
 sem.fm.v.all <- fitMeasures(fit.v.all)
