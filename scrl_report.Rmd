@@ -1495,21 +1495,38 @@ xtable::xtable(modindices(fit.v.rot.all))
 
 ```{r sem-params, results = "asis"}
 
-xtable::xtable(parameterEstimates(fit.l.rot.all))
-xtable::xtable(parameterEstimates(fit.v.rot.all))
+xtable::xtable(table_results(fit.l.all))
+xtable::xtable(table_results(fit.v.all))
+xtable::xtable(table_results(fit.l.rot.all))
+xtable::xtable(table_results(fit.v.rot.all))
 
 ```
 
 ## SEM Model Fit Measures
 
-```{r sem-fit-measures}
+```{r sem-fit-measures, results = "asis"}
 
 sem.fm.l.all <- fitMeasures(fit.l.all)
 sem.fm.v.all <- fitMeasures(fit.v.all)
 sem.fm.l.rot.all <- fitMeasures(fit.l.rot.all)
 sem.fm.v.rot.all <- fitMeasures(fit.v.rot.all)
 
+sem.fm.tab.all <- rbind(sem.fm.l.all[c("chisq", "df", "pvalue")],
+                        sem.fm.v.all[c("chisq", "df", "pvalue")])
+rownames(sem.fm.tab.all) <- c("Lichens", "Plants")
+colnames(sem.fm.tab.all) <- c("$\\chi^{2}$", "\\textit{df}", "\\textit{p}-value")
+sem.fm.tab.rot.all <- rbind(sem.fm.l.rot.all[c("chisq", "df", "pvalue")],
+                        sem.fm.v.rot.all[c("chisq", "df", "pvalue")])
+rownames(sem.fm.tab.rot.all) <- c("Lichens", "Plants")
+colnames(sem.fm.tab.rot.all) <- c("$\\chi^{2}$", "\\textit{df}", "\\textit{p}-value")
+
+print(xtable::xtable(sem.fm.tab.all, digits = 3), 
+                     sanitize.text.function = function(x) {x})
+print(xtable::xtable(sem.fm.tab.rot.all, digits = 3), 
+                     sanitize.text.function = function(x) {x})
+
 ```
+
 
 
 ## Ordination Plots
@@ -1568,7 +1585,8 @@ lay <- get_layout("crown", "light", "",            "p.A",
                   "",    "", "",     "p.X3",
                   rows = 9)
 
-graph_sem(fit.v.all, layout = lay)
+tg.v.all <- prepare_graph(fit.v.all, layout = lay)
+plot(tg.v.all)
 
 ```
 
@@ -1582,7 +1600,8 @@ lay <- get_layout("crown", "light", "",     "l.A",
                   "",      "rock.lg", "", "",
                   rows = 6)
 
-graph_sem(fit.l.rot.all, layout = lay)
+tg.l.rot.all <- prepare_graph(fit.l.rot.all, layout = lay)
+plot(tg.l.rot.all)
 
 ```
 
@@ -1596,7 +1615,8 @@ lay <- get_layout("crown", "light", "",            "p.A",
                   "",      "rock.sm", "", "",
                   rows = 6)
 
-graph_sem(fit.v.rot.all, layout = lay)
+tg.v.rot.all <- prepare_graph(fit.v.rot.all, layout = lay)
+plot(tg.v.rot.all)
 
 ```
 
