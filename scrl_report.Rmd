@@ -1747,16 +1747,15 @@ plot(tg.v.rot.all)
   models showing significant differences from their observed
   covariance matrices based on $X^2$ Goodness of Fit tests.
 - Ultimately, moth induced changes explained significant amounts of
-  community variation in differences in lichen abundance ($R^2$ = `r
-  r2.l.rot.all["l.A"]`), richness ($R^2$ = `r r2.l.rot.all["l.R"]`)
+  community variation in differences in lichen abundance 
+  ($R^2$ = `r r2.l.rot.all["l.A"]`), richness ($R^2$ = `r r2.l.rot.all["l.R"]`)
   and diversity ($R^2$ = `r r2.l.rot.all["l.D"]`), as well as in plant
-  community differences in abundance ($R^2$ = `r
-  r2.v.rot.all["p.A"]`), richness ($R^2$ = `r r2.v.rot.all["p.A"]`)
+  community differences in abundance ($R^2$ = `r r2.v.rot.all["p.A"]`), 
+  richness ($R^2$ = `r r2.v.rot.all["p.A"]`)
   and diversity ($R^2$ = `r r2.v.rot.all["p.D"]`). Whole community
   differences between moth susceptible and resistant trees were also
   signifcantly explained by crown size differences for both lichens
-  ($R^2$ = `r r2.l.rot.all["l.X1"]`) and plants ($R^2$ = `r
-  r2.v.rot.all["p.D"]`).
+  ($R^2$ = `r r2.l.rot.all["l.X1"]`) and plants ($R^2$ = `r r2.v.rot.all["p.D"]`).
 - See SEM path diagrams
 
 
