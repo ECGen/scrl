@@ -1773,9 +1773,11 @@ plot(tg.v.rot.all)
 ```{r table-export, results = "hide"}
 
 write.csv(file = "results/sem_results_lichen.csv",
-          table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")])
+          table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")],
+          row.names = FALSE)
 write.csv(file = "results/sem_results_plant.csv",
-          table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")])
+          table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")],
+          row.names = FALSE)
 
 ```
 
