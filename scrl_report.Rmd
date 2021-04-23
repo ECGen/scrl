@@ -1467,13 +1467,11 @@ lav.l.rot.all <- 'light ~ crown
                   light ~ trunk
                   litter ~ trunk
                   rock.lg ~ litter
-                  rock.sm ~ litter
-                  rock.lg ~~ rock.sm
-                  l.A ~ light + rock.lg + rock.sm
-                  l.R ~ light + rock.lg + rock.sm
-                  l.D ~ light + rock.lg + rock.sm
-                  rot.l.X1 ~ light + rock.lg + rock.sm
-                  rot.l.X2 ~ light + rock.lg + rock.sm
+                  l.A ~ light + rock.lg 
+                  l.R ~ light + rock.lg 
+                  l.D ~ light + rock.lg 
+                  rot.l.X1 ~ light + rock.lg 
+                  rot.l.X2 ~ light + rock.lg 
                   l.A ~~ l.R
                   l.A ~~ l.D
                   l.R ~~ l.D
@@ -1702,6 +1700,18 @@ plot(tg.v.rot.all)
 ```
 
 
+## SEM Methods
+
+We constructed *a priori* models based on our hypotheses of the
+effects of tree traits on the two communities, lichens and plants.  We
+used the differences beteween moth susceptible and resistant trees for
+all variables in structural model using linear regressions with only
+the measured variables. Models were fit to the standardized variables
+using a maximum likelihood estimator and a $X^2$ goodness of fit test
+using the *Lavaan* package in R (Rosseel 2012).
+
+Yves Rosseel (2012). lavaan: An R Package for Structural Equation
+  Modeling. Journal of Statistical Software, 48(2), 1-36.
 
 
 ## Causal Pathway of Moth Susceptibility Effects on Communities
