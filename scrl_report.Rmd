@@ -1370,6 +1370,7 @@ v.com.dif.vec.rot <- envfit(v.com.dif.ord.proc,
 
 sem.dat <- data.frame(tra.dif, env.dif, l.ard.dif, v.ard.dif, l.com.dif.ord, v.com.dif.ord, l.com.dif.ord.proc, v.com.dif.ord.proc)
 colnames(sem.dat)[colnames(sem.dat) == "crown.radius"] <- "crown"
+colnames(sem.dat)[colnames(sem.dat) == "trunk.radius"] <- "trunk"
 
 ```
 
@@ -1491,6 +1492,41 @@ lav.v.rot.nolight <- 'litter ~ crown
                   p.A ~~ rot.p.X1
                   p.R ~~ rot.p.X1
                  '
+lav.l.rot.arc <- 'light ~ crown
+                  litter ~ crown
+                  light ~ trunk
+                  litter ~ trunk
+                  rock.lg ~ litter
+                  l.A ~ light + rock.lg 
+                  l.R ~ light + rock.lg 
+                  l.D ~ light + rock.lg 
+                  rot.l.X1 ~ light + rock.lg 
+                  rot.l.X2 ~ light + rock.lg 
+                  l.A ~~ l.R
+                  l.A ~~ l.D
+                  l.R ~~ l.D
+                  l.A ~~ rot.l.X1
+                  l.R ~~ rot.l.X1
+                 '
+lav.v.rot.arc <- 'light ~ crown
+                  litter ~ crown
+                  light ~ trunk
+                  litter ~ trunk
+                  rock.sm ~ litter
+                  p.A ~ light + rock.sm 
+                  p.R ~ light + rock.sm
+                  p.D ~ light + rock.sm 
+                  rot.p.X1 ~ light + rock.sm 
+                  rot.p.X2 ~ light + rock.sm 
+                  rot.p.X3 ~ light + rock.sm 
+                  p.A ~~ rot.p.X2
+                  p.A ~~ p.R
+                  p.A ~~ p.D
+                  p.R ~~ p.D
+                  p.A ~~ rot.p.X1
+                  p.R ~~ rot.p.X1
+                 '
+
 
 std <- function(x){(x - mean(x)) / sd(x)}
 
@@ -1510,6 +1546,10 @@ set.seed(12345)
 fit.l.rot.nolight <- lavaan::sem(lav.l.rot.nolight, data = apply(sem.dat, 2, std))
 set.seed(12345)
 fit.v.rot.nolight <- lavaan::sem(lav.v.rot.nolight, data = apply(sem.dat, 2, std))
+set.seed(12345)
+fit.l.rot.arc <- lavaan::sem(lav.l.rot.arc, data = apply(sem.dat, 2, std))
+set.seed(12345)
+fit.v.rot.arc <- lavaan::sem(lav.v.rot.arc, data = apply(sem.dat, 2, std))
 
 summary(fit.l.all.raw, rsquare = TRUE)
 summary(fit.v.all.raw, rsquare = TRUE)
@@ -1517,6 +1557,8 @@ summary(fit.l.all, rsquare = TRUE)
 summary(fit.v.all, rsquare = TRUE)
 summary(fit.l.rot.all, rsquare = TRUE)
 summary(fit.v.rot.all, rsquare = TRUE)
+summary(fit.l.rot.arc, rsquare = TRUE)
+summary(fit.v.rot.arc, rsquare = TRUE)
 summary(fit.l.rot.nolight, rsquare = TRUE)
 summary(fit.v.rot.nolight, rsquare = TRUE)
 
@@ -1550,7 +1592,7 @@ r2.v.rot.all <- get_R2(fit.v.rot.all)
 
 ```{r sem-pairs-traits}
 
-pairs.panels(sem.dat[, c("trunk.radius", "crown", "litter", "light", "rock.lg", "rock.sm")])
+pairs.panels(sem.dat[, c("trunk", "crown", "litter", "light", "rock.lg", "rock.sm")])
 
 ```
 
