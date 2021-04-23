@@ -1755,7 +1755,8 @@ plot(tg.v.rot.all)
   and diversity ($R^2$ = `r r2.v.rot.all["p.D"]`). Whole community
   differences between moth susceptible and resistant trees were also
   signifcantly explained by crown size differences for both lichens
-  ($R^2$ = `r r2.l.rot.all["l.X1"]`) and plants ($R^2$ = `r r2.v.rot.all["p.D"]`).
+  ($R^2$ = `r r2.l.rot.all["rot.l.X1"]`) and 
+  plants ($R^2$ = `r r2.v.rot.all["rot.v.X1"]`).
 - See SEM path diagrams
 
 
