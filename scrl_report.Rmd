@@ -1770,15 +1770,19 @@ plot(tg.v.rot.all)
    - As small rock differences increase, plant differences decrease
 
 
-```{r table-export, results = "asis"}
+```{r table-export, results = "hide"}
 
-## SEE Lavann use case in Dick-Duck-Go
-## https://nickmichalak.com/post/2019-02-14-testing-conditional-indirect-effects-mediation-in-r/testing-conditional-indirect-effects-mediation-in-r/
+write.csv(file = "results/sem_results_lichen.csv",
+          table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")])
+write.csv(file = "results/sem_results_plant.csv",
+          table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")])
 
-## Lichen SEM Regressions
+```
+
+```{r table-for-export, results = "asis", echo = FALSE}
+
 kable(table_results(fit.l.rot.all))
-
-## Plant SEM Regressions
 kable(table_results(fit.v.rot.all))
 
 ```
+
