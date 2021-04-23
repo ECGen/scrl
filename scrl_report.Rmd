@@ -54,7 +54,7 @@ functions used in the analysis.
 
 cran.pkgs <- c("reshape2", "vegan", "ecodist", "xtable", "knitr",
                "semPlot", "lavaan", "piecewiseSEM", "distantia", 
-               "tidySEM", "readxl")
+               "tidySEM", "readxl", "psych")
 
 ## install packages that are not installed
 if (any(!(cran.pkgs %in% installed.packages()[, 1]))){
@@ -1473,14 +1473,36 @@ fit.v.all <- lavaan::sem(lav.v.all, data = apply(sem.dat, 2, std))
 fit.l.rot.all <- lavaan::sem(lav.l.rot.all, data = apply(sem.dat, 2, std))
 fit.v.rot.all <- lavaan::sem(lav.v.rot.all, data = apply(sem.dat, 2, std))
 
-summary(fit.l.all.raw)
-summary(fit.v.all.raw)
-summary(fit.l.all)
-summary(fit.v.all)
-summary(fit.l.rot.all)
-summary(fit.v.rot.all)
+summary(fit.l.all.raw, rsquare = TRUE)
+summary(fit.v.all.raw, rsquare = TRUE)
+summary(fit.l.all, rsquare = TRUE)
+summary(fit.v.all, rsquare = TRUE)
+summary(fit.l.rot.all, rsquare = TRUE)
+summary(fit.v.rot.all, rsquare = TRUE)
 
 ```
+
+## SEM variable inter-correlations plot
+
+
+```{r sem-pairs}
+
+pairs.panels(sen.dat)
+
+```
+
+## SEM Skew-Kurtosis Check
+
+
+```{r sem-skew-kurt, results = "asis"}
+
+skc.sem <- skew_kurtosis(sem.dat)
+skc.sem.flags <- skc.sem[(abs(skc.sem[, "skew_2se"]) > 1 |
+                          abs(skc.sem[, "kurt_2se"]) > 1), ]
+kable(skc.sem.flags)
+
+```
+
 
 ## SEM Modification Indices
 
@@ -1627,11 +1649,13 @@ plot(tg.v.rot.all)
 ```
 
 
+
+
 ## Causal Pathway of Moth Susceptibility Effects on Communities
 
 
 - Moth susceptiblity indirectly influences plants and lichen
-   1. Canopy effect of moth increases litter effects but does not
+   1. Crown effect of moth increases litter effects but does not
    affect light differences
    2. Differences in litter between moth susceptible and resistant
    trees decreases the differences of both large and small rocks
@@ -1640,6 +1664,27 @@ plot(tg.v.rot.all)
       in small rocks decreases the plant community differences
       (abundance richness, diversity and composition) between
       susceptible and resistant trees
-- Both SEMs (lichen and plant) showed accetable goodness of fit
+- Both SEMs fit the data showing neither the lichen ($df$ = , $Chi^2$
+  = , $p-value$ = ) nor the plant ($df$ = , $Chi^2$ = , $p-value$ = )
+  models showing significant differences from their observed
+  covariance matrices based on $\Chi^2$ Goodness of Fit tests.
+- Ultimately, moth induced changes to crown size explained
+  significant amounts of community variation in differences in lichen
+  abundance, richness and diversity, as well as significant variation
+  in plant community differences in abundance ($R^2$ = ), richness
+  ($R^2$ = ) and diversity ($R^2$ = ). Whole community differences
+  between moth susceptible and resistant trees were also signifcantly
+  explained by crown size differences for both lichens ($R^2$ = ) and
+  plants ($R^2$ = ).
 - See SEM path diagrams
 
+
+```{r table-export, results = "hide"}
+
+## Lichen SEM Regressions
+
+## Plant SEM Regressions
+
+
+
+```
