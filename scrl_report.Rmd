@@ -1742,8 +1742,12 @@ plot(tg.v.rot.all)
       in small rocks decreases the plant community differences
       (abundance richness, diversity and composition) between
       susceptible and resistant trees
-- Both SEMs fit the data showing neither the lichen ($df$ = , $X^2$
-  = , $p-value$ = ) nor the plant ($df$ = , $X^2$ = , $p-value$ = )
+- Both SEMs fit the data lichen ($df$ = `r sem.fm.tab.rot.all["Lichens", 2]`, 
+  $X^2$ = `r sem.fm.tab.rot.all["Lichens", 1]`, $p$-value =
+  `r sem.fm.tab.rot.all["Lichens", 3]`) 
+  nor the plant ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, 
+  $X^2$ = `r sem.fm.tab.rot.all["Plants", 1]`, 
+  $p$-value = `r sem.fm.tab.rot.all["Plants", 3]`)
   models showing significant differences from their observed
   covariance matrices based on $X^2$ Goodness of Fit tests.
 - Ultimately, moth induced changes explained significant amounts of
@@ -1758,17 +1762,23 @@ plot(tg.v.rot.all)
   ($R^2$ = `r r2.l.rot.all["rot.l.X1"]`) and 
   plants ($R^2$ = `r r2.v.rot.all["rot.p.X1"]`).
 - See SEM path diagrams
+- The effects can be interpreted as so:
+   - As crown differences increase, litter differences increase
+   - As litter differences increase, large rock differences decrease
+   - As litter differences increase, small rock differences decrease
+   - As large rock differences increase, lichen differences increase
+   - As small rock differences increase, plant differences decrease
 
 
-```{r table-export, results = "hide"}
+```{r table-export, results = "asis"}
 
 ## SEE Lavann use case in Dick-Duck-Go
 ## https://nickmichalak.com/post/2019-02-14-testing-conditional-indirect-effects-mediation-in-r/testing-conditional-indirect-effects-mediation-in-r/
 
 ## Lichen SEM Regressions
+kable(table_results(fit.l.rot.all))
 
 ## Plant SEM Regressions
-
-
+kable(table_results(fit.v.rot.all))
 
 ```
