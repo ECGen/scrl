@@ -1451,7 +1451,7 @@ lav.v.rot.all <- 'light ~ crown
                   litter ~ crown
                   rock.sm ~ litter
                   p.A ~ light + rock.sm 
-                  p.R ~ light + rock.sm  + litter 
+                  p.R ~ light + rock.sm
                   p.D ~ light + rock.sm 
                   rot.p.X1 ~ light + rock.sm 
                   rot.p.X2 ~ light + rock.sm 
@@ -1463,15 +1463,53 @@ lav.v.rot.all <- 'light ~ crown
                   p.A ~~ rot.p.X1
                   p.R ~~ rot.p.X1
                  '
+lav.l.rot.nolight <- 'litter ~ crown
+                  rock.lg ~ litter
+                  l.A ~ rock.lg 
+                  l.R ~ rock.lg 
+                  l.D ~ rock.lg 
+                  rot.l.X1 ~ rock.lg 
+                  rot.l.X2 ~ rock.lg 
+                  l.A ~~ l.R
+                  l.A ~~ l.D
+                  l.R ~~ l.D
+                  l.A ~~ rot.l.X1
+                  l.R ~~ rot.l.X1
+                 '
+lav.v.rot.nolight <- 'litter ~ crown
+                  rock.sm ~ litter
+                  p.A ~ rock.sm 
+                  p.R ~ rock.sm
+                  p.D ~ rock.sm 
+                  rot.p.X1 ~ rock.sm 
+                  rot.p.X2 ~ rock.sm 
+                  rot.p.X3 ~ rock.sm 
+                  p.A ~~ rot.p.X2
+                  p.A ~~ p.R
+                  p.A ~~ p.D
+                  p.R ~~ p.D
+                  p.A ~~ rot.p.X1
+                  p.R ~~ rot.p.X1
+                 '
 
 std <- function(x){(x - mean(x)) / sd(x)}
 
+set.seed(12345)
 fit.l.all.raw <- lavaan::sem(lav.l.all, data = sem.dat)
+set.seed(12345)
 fit.v.all.raw <- lavaan::sem(lav.v.all, data = sem.dat)
+set.seed(12345)
 fit.l.all <- lavaan::sem(lav.l.all, data = apply(sem.dat, 2, std))
+set.seed(12345)
 fit.v.all <- lavaan::sem(lav.v.all, data = apply(sem.dat, 2, std))
+set.seed(12345)
 fit.l.rot.all <- lavaan::sem(lav.l.rot.all, data = apply(sem.dat, 2, std))
+set.seed(12345)
 fit.v.rot.all <- lavaan::sem(lav.v.rot.all, data = apply(sem.dat, 2, std))
+set.seed(12345)
+fit.l.rot.nolight <- lavaan::sem(lav.l.rot.nolight, data = apply(sem.dat, 2, std))
+set.seed(12345)
+fit.v.rot.nolight <- lavaan::sem(lav.v.rot.nolight, data = apply(sem.dat, 2, std))
 
 summary(fit.l.all.raw, rsquare = TRUE)
 summary(fit.v.all.raw, rsquare = TRUE)
@@ -1479,6 +1517,31 @@ summary(fit.l.all, rsquare = TRUE)
 summary(fit.v.all, rsquare = TRUE)
 summary(fit.l.rot.all, rsquare = TRUE)
 summary(fit.v.rot.all, rsquare = TRUE)
+summary(fit.l.rot.nolight, rsquare = TRUE)
+summary(fit.v.rot.nolight, rsquare = TRUE)
+
+```
+
+## SEM Variable R-Squares
+
+```{r sem-r2}
+
+get_R2 <- function(x){
+    out <- capture.output(summary(x, rsquare = TRUE))
+    out <- out[grep("R-Square:",out):length(out)]
+    out <- out[!(grepl("R-Square:", out)) & !(grepl("Estimate", out))]
+    out <- out[out != ""]
+    out <- strsplit(out, " ")
+    out <- lapply(out, function(x) x[x != ""])
+    out <- do.call(rbind, out)
+    out.names <- out[, 1]
+    out <- as.numeric(out[, 2])
+    names(out) <- out.names
+    return(out)
+}
+
+r2.l.rot.all <- get_R2(fit.l.rot.all)
+r2.v.rot.all <- get_R2(fit.v.rot.all)
 
 ```
 
@@ -1487,7 +1550,7 @@ summary(fit.v.rot.all, rsquare = TRUE)
 
 ```{r sem-pairs}
 
-pairs.panels(sen.dat)
+pairs.panels(sem.dat)
 
 ```
 
@@ -1664,22 +1727,28 @@ plot(tg.v.rot.all)
       in small rocks decreases the plant community differences
       (abundance richness, diversity and composition) between
       susceptible and resistant trees
-- Both SEMs fit the data showing neither the lichen ($df$ = , $Chi^2$
-  = , $p-value$ = ) nor the plant ($df$ = , $Chi^2$ = , $p-value$ = )
+- Both SEMs fit the data showing neither the lichen ($df$ = , $X^2$
+  = , $p-value$ = ) nor the plant ($df$ = , $X^2$ = , $p-value$ = )
   models showing significant differences from their observed
-  covariance matrices based on $\Chi^2$ Goodness of Fit tests.
-- Ultimately, moth induced changes to crown size explained
-  significant amounts of community variation in differences in lichen
-  abundance, richness and diversity, as well as significant variation
-  in plant community differences in abundance ($R^2$ = ), richness
-  ($R^2$ = ) and diversity ($R^2$ = ). Whole community differences
-  between moth susceptible and resistant trees were also signifcantly
-  explained by crown size differences for both lichens ($R^2$ = ) and
-  plants ($R^2$ = ).
+  covariance matrices based on $X^2$ Goodness of Fit tests.
+- Ultimately, moth induced changes explained significant amounts of
+  community variation in differences in lichen abundance ($R^2$ = `{r
+  r2.l.rot.all["l.A"]`), richness ($R^2$ = `{r r2.l.rot.all["l.R"]`)
+  and diversity ($R^2$ = `{r r2.l.rot.all["l.D"]`), as well as in
+  plant community differences in abundance ($R^2$ = `{r
+  r2.v.rot.all["p.A"]`), richness ($R^2$ = `{r r2.v.rot.all["p.A"]`)
+  and diversity ($R^2$ = `{r r2.v.rot.all["p.D"]`). Whole community
+  differences between moth susceptible and resistant trees were also
+  signifcantly explained by crown size differences for both lichens
+  ($R^2$ = `{r r2.l.rot.all["l.X1"]`) and plants ($R^2$ = `{r
+  r2.v.rot.all["p.D"]`).
 - See SEM path diagrams
 
 
 ```{r table-export, results = "hide"}
+
+## SEE Lavann use case in Dick-Duck-Go
+## https://nickmichalak.com/post/2019-02-14-testing-conditional-indirect-effects-mediation-in-r/testing-conditional-indirect-effects-mediation-in-r/
 
 ## Lichen SEM Regressions
 
