@@ -1434,36 +1434,6 @@ lav.v.all <- 'light ~ crown
               p.A ~~ p.X1
               p.R ~~ p.X1
              '
-lav.l.rot.all <- 'light ~ crown
-                  litter ~ crown
-                  rock.lg ~ litter
-                  l.A ~ light + rock.lg 
-                  l.R ~ light + rock.lg 
-                  l.D ~ light + rock.lg 
-                  rot.l.X1 ~ light + rock.lg 
-                  rot.l.X2 ~ light + rock.lg 
-                  l.A ~~ l.R
-                  l.A ~~ l.D
-                  l.R ~~ l.D
-                  l.A ~~ rot.l.X1
-                  l.R ~~ rot.l.X1
-                 '
-lav.v.rot.all <- 'light ~ crown
-                  litter ~ crown
-                  rock.sm ~ litter
-                  p.A ~ light + rock.sm 
-                  p.R ~ light + rock.sm
-                  p.D ~ light + rock.sm 
-                  rot.p.X1 ~ light + rock.sm 
-                  rot.p.X2 ~ light + rock.sm 
-                  rot.p.X3 ~ light + rock.sm 
-                  p.A ~~ rot.p.X2
-                  p.A ~~ p.R
-                  p.A ~~ p.D
-                  p.R ~~ p.D
-                  p.A ~~ rot.p.X1
-                  p.R ~~ rot.p.X1
-                 '
 lav.l.rot.nolight <- 'litter ~ crown
                   rock.lg ~ litter
                   l.A ~ rock.lg 
@@ -1492,7 +1462,7 @@ lav.v.rot.nolight <- 'litter ~ crown
                   p.A ~~ rot.p.X1
                   p.R ~~ rot.p.X1
                  '
-lav.l.rot.arc <- 'light ~ crown
+lav.l.rot.all <- 'light ~ crown
                   litter ~ crown
                   light ~ trunk
                   litter ~ trunk
@@ -1508,7 +1478,7 @@ lav.l.rot.arc <- 'light ~ crown
                   l.A ~~ rot.l.X1
                   l.R ~~ rot.l.X1
                  '
-lav.v.rot.arc <- 'light ~ crown
+lav.v.rot.all <- 'light ~ crown
                   litter ~ crown
                   light ~ trunk
                   litter ~ trunk
@@ -1546,10 +1516,6 @@ set.seed(12345)
 fit.l.rot.nolight <- lavaan::sem(lav.l.rot.nolight, data = apply(sem.dat, 2, std))
 set.seed(12345)
 fit.v.rot.nolight <- lavaan::sem(lav.v.rot.nolight, data = apply(sem.dat, 2, std))
-set.seed(12345)
-fit.l.rot.arc <- lavaan::sem(lav.l.rot.arc, data = apply(sem.dat, 2, std))
-set.seed(12345)
-fit.v.rot.arc <- lavaan::sem(lav.v.rot.arc, data = apply(sem.dat, 2, std))
 
 summary(fit.l.all.raw, rsquare = TRUE)
 summary(fit.v.all.raw, rsquare = TRUE)
@@ -1557,8 +1523,6 @@ summary(fit.l.all, rsquare = TRUE)
 summary(fit.v.all, rsquare = TRUE)
 summary(fit.l.rot.all, rsquare = TRUE)
 summary(fit.v.rot.all, rsquare = TRUE)
-summary(fit.l.rot.arc, rsquare = TRUE)
-summary(fit.v.rot.arc, rsquare = TRUE)
 summary(fit.l.rot.nolight, rsquare = TRUE)
 summary(fit.v.rot.nolight, rsquare = TRUE)
 

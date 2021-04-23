@@ -1,6 +1,8 @@
 "label","est_sig","se","pval"
-"light.ON.crown","-0.04","0.18","0.84"
-"litter.ON.crown","0.52***","0.16","0.00"
+"light.ON.crown","-0.05","0.20","0.80"
+"litter.ON.crown","0.59***","0.17","0.00"
+"light.ON.trunk","0.03","0.20","0.87"
+"litter.ON.trunk","-0.17","0.17","0.31"
 "rock.lg.ON.litter","-0.90***","0.08","0.00"
 "l.A.ON.light","0.04","0.15","0.81"
 "l.A.ON.rock.lg","0.53***","0.15","0.00"
@@ -17,8 +19,8 @@
 "l.R.WITH.l.D","0.30**","0.09","0.00"
 "l.A.WITH.rot.l.X1","0.68***","0.18","0.00"
 "l.R.WITH.rot.l.X1","0.24*","0.11","0.02"
-"Variances.light","0.97***","0.25","0.00"
-"Variances.litter","0.70***","0.18","0.00"
+"Variances.light","0.96***","0.25","0.00"
+"Variances.litter","0.68***","0.18","0.00"
 "Variances.rock.lg","0.18***","0.05","0.00"
 "Variances.l.A","0.69***","0.18","0.00"
 "Variances.l.R","0.38***","0.10","0.00"
@@ -31,3 +33,5 @@
 "l.D.WITH.rot.l.X2","0.11","0.12","0.37"
 "rot.l.X1.WITH.rot.l.X2","0.15","0.16","0.32"
 "Variances.crown","0.97","0.00",NA
+"crown.WITH.trunk","0.41","0.00",NA
+"Variances.trunk","0.97","0.00",NA
