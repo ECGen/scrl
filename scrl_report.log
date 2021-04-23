@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  23 APR 2021 12:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  23 APR 2021 12:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -795,7 +795,7 @@ st/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
 ype1/public/lm/lmtk10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
 c/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmtti
 10.pfb>
-Output written on scrl_report.pdf (94 pages, 833972 bytes).
+Output written on scrl_report.pdf (94 pages, 833970 bytes).
 PDF statistics:
  789 PDF objects out of 1000 (max. 8388607)
  635 compressed objects within 7 object streams
