@@ -1467,11 +1467,13 @@ lav.l.rot.all <- 'light ~ crown
                   light ~ trunk
                   litter ~ trunk
                   rock.lg ~ litter
-                  l.A ~ light + rock.lg 
-                  l.R ~ light + rock.lg 
-                  l.D ~ light + rock.lg 
-                  rot.l.X1 ~ light + rock.lg 
-                  rot.l.X2 ~ light + rock.lg 
+                  rock.sm ~ litter
+                  rock.lg ~~ rock.sm
+                  l.A ~ light + rock.lg + rock.sm
+                  l.R ~ light + rock.lg + rock.sm
+                  l.D ~ light + rock.lg + rock.sm
+                  rot.l.X1 ~ light + rock.lg + rock.sm
+                  rot.l.X2 ~ light + rock.lg + rock.sm
                   l.A ~~ l.R
                   l.A ~~ l.D
                   l.R ~~ l.D
@@ -1668,50 +1670,17 @@ plot(v.com.dif.vec.rot, add = TRUE)
 ## SEM Plots
 
 
-```{r plot-sem-tidy-lichen}
-
-lay <- get_layout("crown", "light", "",     "l.A",
-                  "",      "", "",            "",
-                  "",      "litter", "",          "l.R",
-                  "",      "", "",            "",
-                  "",      "", "",          "l.D",
-                  "",      "", "",            "",
-                  "",      "", "",    "l.X1",
-                  "",      "rock.lg", "", "l.X2",
-                  rows = 8)
-tg.l.all <- prepare_graph(fit.l.all, layout = lay)
-plot(tg.l.all)
-
-```
-
-```{r plot-sem-tidy-plant}
-
-lay <- get_layout("crown", "light", "",            "p.A",
-                  "",      "", "",            "",
-                  "",      "litter", "",       "p.R",
-                  "",      "", "",            "",
-                  "",      "", "",            "p.D",
-                  "",      "", "",            "",
-                  "",      "", "",      "p.X1",
-                  "",      "rock.sm", "", "p.X2",
-                  "",    "", "",     "p.X3",
-                  rows = 9)
-
-tg.v.all <- prepare_graph(fit.v.all, layout = lay)
-plot(tg.v.all)
-
-```
 
 ```{r plot-sem-tidy-lichen-rot}
 
-lay <- get_layout("crown", "light", "",     "l.A",
-                  "",      "", "",    "",
-                  "",      "", "",          "l.R",
-                  "",      "litter", "",          "l.D",
-                  "",      "", "",    "rot.l.X1",
-                  "",      "rock.lg", "", "",
-                  rows = 6)
-
+lay <- get_layout("crown", "", "", "",     "l.A",
+                  "", "",      "", "", "",
+                  "", "",      "", "",          "l.R",
+                  "litter", "", "rock.lg", "", "",          
+                  "", "",      "", "", "l.D",
+                  "", "", "", "", "", 
+                  "", "",      "", "",    "rot.l.X1",
+                  rows = 7)
 tg.l.rot.all <- prepare_graph(fit.l.rot.all, layout = lay)
 plot(tg.l.rot.all)
 
@@ -1719,14 +1688,14 @@ plot(tg.l.rot.all)
 
 ```{r plot-sem-tidy-plant-rot}
 
-lay <- get_layout("crown", "light", "",            "p.A",
-                  "",      "", "",       "p.R",
-                  "",      "litter", "",            "p.D",
-                  "", "", "", "", 
-                  "",      "", "", "rot.p.X1",
-                  "",      "rock.sm", "", "",
-                  rows = 6)
-
+lay <- get_layout("crown", "", "", "",     "p.A",
+                  "", "",      "", "", "",
+                  "", "",      "", "",          "p.R",
+                  "litter", "", "rock.sm", "", "",          
+                  "", "",      "", "", "p.D",
+                  "", "", "", "", "", 
+                  "", "",      "", "",    "rot.p.X1",
+                  rows = 7)
 tg.v.rot.all <- prepare_graph(fit.v.rot.all, layout = lay)
 plot(tg.v.rot.all)
 
