@@ -1702,6 +1702,18 @@ plot(tg.v.rot.all)
 
 ## SEM Methods
 
+We used non-metric Multi-Dimensional Scaling (NMDS) to generate
+ordinations of the community differences between tree pairs. For both
+communities (lichens and plants) ordinations were conducted via the
+*vegan* package (Oksanen et al. 2019), using 100 random initial
+configurations with a maximum of 1000 iterations and a change in
+stress threshold of less than 10$^{-12}$. This was repeated for one to
+four dimension configurations, and the configuration with the lowest
+dimensionality and an unexplained variation less than 10\% was
+selected. Ordinated scores were then rotated for maximum correlation
+with the tree trait variables using a procrustes rotation (Oksanen et
+al. 2019).
+
 We constructed *a priori* models based on our hypotheses of the
 effects of tree traits on the two communities, lichens and plants.  We
 used the differences beteween moth susceptible and resistant trees for
@@ -1709,6 +1721,12 @@ all variables in structural model using linear regressions with only
 the measured variables. Models were fit to the standardized variables
 using a maximum likelihood estimator and a $X^2$ goodness of fit test
 using the *Lavaan* package in R (Rosseel 2012).
+
+Jari Oksanen, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
+  Pierre Legendre, Dan McGlinn, Peter R. Minchin, R. B. O'Hara, Gavin
+  L. Simpson, Peter Solymos, M. Henry H. Stevens, Eduard Szoecs and
+  Helene Wagner (2019). vegan: Community Ecology Package. R package
+  version 2.5-6. https://CRAN.R-project.org/package=vegan.
 
 Yves Rosseel (2012). lavaan: An R Package for Structural Equation
   Modeling. Journal of Statistical Software, 48(2), 1-36.
