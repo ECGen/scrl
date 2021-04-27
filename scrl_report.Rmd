@@ -314,7 +314,7 @@ ard.se <- tapply(ard.dat[, "diff"], ard.dat[, "Stat"], se)
 pdf(file = "./results/scrl_isp_ard.pdf", width = 9, height = 5)
 
 par(mfrow = c(1,2))
-bp.out <- barplot(ard.mu, col = "darkgrey", ylim = c(-5, 0), 
+bp.out <- barplot(ard.mu, col = "darkgrey", ylim = c(-0.5, 0), 
                   ylab = "Relativized Difference (S - R)", border = "NA")
 segments(bp.out[, 1], ard.mu + ard.se,
          bp.out[, 1], ard.mu - ard.se, 
@@ -870,12 +870,12 @@ v.ard.se <- tapply(v.ard.dat[, "diff"], v.ard.dat[, "Stat"], se)
 pdf(file = "./results/scrl_isp_ard_plant.pdf", width = 9, height = 5)
 
 par(mfrow = c(1,2))
-bp.out <- barplot(v.ard.mu, col = "darkgrey", ylim = c(-5, 0), 
+bp.out <- barplot(v.ard.mu, col = "darkgrey", ylim = c(-2.75, 0), 
                   ylab = "Relativized Difference (S - R)", border = "NA")
 segments(bp.out[, 1], v.ard.mu + v.ard.se,
          bp.out[, 1], v.ard.mu - v.ard.se, 
          lwd = 1.5)
-bp.out <- barplot(v.isp.mu, col = "darkgrey", ylim = c(-0.5, 0), 
+bp.out <- barplot(v.isp.mu, col = "darkgrey", ylim = c(-12.5, 0), 
                   ylab = "Difference (S - R)", border = "NA",
 			axisnames = TRUE, 
 			names.arg = sapply(names(v.isp.mu), 
