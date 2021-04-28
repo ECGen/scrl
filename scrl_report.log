@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  28 APR 2021 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  28 APR 2021 11:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -714,14 +714,14 @@ Package pdftex.def Info: scrl_report_files/figure-latex/plot-ord-rot-1.pdf  use
 d on input line 6289.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
 [84 <./scrl_report_files/figure-latex/plot-ord-1.pdf>]
-<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=514, 432.616
-26pt x 292.09125pt>
+<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=514, 429.605
+pt x 291.0875pt>
 File: scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf Graphic fil
 e (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-lichen-ro
-t-1.pdf  used on input line 6330.
-(pdftex.def)             Requested size: 432.635pt x 292.10388pt.
+t-1.pdf  used on input line 6331.
+(pdftex.def)             Requested size: 429.61049pt x 291.09122pt.
 [85 <./scrl_report_files/figure-latex/plot-ord-rot-1.pdf>]
 <scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf, id=529, 433.62pt
  x 292.09125pt>
@@ -729,7 +729,7 @@ File: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf Graphic file
  (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot
--1.pdf  used on input line 6356.
+-1.pdf  used on input line 6357.
 (pdftex.def)             Requested size: 433.63878pt x 292.10388pt.
 [86 <./scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>] [87 <./s
 crl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [88] [89] [90] [9
@@ -758,7 +758,7 @@ e/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2016/texm
 f-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
 ublic/lm/lmtti10.pfb>
-Output written on scrl_report.pdf (96 pages, 793256 bytes).
+Output written on scrl_report.pdf (96 pages, 793268 bytes).
 PDF statistics:
  791 PDF objects out of 1000 (max. 8388607)
  641 compressed objects within 7 object streams

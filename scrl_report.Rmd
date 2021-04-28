@@ -1738,6 +1738,7 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
                     "rot.l.X1", "label"] <- "axis 1"
 tg.l.rot.all[["rect_height"]] <- tg.l.rot.all[["rect_height"]] * 2
 tg.l.rot.all[["rect_width"]] <- tg.l.rot.all[["rect_width"]] * 2
+tg.l.rot.all[["text_size"]] <- tg.l.rot.all[["text_size"]] * 0.75
 plot(tg.l.rot.all)
 
 ```
