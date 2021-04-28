@@ -1726,6 +1726,16 @@ lay <- get_layout("crown", "", "", "",     "l.A",
                   "", "",      "", "",    "rot.l.X1",
                   rows = 7)
 tg.l.rot.all <- prepare_graph(fit.l.rot.all, layout = lay)
+nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
+                    "l.A", "label"] <- "Abundance"
+nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
+                    "l.R", "label"] <- "Richness"
+nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
+                    "l.D", "label"] <- "Diversity"
+nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
+                    "rock.lg", "label"] <- "Rock >3cm"
+nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
+                    "rot.l.X1", "label"] <- "Axis 1"
 plot(tg.l.rot.all)
 
 ```
