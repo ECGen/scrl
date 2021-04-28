@@ -1736,8 +1736,8 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
                     "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "rot.l.X1", "label"] <- "axis 1"
-tg.l.rot.all[["rect_height"]] <- tg.l.rot.all[["rect_height"]] * 1.25
-tg.l.rot.all[["rect_width"]] <- tg.l.rot.all[["rect_width"]] * 1.25
+tg.l.rot.all[["rect_height"]] <- tg.l.rot.all[["rect_height"]] * 2
+tg.l.rot.all[["rect_width"]] <- tg.l.rot.all[["rect_width"]] * 2
 plot(tg.l.rot.all)
 
 ```
