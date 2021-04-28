@@ -1736,9 +1736,6 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
                     "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "rot.l.X1", "label"] <- "axis 1"
-tg.l.rot.all[["rect_height"]] <- tg.l.rot.all[["rect_height"]] * 2
-tg.l.rot.all[["rect_width"]] <- tg.l.rot.all[["rect_width"]] * 2
-tg.l.rot.all[["text_size"]] <- tg.l.rot.all[["text_size"]] * 0.75
 plot(tg.l.rot.all)
 
 ```
@@ -1754,6 +1751,16 @@ lay <- get_layout("crown", "", "", "",     "p.A",
                   "", "",      "", "",    "rot.p.X1",
                   rows = 7)
 tg.v.rot.all <- prepare_graph(fit.v.rot.all, layout = lay)
+nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
+                    "p.A", "label"] <- "abundance"
+nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
+                    "p.R", "label"] <- "richness"
+nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
+                    "p.D", "label"] <- "diversity"
+nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
+                    "rock.sm", "label"] <- "rock <3cm"
+nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
+                    "rot.p.X1", "label"] <- "axis 1"
 plot(tg.v.rot.all)
 
 ```
