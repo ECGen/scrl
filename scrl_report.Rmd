@@ -1727,15 +1727,17 @@ lay <- get_layout("crown", "", "", "",     "l.A",
                   rows = 7)
 tg.l.rot.all <- prepare_graph(fit.l.rot.all, layout = lay)
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "l.A", "label"] <- "Abundance"
+                    "l.A", "label"] <- "abundance"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "l.R", "label"] <- "Richness"
+                    "l.R", "label"] <- "richness"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "l.D", "label"] <- "Diversity"
+                    "l.D", "label"] <- "diversity"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "rock.lg", "label"] <- "Rock >3cm"
+                    "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "rot.l.X1", "label"] <- "Axis 1"
+                    "rot.l.X1", "label"] <- "axis 1"
+nodes(tg.l.rot.all) <- data.frame(nodes(tg.l.rot.all), 
+                                  size = rep(2, nrow(nodes(tg.l.rot.all))))
 plot(tg.l.rot.all)
 
 ```
