@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  28 APR 2021 11:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  4 MAY 2021 18:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -630,118 +630,118 @@ s"], diff) and tapply(l.dat[, "Litter.."], l.dat[, "Tree.pairs"], diff)[]
 [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
 [45] [46] [47]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 3537.
+(Font)              <10> on input line 3588.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 3537.
+(Font)              <7> on input line 3588.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 3537.
-[48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61]
-Overfull \hbox (112.99329pt too wide) in paragraph at lines 4570--4570
+(Font)              <5> on input line 3588.
+[48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62]
+Overfull \hbox (112.99329pt too wide) in paragraph at lines 4682--4682
 []\T1/lmtt/m/n/10 ## Warning in procrustes(env.dif[, "rock.lg"], l.com.dif.ord)
 : X has fewer axes than Y: X adjusted to comform Y[] 
  []
 
 
-Overfull \hbox (112.99329pt too wide) in paragraph at lines 4580--4580
+Overfull \hbox (112.99329pt too wide) in paragraph at lines 4692--4692
 []\T1/lmtt/m/n/10 ## Warning in procrustes(env.dif[, "rock.sm"], v.com.dif.ord)
 : X has fewer axes than Y: X adjusted to comform Y[] 
  []
 
-[62] [63] [64]
-Underfull \vbox (badness 10000) detected at line 4872
+[63] [64] [65]
+Underfull \vbox (badness 10000) detected at line 4984
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4872
+Underfull \vbox (badness 10000) detected at line 4984
  []
 
-[65]
-Underfull \vbox (badness 10000) detected at line 4872
+[66]
+Underfull \vbox (badness 10000) detected at line 4984
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4872
+Underfull \vbox (badness 10000) detected at line 4984
  []
 
-[66] [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]
-<scrl_report_files/figure-latex/sem-pairs-traits-1.pdf, id=450, 419.5675pt x 27
+[67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]
+<scrl_report_files/figure-latex/sem-pairs-traits-1.pdf, id=456, 419.5675pt x 27
 5.0275pt>
 File: scrl_report_files/figure-latex/sem-pairs-traits-1.pdf Graphic file (type 
 pdf)
 <use scrl_report_files/figure-latex/sem-pairs-traits-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/sem-pairs-traits-1.pdf 
- used on input line 5722.
+ used on input line 5834.
 (pdftex.def)             Requested size: 419.56647pt x 275.02682pt.
-[81 <./scrl_report_files/figure-latex/sem-pairs-traits-1.pdf>]
-<scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf, id=466, 419.5675pt x 27
+[82 <./scrl_report_files/figure-latex/sem-pairs-traits-1.pdf>]
+<scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf, id=472, 419.5675pt x 27
 5.0275pt>
 File: scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf Graphic file (type 
 pdf)
 <use scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf 
- used on input line 5731.
+ used on input line 5843.
 (pdftex.def)             Requested size: 419.56647pt x 275.02682pt.
-<scrl_report_files/figure-latex/sem-pairs-plant-1.pdf, id=467, 419.5675pt x 275
+<scrl_report_files/figure-latex/sem-pairs-plant-1.pdf, id=473, 419.5675pt x 275
 .0275pt>
 File: scrl_report_files/figure-latex/sem-pairs-plant-1.pdf Graphic file (type p
 df)
 <use scrl_report_files/figure-latex/sem-pairs-plant-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/sem-pairs-plant-1.pdf  
-used on input line 5740.
+used on input line 5852.
 (pdftex.def)             Requested size: 419.56647pt x 275.02682pt.
-[82 <./scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf> <./scrl_report_fi
+[83 <./scrl_report_files/figure-latex/sem-pairs-lichen-1.pdf> <./scrl_report_fi
 les/figure-latex/sem-pairs-plant-1.pdf>]
 
-LaTeX Warning: Float too large for page by 274.76997pt on input line 5863.
+LaTeX Warning: Float too large for page by 274.76997pt on input line 5975.
 
 
-LaTeX Warning: Float too large for page by 406.76997pt on input line 5969.
+LaTeX Warning: Float too large for page by 406.76997pt on input line 6081.
 
-[83]
-<scrl_report_files/figure-latex/plot-ord-1.pdf, id=499, 440.64626pt x 252.945pt
+[84]
+<scrl_report_files/figure-latex/plot-ord-1.pdf, id=505, 440.64626pt x 252.945pt
 >
 File: scrl_report_files/figure-latex/plot-ord-1.pdf Graphic file (type pdf)
 <use scrl_report_files/figure-latex/plot-ord-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-ord-1.pdf  used on
- input line 6277.
+ input line 6389.
 (pdftex.def)             Requested size: 440.65189pt x 252.94823pt.
-<scrl_report_files/figure-latex/plot-ord-rot-1.pdf, id=500, 440.64626pt x 251.9
+<scrl_report_files/figure-latex/plot-ord-rot-1.pdf, id=506, 440.64626pt x 251.9
 4125pt>
 File: scrl_report_files/figure-latex/plot-ord-rot-1.pdf Graphic file (type pdf)
 
 <use scrl_report_files/figure-latex/plot-ord-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-ord-rot-1.pdf  use
-d on input line 6289.
+d on input line 6401.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
-[84 <./scrl_report_files/figure-latex/plot-ord-1.pdf>]
-<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=514, 432.616
+[85 <./scrl_report_files/figure-latex/plot-ord-1.pdf>]
+<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=521, 432.616
 26pt x 292.09125pt>
 File: scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf Graphic fil
 e (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-lichen-ro
-t-1.pdf  used on input line 6328.
+t-1.pdf  used on input line 6440.
 (pdftex.def)             Requested size: 432.635pt x 292.10388pt.
-[85 <./scrl_report_files/figure-latex/plot-ord-rot-1.pdf>]
-<scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf, id=529, 433.62pt
+[86 <./scrl_report_files/figure-latex/plot-ord-rot-1.pdf>]
+<scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf, id=535, 433.62pt
  x 292.09125pt>
 File: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf Graphic file
  (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot
--1.pdf  used on input line 6364.
+-1.pdf  used on input line 6476.
 (pdftex.def)             Requested size: 433.63878pt x 292.10388pt.
-[86 <./scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>] [87 <./s
-crl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [88] [89] [90] [9
-1] [92] [93] [94] [95] [96] (./scrl_report.aux) ) 
+[87 <./scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>] [88 <./s
+crl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [89] [90] [91] [9
+2] [93] [94] [95] [96] [97] (./scrl_report.aux) ) 
 Here is how much of TeX's memory you used:
- 13626 strings out of 479014
- 205265 string characters out of 5859148
- 691115 words of memory out of 5000000
- 30551 multiletter control sequences out of 15000+600000
+ 13630 strings out of 479014
+ 205388 string characters out of 5859148
+ 691195 words of memory out of 5000000
+ 30552 multiletter control sequences out of 15000+600000
  459245 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 85i,10n,88p,773b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 85i,10n,88p,773b,471s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf
 -dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016/texmf-dist/fonts/en
 c/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm
@@ -758,10 +758,10 @@ e/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2016/texm
 f-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
 ublic/lm/lmtti10.pfb>
-Output written on scrl_report.pdf (96 pages, 793427 bytes).
+Output written on scrl_report.pdf (97 pages, 794316 bytes).
 PDF statistics:
- 791 PDF objects out of 1000 (max. 8388607)
- 641 compressed objects within 7 object streams
- 188 named destinations out of 1000 (max. 500000)
- 31032 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 801 PDF objects out of 1000 (max. 8388607)
+ 650 compressed objects within 7 object streams
+ 191 named destinations out of 1000 (max. 500000)
+ 31040 words of extra memory for PDF output out of 35830 (max. 10000000)
 

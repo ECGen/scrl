@@ -1211,7 +1211,7 @@ colnames(v.ard.dif) <- paste0("p.", colnames(v.ard.dif))
 tra.dif.d <- dist(tra.dif)
 l.com.dif.d <- dist(l.com.dif)
 v.com.dif.d <- dist(v.com.dif)
-env.dif.d <- dist(env.dif)
+env.dif.d <- dist(env.dif[, c("rock.lg", "rock.sm", "light")])
 
 ind.env.dif.d <- lapply(split(as.matrix(env.dif), col(env.dif)), dist)
 names(ind.env.dif.d) <- colnames(env.dif)
@@ -1222,15 +1222,33 @@ names(ind.env.dif.d) <- colnames(env.dif)
 
 ## Lichen and plant community resposnes are not correlated
 
-``{r mantel-l-v}
+```{r mantel-l-v}
 
 mantel(l.com.dif.d ~ v.com.dif.d)
+
+mantel(l.com.dif.d ~ env.dif.d)
+mantel(l.com.dif.d ~ tra.dif.d)
+
+mantel(v.com.dif.d ~ env.dif.d)
+mantel(v.com.dif.d ~ tra.dif.d)
 
 ```
 
 ## Both lichen and vegetation respond to moth susceptibility
 
 ```{r moth-com, results = "asis", cache = TRUE}
+
+set.seed(12345)
+xtable::xtable(
+            adonis2(l.com.dif.d ~ crown.radius + rock.sm + rock.lg + light + litter, 
+                    data = data.frame(env.dif, tra.dif), by = "margin")
+        )        
+
+set.seed(12345)
+xtable::xtable(
+            adonis2(sqrt(v.com.dif.d) ~ litter + rock.sm + rock.lg + light + crown.radius, 
+                    data = data.frame(env.dif, tra.dif), by = "margin")
+        )
 
 set.seed(12345)
 xtable::xtable(adonis2(com.ds ~ Moth, 
@@ -1736,7 +1754,7 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
                     "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "rot.l.X1", "label"] <- "axis 1"
-plot(tg.l.rot.all)
+plot(tg.l.rot.all, text_size = 3.5)
 
 ```
 
