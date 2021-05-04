@@ -1754,7 +1754,10 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
                     "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "rot.l.X1", "label"] <- "axis 1"
-plot(tg.l.rot.all, text_size = 3.5)
+graph_sem(fit.l.rot.all, 
+          text_size = 3.5, 
+          edges = tg.l.rot.all[["edges"]])
+
 
 ```
 
