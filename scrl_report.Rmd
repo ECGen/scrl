@@ -1745,7 +1745,7 @@ lay <- get_layout("crown", "", "", "",     "l.A",
                   rows = 7)
 tg.l.rot.all <- prepare_graph(fit.l.rot.all, 
                               layout = lay,
-                              text_size = 2.70)
+                              text_size = 2.65)
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "l.A", "label"] <- "abundance"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
@@ -1753,7 +1753,7 @@ nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] ==
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "l.D", "label"] <- "diversity"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
-                    "rock.lg", "label"] <- "rock <3cm"
+                    "rock.lg", "label"] <- "rock >3cm"
 nodes(tg.l.rot.all)[nodes(tg.l.rot.all)[, "name"] == 
                     "rot.l.X1", "label"] <- "axis 1"
 plot(tg.l.rot.all)
@@ -1773,7 +1773,7 @@ lay <- get_layout("crown", "", "", "",     "p.A",
                   rows = 7)
 tg.v.rot.all <- prepare_graph(fit.v.rot.all, 
                               layout = lay,
-                              text_size = 2.70)
+                              text_size = 2.65)
 nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
                     "p.A", "label"] <- "abundance"
 nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
