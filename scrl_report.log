@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  4 MAY 2021 19:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  5 MAY 2021 11:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -735,11 +735,11 @@ Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot
 crl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [89] [90] [91] [9
 2] [93] [94] [95] [96] [97] (./scrl_report.aux) ) 
 Here is how much of TeX's memory you used:
- 13630 strings out of 479014
- 205388 string characters out of 5859148
- 691195 words of memory out of 5000000
- 30552 multiletter control sequences out of 15000+600000
- 459245 words of font info for 124 fonts, out of 8000000 for 9000
+ 13654 strings out of 479014
+ 205767 string characters out of 5859148
+ 695095 words of memory out of 5000000
+ 30557 multiletter control sequences out of 15000+600000
+ 460133 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  85i,10n,88p,773b,471s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf
@@ -758,10 +758,10 @@ e/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2016/texm
 f-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
 ublic/lm/lmtti10.pfb>
-Output written on scrl_report.pdf (97 pages, 794262 bytes).
+Output written on scrl_report.pdf (97 pages, 797430 bytes).
 PDF statistics:
- 801 PDF objects out of 1000 (max. 8388607)
- 650 compressed objects within 7 object streams
- 191 named destinations out of 1000 (max. 500000)
- 31040 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 808 PDF objects out of 1000 (max. 8388607)
+ 657 compressed objects within 7 object streams
+ 192 named destinations out of 1000 (max. 500000)
+ 31056 words of extra memory for PDF output out of 35830 (max. 10000000)
 

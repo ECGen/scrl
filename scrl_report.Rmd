@@ -1788,6 +1788,20 @@ plot(tg.v.rot.all)
 
 ```
 
+## Community Analyses
+
+To examine the lichen and plant community responses to moth
+susceptibility we analyzed both univariate and multivariate community
+metrics. All univariate metrics, which included total abundance (as
+total % cover), species richness and Shannon's diversity, were
+analyzed using *t*-tests of the differences between susceptible and
+resistant trees as done for the tree traits (Pearson
+1895). Mulivariate community responses were analyzed with paired
+PERMANOVAs (Anderson 2001) using Bray-Curtis dissimilarity (Bray &
+Curtis 1957) adjusted to include zero-sum observations and 10,000
+permutations. Mantel correlation was conducted to test
+for multivariate similarity of lichen and plant community responses to
+moth susceptibility. 
 
 ## SEM Methods
 
@@ -1803,13 +1817,20 @@ selected. Ordinated scores were then rotated for maximum correlation
 with the tree trait variables using a procrustes rotation (Oksanen et
 al. 2019).
 
-We constructed *a priori* models based on our hypotheses of the
-effects of tree traits on the two communities, lichens and plants.  We
-used the differences beteween moth susceptible and resistant trees for
-all variables in structural model using linear regressions with only
-the measured variables. Models were fit to the standardized variables
-using a maximum likelihood estimator and a $X^2$ goodness of fit test
-using the *Lavaan* package in R (Rosseel 2012).
+Applying an ecological causal modeling approach (Grace and Bollen
+2008), we constructed *a priori* models based on our hypotheses of the
+effects of tree traits on the two communities, lichens and plants
+(Figure Supplemental *a priori models*).  We used the differences
+beteween moth susceptible and resistant trees for all variables in
+structural model using linear regressions with only the measured
+variables. Models were fit to the standardized variables using a
+maximum likelihood estimator and a $X^2$ goodness of fit test using
+the *Lavaan* package in R (Rosseel 2012).
+
+Grace, James B. and Bollen, Kenneth A. 2008. Representing general
+ theoretical concepts in structural equation models: the role of
+ composite variables.  Environmental and Ecological Statistics,
+ Vol. 15, Issue. 2, p. 191.
 
 Jari Oksanen, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
   Pierre Legendre, Dan McGlinn, Peter R. Minchin, R. B. O'Hara, Gavin
@@ -1820,29 +1841,32 @@ Jari Oksanen, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
 Yves Rosseel (2012). lavaan: An R Package for Structural Equation
   Modeling. Journal of Statistical Software, 48(2), 1-36.
 
+## Moth Susceptibility Impacted Lichen and Plant Communities
+
+We found significant lichen and plant community differences between
+moth susceptibile and resistant trees. Abundance, richness and
+diversity were all lower under susceptible trees for both communities
+(TABLE abundance richness and diversity t-tests). As a whole both
+lichen ($R^2$ = 0.04, *p*-value = 0.031) and plant (*R^2* = 0.31,
+*p*-value = 0.0001) communities were signifcantly predicted by moth
+susceptibility. Although the moth effect was significant for both
+lichens and plants, their multivariate differences were not correlated
+(Mantel *r* = -0.12, *p*-value = 0.44).
 
 ## Causal Pathway of Moth Susceptibility Effects on Communities
 
-
-- Moth susceptiblity indirectly influences plants and lichen
-   1. Crown effect of moth increases litter effects but does not
-   affect light differences
-   2. Differences in litter between moth susceptible and resistant
-   trees decreases the differences of both large and small rocks
-   3. Differnces in large rocks increases lichen community differences
-      (abundance, richness, diversity, composition) and the difference
-      in small rocks decreases the plant community differences
-      (abundance richness, diversity and composition) between
-      susceptible and resistant trees
-- Both SEMs fit the data lichen ($df$ = `r sem.fm.tab.rot.all["Lichens", 2]`, 
+Moth susceptiblity indirectly influenced lichen and plants community
+composition by impacting local environmental conditions via altered
+tree traits. Both SEMs fit the lichen 
+($df$ = `r sem.fm.tab.rot.all["Lichens", 2]`, 
   $X^2$ = `r sem.fm.tab.rot.all["Lichens", 1]`, $p$-value =
   `r sem.fm.tab.rot.all["Lichens", 3]`) 
-  nor the plant ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, 
+  and plant ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, 
   $X^2$ = `r sem.fm.tab.rot.all["Plants", 1]`, 
   $p$-value = `r sem.fm.tab.rot.all["Plants", 3]`)
-  models showing significant differences from their observed
-  covariance matrices based on $X^2$ Goodness of Fit tests.
-- Ultimately, moth induced changes explained significant amounts of
+  data well, as neither model showed significant differences from their observed
+  covariance matrices based on their respective $X^2$ Goodness of Fit
+  tests. Moth crown herbivory effects on litter explained significant amounts of
   community variation in differences in lichen abundance 
   ($R^2$ = `r r2.l.rot.all["l.A"]`), richness ($R^2$ = `r r2.l.rot.all["l.R"]`)
   and diversity ($R^2$ = `r r2.l.rot.all["l.D"]`), as well as in plant
@@ -1852,14 +1876,14 @@ Yves Rosseel (2012). lavaan: An R Package for Structural Equation
   differences between moth susceptible and resistant trees were also
   signifcantly explained by crown size differences for both lichens
   ($R^2$ = `r r2.l.rot.all["rot.l.X1"]`) and 
-  plants ($R^2$ = `r r2.v.rot.all["rot.p.X1"]`).
-- See SEM path diagrams
-- The effects can be interpreted as so:
-   - As crown differences increase, litter differences increase
-   - As litter differences increase, large rock differences decrease
-   - As litter differences increase, small rock differences decrease
-   - As large rock differences increase, lichen differences increase
-   - As small rock differences increase, plant differences decrease
+  plants ($R^2$ = `r r2.v.rot.all["rot.p.X1"]`). Together, both of the
+  SEM support a causal pathway from moth crown  herbivory increased
+  litter, which altered the abundance of rocks of  different size
+  classes, ultimately impacting the lichen and plant  communities
+  (Fig. SEM PATH DIAGRAM). However, causal pathways involving light
+  differences between resulting from moth susceptibility were not
+  supported in either the lichen or the plant SEM (SUPPLEMENTARY TABLE
+  SEM path coefficents).
 
 
 ```{r table-export, results = "hide"}
