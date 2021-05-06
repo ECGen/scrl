@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 MAY 2021 12:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.23)  6 MAY 2021 14:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,54 +724,66 @@ d on input line 6453.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
 [86 <./scrl_report_files/figure-latex/plot-ord-1.pdf>] [87 <./scrl_report_files
 /figure-latex/plot-ord-rot-1.pdf>]
-<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=538, 426.593
+<scrl_report_files/figure-latex/plot-sem-apriori-1.pdf, id=538, 416.55624pt x 2
+85.065pt>
+File: scrl_report_files/figure-latex/plot-sem-apriori-1.pdf Graphic file (type 
+pdf)
+<use scrl_report_files/figure-latex/plot-sem-apriori-1.pdf>
+Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-apriori-1.pdf 
+ used on input line 6517.
+(pdftex.def)             Requested size: 416.55522pt x 285.0643pt.
+
+Underfull \vbox (badness 10000) detected at line 6533
+ []
+
+[88 <./scrl_report_files/figure-latex/plot-sem-apriori-1.pdf>]
+<scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf, id=550, 426.593
 75pt x 290.08376pt>
 File: scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf Graphic fil
 e (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-lichen-ro
-t-1.pdf  used on input line 6551.
+t-1.pdf  used on input line 6555.
 (pdftex.def)             Requested size: 426.61873pt x 290.10074pt.
-[88]
-<scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf, id=543, 427.5975
+[89 <./scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>]
+<scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf, id=563, 427.5975
 pt x 290.08376pt>
 File: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf Graphic file
  (type pdf)
 <use scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>
 Package pdftex.def Info: scrl_report_files/figure-latex/plot-sem-tidy-plant-rot
--1.pdf  used on input line 6589.
+-1.pdf  used on input line 6593.
 (pdftex.def)             Requested size: 427.59645pt x 290.08304pt.
-[89 <./scrl_report_files/figure-latex/plot-sem-tidy-lichen-rot-1.pdf>] [90 <./s
-crl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [91] [92] [93] [9
-4] [95] [96] [97] [98] [99] [100] [101] (./scrl_report.aux) ) 
+[90 <./scrl_report_files/figure-latex/plot-sem-tidy-plant-rot-1.pdf>] [91] [92]
+[93] [94] [95] [96] [97] [98] [99] [100] [101] (./scrl_report.aux) ) 
 Here is how much of TeX's memory you used:
- 13688 strings out of 479014
- 206146 string characters out of 5859148
- 699124 words of memory out of 5000000
- 30564 multiletter control sequences out of 15000+600000
+ 13694 strings out of 479014
+ 206476 string characters out of 5859148
+ 697838 words of memory out of 5000000
+ 30569 multiletter control sequences out of 15000+600000
  460985 words of font info for 141 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  85i,10n,88p,773b,475s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texliv
-e/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016/texmf-d
-ist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2016/texmf-dist/fonts/
-enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/
-lm/lm-ts1.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/
-2016/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2016/texmf
--dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr7.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist/f
-onts/type1/public/lm/lmtti10.pfb>
-Output written on scrl_report.pdf (101 pages, 805661 bytes).
+{/usr/local
+/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016/
+texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2016/texmf-dist
+/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc
+/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-
+ec.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/l
+m/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmri10.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf
+-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on scrl_report.pdf (101 pages, 819469 bytes).
 PDF statistics:
- 844 PDF objects out of 1000 (max. 8388607)
- 689 compressed objects within 7 object streams
+ 852 PDF objects out of 1000 (max. 8388607)
+ 694 compressed objects within 7 object streams
  203 named destinations out of 1000 (max. 500000)
- 31088 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 31093 words of extra memory for PDF output out of 35830 (max. 10000000)
 

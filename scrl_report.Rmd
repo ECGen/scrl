@@ -1783,7 +1783,7 @@ plot(v.com.dif.vec.rot, add = TRUE)
 ## SEM Plots
 
 
-```{r plot-sem-apriori}
+```{r plot-sem-apriori, cache = TRUE}
 
 apriori.dat <- data.frame(crown = rnorm(30),
                           light = rnorm(30),
