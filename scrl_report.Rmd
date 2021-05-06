@@ -1704,11 +1704,10 @@ print(xtable::xtable(sem.fm.tab.rot.all, digits = 3),
 ```
 
 
-
 ## Ordination Plots
 
 
-```{r plot-ord}
+```{r plot-ord, fig.width = 10, fig.height = 5}
 
 par(mfrow = c(1,2))
 plot(l.com.dif.ord[, 1:2], xlab = "Axis 1", ylab = "Axis 2", pch = 19)
@@ -1730,6 +1729,50 @@ plot(v.com.dif.vec.rot, add = TRUE)
 
 
 ## SEM Plots
+
+
+```{r plot-sem-apriori}
+
+apriori.dat <- data.frame(crown = rnorm(30),
+                          light = rnorm(30),
+                          litter = rnorm(30),
+                          rock.lg = rnorm(30),
+                          rock.sm = rnorm(30),
+                          richness = rnorm(30),
+                          abundance = rnorm(30),
+                          diversity = rnorm(30),
+                          ordination = rnorm(30))
+lav.apriori <- 'light ~ crown
+                litter ~ crown
+                rock.lg ~ litter
+                abundance ~ light + rock.lg + rock.sm
+                richness ~ light + rock.lg + rock.sm
+                diversity ~ light + rock.lg + rock.sm
+                ordination ~ light + rock.lg + rock.sm
+                rock.lg ~~ rock.sm
+               '
+fit.apriori <- lavaan::sem(lav.apriori, data = apriori.dat)
+
+lay.apriori <- get_layout("crown", "", "light", "",     "abundance",
+                  "", "",      "", "", "",
+                  "", "",      "", "",          "richness",
+                  "litter", "", "rock.lg", "", "",    
+                  "", "",      "", "", "diversity",
+                  "", "", "rock.sm", "", "", 
+                  "", "",      "", "", "",
+                  "", "",   "", "",    "ordination",
+                  rows = 8)
+
+tg.apriori <- prepare_graph(fit.apriori,
+                              layout = lay.apriori,
+                              text_size = 2.5)
+nodes(tg.apriori)[nodes(tg.apriori)[, "name"] == 
+                    "rock.lg", "label"] <- "rock >3cm"
+nodes(tg.apriori)[nodes(tg.apriori)[, "name"] == 
+                  "rock.sm", "label"] <- "rock <3cm"
+edges(tg.apriori)[, "label"] <- ""
+
+```
 
 
 
@@ -1807,15 +1850,14 @@ moth susceptibility.
 
 We used non-metric Multi-Dimensional Scaling (NMDS) to generate
 ordinations of the community differences between tree pairs. For both
-communities (lichens and plants) ordinations were conducted via the
-*vegan* package (Oksanen et al. 2019), using 100 random initial
-configurations with a maximum of 1000 iterations and a change in
-stress threshold of less than 10$^{-12}$. This was repeated for one to
-four dimension configurations, and the configuration with the lowest
-dimensionality and an unexplained variation less than 10\% was
-selected. Ordinated scores were then rotated for maximum correlation
-with the tree trait variables using a procrustes rotation (Oksanen et
-al. 2019).
+communities (lichens and plants) ordinations were conducted using 100
+random initial configurations with a maximum of 1000 iterations and a
+change in stress threshold of less than 10$^{-12}$. This was repeated
+for one to four dimension configurations, and the configuration with
+the lowest dimensionality and an unexplained variation less than 10\%
+was selected. Ordinated scores were then rotated for maximum
+correlation with the tree trait variables using a procrustes rotation
+(Oksanen et al. 2019).
 
 Applying an ecological causal modeling approach (Grace and Bollen
 2008), we constructed *a priori* models based on our hypotheses of the
@@ -1824,22 +1866,10 @@ effects of tree traits on the two communities, lichens and plants
 beteween moth susceptible and resistant trees for all variables in
 structural model using linear regressions with only the measured
 variables. Models were fit to the standardized variables using a
-maximum likelihood estimator and a $X^2$ goodness of fit test using
-the *Lavaan* package in R (Rosseel 2012).
-
-Grace, James B. and Bollen, Kenneth A. 2008. Representing general
- theoretical concepts in structural equation models: the role of
- composite variables.  Environmental and Ecological Statistics,
- Vol. 15, Issue. 2, p. 191.
-
-Jari Oksanen, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
-  Pierre Legendre, Dan McGlinn, Peter R. Minchin, R. B. O'Hara, Gavin
-  L. Simpson, Peter Solymos, M. Henry H. Stevens, Eduard Szoecs and
-  Helene Wagner (2019). vegan: Community Ecology Package. R package
-  version 2.5-6. https://CRAN.R-project.org/package=vegan.
-
-Yves Rosseel (2012). lavaan: An R Package for Structural Equation
-  Modeling. Journal of Statistical Software, 48(2), 1-36.
+maximum likelihood estimator and a $X^2$ goodness of fit test. We
+modeled the two communities (lichens and plants) separately because we
+found no significant correlation between the response of the two
+communities to moth herbivory (see Results).
 
 ## Moth Susceptibility Impacted Lichen and Plant Communities
 
@@ -1885,22 +1915,133 @@ tree traits. Both SEMs fit the lichen
   supported in either the lichen or the plant SEM (SUPPLEMENTARY TABLE
   SEM path coefficents).
 
+## Software and Data
 
-```{r table-export, results = "hide"}
+All analyses were done with R version 4.0.4 (R Core Team
+2021). Univariate *t*-tests were conducted using the *stats* package
+(R Core Team 2021). Multivariate analyses were conducted using the
+*ecodist* package for distance calculations (Goslee & Urban 2007) and
+the *vegan* package (Oksanen et al. 2019) for PERMANOVA and Mantel
+tests and to conduct the ordination and procrustes rotation. The
+structural equation modeling was conducted using the *lavaan* (Rosseel
+2012) and *tidygraph* (Pedersen 2020) packages. Data and software for
+all the analyses are deposited as a reproducible workflow using the
+drake package (Landau 2018) at Zenodo
+(https://zenodo.org/record/4531170).
 
-write.csv(file = "results/sem_results_lichen.csv",
-          table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")],
-          row.names = FALSE)
-write.csv(file = "results/sem_results_plant.csv",
-          table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")],
-          row.names = FALSE)
+
+## Citations
+
+Grace, James B. and Bollen, Kenneth A. 2008. Representing general
+ theoretical concepts in structural equation models: the role of
+ composite variables.  Environmental and Ecological Statistics,
+ Vol. 15, Issue. 2, p. 191.
+
+Oksanen, Jari F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
+  Pierre Legendre, Dan McGlinn, Peter R. Minchin, R. B. O'Hara, Gavin
+  L. Simpson, Peter Solymos, M. Henry H. Stevens, Eduard Szoecs and
+  Helene Wagner (2019). vegan: Community Ecology Package. R package
+  version 2.5-6. 
+
+Pedersen, Thomas Lin (2020). tidygraph: A Tidy API for Graph
+  Manipulation. R package version 1.2.0.
+
+R Core Team (2021). R: A language and environment for statistical
+  computing. R Foundation for Statistical Computing, Vienna, Austria.
+
+Rosseel, Yves (2012). lavaan: An R Package for Structural Equation
+  Modeling. Journal of Statistical Software, 48(2), 1-36.
+
+## Figure Captions
+
+Path diagrams of the structural equation models (SEM) for the (A)
+lichen and (B) plant communities. Boxes are measured variables and
+single-headed arrows show the directed hypothesized causal link
+between variables with the standardized path coeffiecients overlayed
+onto their respective arrows. Double-headed arrows and undirected
+dashed lines show the variances and co-variances, respectively. Only
+variables with at least one significant path coefficient are shown for
+clarity and estimates for all modeled pathways can be found in
+Supplementary Table ????.
+
+Bivariate plots of the procrustes rotated ordinations for the (A)
+lichen and (B) plant communities. Overlaid vectors show the magnitude
+and direction of the correlations for variables indicated by their
+respective labels. 
+
+
+## Table Legends
+
+Combined results from the univariate *t*-tests of the differences of
+the community metrics (abundance, richness and diversity) between moth
+susceptible and resistiant trees (S -R).
+
+```{r table-combined-ard, results = "asis"}
+
+tab.ard.combined <- tab.ttest.ard
+community <- do.call(rbind, 
+                     strsplit(rownames(tab.ard.combined), "\\."))[, 1]
+community <- gsub("l", "lichens", community)
+community <- gsub("p", "plants", community)
+metric <- do.call(rbind, 
+                     strsplit(rownames(tab.ard.combined), "\\."))[, 2]
+metric <- gsub("A", "abundance", metric)
+metric <- gsub("R", "richness", metric)
+metric <- gsub("D", "diversity", metric)
+tab.ard.combined <- data.frame(community, metric, tab.ard.combined)
+colnames(tab.ard.combined)[colnames(tab.ard.combined) == "statistic.t"] <- "t"
+colnames(tab.ard.combined)[colnames(tab.ard.combined) == "parameter.df"] <- "df"
+colnames(tab.ard.combined)[colnames(tab.ard.combined) == "estimate.mean.of.x"] <- "mean"
+tab.ard.combined[, "t"] <- round(tab.ard.combined[, "t"], 3)
+tab.ard.combined[, "df"] <- round(tab.ard.combined[, "df"], 0)
+tab.ard.combined[, "mean"] <- round(tab.ard.combined[, "mean"], 3)
+tab.ard.combined[, "p.value"] <- round(tab.ard.combined[, "p.value"], 4)
+write.csv(file = "results/table_ard_combined.csv", tab.ard.combined)
+print(xtable::xtable(tab.ard.combined, 
+               digits = c(0, 0, 0, 3, 0, 3, 4)),
+               include.rownames = FALSE)
 
 ```
 
-```{r table-for-export, results = "asis", echo = FALSE}
+Standardized path coefficients, variance and covariance statistics
+from the Lavann structural equation modeling (SEM) for the lichen
+community. The labels show the pathway for path coefficients with the
+directionality indicated by "ON" and covariances are indicated by
+"WITH". Paths common to both models are only shown once while other
+varialbes specific to each model are preceded by "l" for lichen and
+"p" for plant community. The *est_sig* column contains the standardize
+path coefficient and possibly asterisks indicating the level of
+significance. The standard error and *p*-value for the linear
+regression for each path are in the following columns *se* and *pval*,
+respectively.
 
-kable(table_results(fit.l.rot.all))
-kable(table_results(fit.v.rot.all))
+
+```{r combined-sem-tables}
+
+sem.combined <- rbind(
+    table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")],
+    table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")])
+sem.combined <- sem.combined[!(duplicated(sem.combined[, 1])), ]
+sem.combined[,1] <- gsub("rot.", "", sem.combined[, 1])
+sem.combined[,1] <- gsub(".A.", ".abundance.", sem.combined[, 1])
+sem.combined[,1] <- gsub(".R.", ".richness.", sem.combined[, 1])
+sem.combined[,1] <- gsub(".D.", ".diversity.", sem.combined[, 1])
+sem.combined[,1] <- gsub(".X", ".axis", sem.combined[, 1])
+
+```
+
+```{r table-sem_results, results = "asis", echo = FALSE}
+
+kable(sem.combined)
+
+```
+
+
+```{r table-export, results = "hide"}
+
+write.csv(file = "results/sem_results_combined.csv",
+          sem.combined,
+          row.names = FALSE)
 
 ```
 
