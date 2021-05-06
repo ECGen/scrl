@@ -311,7 +311,7 @@ colnames(ard.dat) <- c("Tree.pairs", "Stat", "diff")
 ard.mu <- tapply(ard.dat[, "diff"], ard.dat[, "Stat"], mean)
 ard.se <- tapply(ard.dat[, "diff"], ard.dat[, "Stat"], se)
 
-pdf(file = "./results/scrl_isp_ard.pdf", width = 9, height = 5)
+pdf(file = "./results/plot_ard_isp.pdf", width = 9, height = 5)
 
 par(mfrow = c(1,2))
 bp.out <- barplot(ard.mu, col = "darkgrey", ylim = c(-0.4, 0), 
@@ -1267,6 +1267,58 @@ xtable::xtable(adonis2(v.com.ds ~ Moth,
 
 ```
 
+```{r perm-lich-plant, cache = TRUE}
+
+set.seed(12345)
+moth.perm.l <- adonis2(com.ds ~ Moth, 
+                      strata = l.dat[, "Tree.pairs"], 
+                      data = l.dat, 
+                      perm = 100000)
+
+set.seed(12345)
+moth.perm.v <- adonis2(v.com.ds ~ Moth, 
+                     strata = l.dat[, "Tree.pairs"], 
+                     data = l.dat, 
+                     perm = 100000)
+
+```
+
+```{r table-perm-lich-plant, cache = TRUE}
+
+tab.perm.l <- data.frame(moth.perm.l)
+tab.perm.v <- data.frame(moth.perm.v)
+
+tab.fact <- rownames(tab.perm.l)
+
+tab.perm.l <- apply(tab.perm.l, 2, as.numeric)
+tab.perm.v <- apply(tab.perm.v, 2, as.numeric)
+
+colnames(tab.perm.l) <- c("df", "SS", "R2", "pseudo-F", "p-value")
+colnames(tab.perm.v) <- c("df", "SS", "R2", "pseudo-F", "p-value")
+
+tab.perm.l[1, "p-value"] <- round(tab.perm.l[1, "p-value"], 4)
+tab.perm.v[1, "p-value"] <- round(tab.perm.v[1, "p-value"], 4)
+
+tab.perm.l[1, "pseudo-F"] <- round(tab.perm.l[1, "pseudo-F"], 2)
+tab.perm.v[1, "pseudo-F"] <- round(tab.perm.v[1, "pseudo-F"], 2)
+
+tab.perm.l[, "SS"] <- round(tab.perm.l[, "SS"], 2)
+tab.perm.v[, "SS"] <- round(tab.perm.v[, "SS"], 2)
+
+tab.perm.l[, "R2"] <- round(tab.perm.l[, "R2"], 2)
+tab.perm.v[, "R2"] <- round(tab.perm.v[, "R2"], 2)
+
+tab.perm.l[is.na(tab.perm.l)] <- ""
+tab.perm.v[is.na(tab.perm.v)] <- ""
+
+rownames(tab.perm.l) <- tab.fact
+rownames(tab.perm.v) <- tab.fact
+
+write.csv(file = "results/table_perm_moth_lichen.csv", tab.perm.l)
+write.csv(file = "results/table_perm_moth_plant.csv", tab.perm.v)
+
+```
+
 
 ```{r moth-ard, results = "asis"}
 
@@ -1771,6 +1823,8 @@ nodes(tg.apriori)[nodes(tg.apriori)[, "name"] ==
 nodes(tg.apriori)[nodes(tg.apriori)[, "name"] == 
                   "rock.sm", "label"] <- "rock <3cm"
 edges(tg.apriori)[, "label"] <- ""
+
+plot(tg.apriori)
 
 ```
 
