@@ -1623,6 +1623,23 @@ lav.v.rot.all <- 'light ~ crown
                   p.R ~~ rot.p.X1
                  '
 
+lav.v.rot.norock <- 'light ~ crown
+                  litter ~ crown
+                  light ~ trunk
+                  litter ~ trunk
+                  p.A ~ light 
+                  p.R ~ light 
+                  p.D ~ light 
+                  rot.p.X1 ~ light 
+                  rot.p.X2 ~ light 
+                  rot.p.X3 ~ light 
+                  p.A ~~ rot.p.X2
+                  p.A ~~ p.R
+                  p.A ~~ p.D
+                  p.R ~~ p.D
+                  p.A ~~ rot.p.X1
+                  p.R ~~ rot.p.X1
+'
 
 std <- function(x){(x - mean(x)) / sd(x)}
 
@@ -1638,6 +1655,7 @@ set.seed(12345)
 fit.l.rot.all <- lavaan::sem(lav.l.rot.all, data = apply(sem.dat, 2, std))
 set.seed(12345)
 fit.v.rot.all <- lavaan::sem(lav.v.rot.all, data = apply(sem.dat, 2, std))
+fit.v.rot.norock <- lavaan::sem(lav.v.rot.norock, data = apply(sem.dat, 2, std))
 set.seed(12345)
 fit.l.rot.nolight <- lavaan::sem(lav.l.rot.nolight, data = apply(sem.dat, 2, std))
 set.seed(12345)
@@ -1649,6 +1667,7 @@ summary(fit.l.all, rsquare = TRUE)
 summary(fit.v.all, rsquare = TRUE)
 summary(fit.l.rot.all, rsquare = TRUE)
 summary(fit.v.rot.all, rsquare = TRUE)
+summary(fit.v.rot.norock, rsquare = TRUE)
 summary(fit.l.rot.nolight, rsquare = TRUE)
 summary(fit.v.rot.nolight, rsquare = TRUE)
 
@@ -1725,6 +1744,12 @@ xtable::xtable(modindices(fit.l.rot.all))
 ```{r sem-mod-indices-plants, results = "asis"}
 
 xtable::xtable(modindices(fit.v.rot.all))
+
+```
+
+```{r sem-mod-indices-plants-nr, results = "asis"}
+
+xtable::xtable(modindices(fit.v.rot.norock))
 
 ```
 
