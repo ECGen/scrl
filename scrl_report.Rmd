@@ -1693,6 +1693,7 @@ get_R2 <- function(x){
 
 r2.l.rot.all <- get_R2(fit.l.rot.all)
 r2.v.rot.all <- get_R2(fit.v.rot.all)
+r2.v.rot.norock <- get_R2(fit.v.rot.norock)
 
 ```
 
@@ -1771,8 +1772,10 @@ xtable::xtable(table_results(fit.v.rot.all))
 
 sem.fm.l.all <- fitMeasures(fit.l.all)
 sem.fm.v.all <- fitMeasures(fit.v.all)
+
 sem.fm.l.rot.all <- fitMeasures(fit.l.rot.all)
 sem.fm.v.rot.all <- fitMeasures(fit.v.rot.all)
+sem.fm.v.rot.norock <- fitMeasures(fit.v.rot.norock)
 
 sem.fm.tab.all <- rbind(sem.fm.l.all[c("chisq", "df", "pvalue")],
                         sem.fm.v.all[c("chisq", "df", "pvalue")])
@@ -1782,10 +1785,16 @@ sem.fm.tab.rot.all <- rbind(sem.fm.l.rot.all[c("chisq", "df", "pvalue")],
                         sem.fm.v.rot.all[c("chisq", "df", "pvalue")])
 rownames(sem.fm.tab.rot.all) <- c("Lichens", "Plants")
 colnames(sem.fm.tab.rot.all) <- c("$\\chi^{2}$", "\\textit{df}", "\\textit{p}-value")
+sem.fm.tab.rot.norock <- rbind(sem.fm.l.rot.all[c("chisq", "df", "pvalue")],
+                        sem.fm.v.rot.norock[c("chisq", "df", "pvalue")])
+rownames(sem.fm.tab.rot.norock) <- c("Lichens", "Plants")
+colnames(sem.fm.tab.rot.norock) <- c("$\\chi^{2}$", "\\textit{df}", "\\textit{p}-value")
 
 print(xtable::xtable(sem.fm.tab.all, digits = 3), 
                      sanitize.text.function = function(x) {x})
 print(xtable::xtable(sem.fm.tab.rot.all, digits = 3), 
+      sanitize.text.function = function(x) {x})
+print(xtable::xtable(sem.fm.tab.rot.norock, digits = 3), 
                      sanitize.text.function = function(x) {x})
 
 ```
@@ -2004,6 +2013,18 @@ tree traits. Both SEMs fit the lichen
   differences between resulting from moth susceptibility were not
   supported in either the lichen or the plant SEM (SUPPLEMENTARY TABLE
   SEM path coefficents).
+
+
+
+Removing rocks from the plant model we find the following. 
+  The model displays good fit ($df$ = `r sem.fm.tab.rot.norock["Plants", 2]`, 
+  $X^2$ = `r sem.fm.tab.rot.norock["Plants", 1]`, 
+  $p$-value = `r sem.fm.tab.rot.norock["Plants", 3]`)
+  data well, as neither model showed significant differences from their observed
+  covariance matrices based on their respective $X^2$ Goodness of Fit
+  tests. The only significant path in this model is from difference in
+  tree crown size to difference in litter ($R^2$ = `r r2.v.rot.norock[
+     "crown.p.litter"]`).
 
 ## Software and Data
 
