@@ -2143,21 +2143,21 @@ sem.combined[,1] <- gsub(".X", ".axis", sem.combined[, 1])
 
 ```{r norocks-sem-tables}
 
-sem.norocks <- rbind(
-    table_results(fit.v.rot.norocks)[, c("label", "est_sig", "se", "pval")])
-sem.norocks <- sem.norocks[!(duplicated(sem.norocks[, 1])), ]
-sem.norocks[,1] <- gsub("rot.", "", sem.norocks[, 1])
-sem.norocks[,1] <- gsub(".A.", ".abundance.", sem.norocks[, 1])
-sem.norocks[,1] <- gsub(".R.", ".richness.", sem.norocks[, 1])
-sem.norocks[,1] <- gsub(".D.", ".diversity.", sem.norocks[, 1])
-sem.norocks[,1] <- gsub(".X", ".axis", sem.norocks[, 1])
+sem.norock <- rbind(
+    table_results(fit.v.rot.norock)[, c("label", "est_sig", "se", "pval")])
+sem.norock <- sem.norock[!(duplicated(sem.norock[, 1])), ]
+sem.norock[,1] <- gsub("rot.", "", sem.norock[, 1])
+sem.norock[,1] <- gsub(".A.", ".abundance.", sem.norock[, 1])
+sem.norock[,1] <- gsub(".R.", ".richness.", sem.norock[, 1])
+sem.norock[,1] <- gsub(".D.", ".diversity.", sem.norock[, 1])
+sem.norock[,1] <- gsub(".X", ".axis", sem.norock[, 1])
 
 ```
 
 ```{r table-sem_results, results = "asis", echo = FALSE}
 
 kable(sem.combined)
-kable(sem.norocks)
+kable(sem.norock)
 
 ```
 
@@ -2168,8 +2168,8 @@ write.csv(file = "results/sem_results_combined.csv",
           sem.combined,
           row.names = FALSE)
 
-write.csv(file = "results/sem_results_norocks.csv",
-          sem.norocks,
+write.csv(file = "results/sem_results_norock.csv",
+          sem.norock,
           row.names = FALSE)
 
 ```
