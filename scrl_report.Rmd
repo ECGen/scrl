@@ -1590,8 +1590,6 @@ lav.v.rot.nolight <- 'litter ~ crown
                  '
 lav.l.rot.all <- 'light ~ crown
                   litter ~ crown
-                  light ~ trunk
-                  litter ~ trunk
                   rock.lg ~ litter
                   l.A ~ light + rock.lg 
                   l.R ~ light + rock.lg 
@@ -1606,8 +1604,6 @@ lav.l.rot.all <- 'light ~ crown
                  '
 lav.v.rot.all <- 'light ~ crown
                   litter ~ crown
-                  light ~ trunk
-                  litter ~ trunk
                   rock.sm ~ litter
                   p.A ~ light + rock.sm 
                   p.R ~ light + rock.sm
@@ -1625,8 +1621,6 @@ lav.v.rot.all <- 'light ~ crown
 
 lav.v.rot.norock <- 'light ~ crown
                   litter ~ crown
-                  light ~ trunk
-                  litter ~ trunk
                   p.A ~ light + litter
                   p.R ~ light + litter 
                   p.D ~ light + litter 
@@ -1643,8 +1637,6 @@ lav.v.rot.norock <- 'light ~ crown
 
 lav.v.rot.rocklitter <- 'light ~ crown
                   litter ~ crown
-                  light ~ trunk
-                  litter ~ trunk
                   rock.sm ~ litter
                   p.A ~ light + litter + rock.sm
                   p.R ~ light + litter  + rock.sm
@@ -1662,8 +1654,6 @@ lav.v.rot.rocklitter <- 'light ~ crown
 
 lav.v.rot.norock.ind.litter <- 'light ~ crown
                   litter ~ crown
-                  light ~ trunk
-                  litter ~ trunk
                   p.A ~ light 
                   p.R ~ light 
                   p.D ~ light 
@@ -1917,6 +1907,41 @@ nodes(tg.apriori)[nodes(tg.apriori)[, "name"] ==
 edges(tg.apriori)[, "label"] <- ""
 
 plot(tg.apriori)
+
+```
+
+```{r plot-sem-apriori-norock, cache = TRUE}
+
+apriori.norock.dat <- data.frame(crown = rnorm(30),
+                          light = rnorm(30),
+                          litter = rnorm(30),
+                          richness = rnorm(30),
+                          abundance = rnorm(30),
+                          diversity = rnorm(30),
+                          ordination = rnorm(30))
+lav.apriori.norock <- 'light ~ crown
+                litter ~ crown
+                abundance ~ light + litter
+                richness ~ light + litter
+                diversity ~ light + litter
+                ordination ~ light + litter
+               '
+fit.apriori.norock <- lavaan::sem(lav.apriori.norock, data = apriori.norock.dat)
+lay.apriori.norock <- get_layout("crown", "", "light", "",     "abundance",
+                  "", "",      "", "", "",
+                  "", "",      "", "",          "richness",
+                  "", "", "", "", "",    
+                  "", "",  "litter", "", "diversity",
+                  "", "", "", "", "", 
+                  "", "",      "", "", "",
+                  "", "",   "", "",    "ordination",
+                  rows = 8)
+
+tg.apriori.norock <- prepare_graph(fit.apriori.norock,
+                              layout = lay.apriori.norock,
+                              text_size = 2.5)
+edges(tg.apriori.norock)[, "label"] <- ""
+plot(tg.apriori.norock)
 
 ```
 
