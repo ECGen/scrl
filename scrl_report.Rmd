@@ -1488,7 +1488,7 @@ l.com.dif.vec.rot <- envfit(l.com.dif.ord.proc,
                             data.frame(env.dif[, c(-1, -3)], 
                                        litter = tra.dif[, "litter"]))
 v.com.dif.vec.rot <- envfit(v.com.dif.ord.proc, 
-                            data.frame(env.dif[, c(-1, -3)], 
+                            data.frame(env.dif[, c(-1, -2, -3)], 
                                        litter = tra.dif[, "litter"]))
 
 ```
