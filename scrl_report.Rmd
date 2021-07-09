@@ -2080,37 +2080,30 @@ lichens and plants, their multivariate differences were not correlated
 
 ## Causal Pathway of Moth Susceptibility Effects on Communities
 
-Moth susceptiblity indirectly influenced lichen and plants community
-composition by impacting local environmental conditions via altered
-tree traits. Both SEMs fit the lichen 
-($df$ = `r sem.fm.tab.rot.all["Lichens", 2]`, 
-  $X^2$ = `r sem.fm.tab.rot.all["Lichens", 1]`, $p$-value =
-  `r sem.fm.tab.rot.all["Lichens", 3]`) 
-  and plant ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, 
-  $X^2$ = `r sem.fm.tab.rot.all["Plants", 1]`, 
-  $p$-value = `r sem.fm.tab.rot.all["Plants", 3]`)
-  data well, as neither model showed significant differences from their observed
-  covariance matrices based on their respective $X^2$ Goodness of Fit
-  tests. Moth crown herbivory effects on litter explained significant amounts of
-  community variation in differences in lichen abundance 
-  ($R^2$ = `r r2.l.rot.all["l.A"]`), richness ($R^2$ = `r r2.l.rot.all["l.R"]`)
-  and diversity ($R^2$ = `r r2.l.rot.all["l.D"]`), as well as in plant
-  community differences in abundance ($R^2$ = `r r2.v.rot.all["p.A"]`), 
-  richness ($R^2$ = `r r2.v.rot.all["p.A"]`)
-  and diversity ($R^2$ = `r r2.v.rot.all["p.D"]`). Whole community
-  differences between moth susceptible and resistant trees were also
-  signifcantly explained by crown size differences for both lichens
-  ($R^2$ = `r r2.l.rot.all["rot.l.X1"]`) and 
-  plants ($R^2$ = `r r2.v.rot.all["rot.p.X1"]`). Together, both of the
-  SEM support a causal pathway from moth crown  herbivory increased
-  litter, which altered the abundance of rocks of  different size
-  classes, ultimately impacting the lichen and plant  communities
-  (Fig. SEM PATH DIAGRAM). However, causal pathways involving light
-  differences between resulting from moth susceptibility were not
-  supported in either the lichen or the plant SEM (SUPPLEMENTARY TABLE
-  SEM path coefficents).
-
-
+Moth susceptiblity indirectly influenced lichen but not plant
+community composition by impacting local environmental conditions via
+altered tree traits. The SEMs fit the lichen ($df$ = `r
+sem.fm.tab.rot.all["Lichens", 2]`, $X^2$ = `r
+sem.fm.tab.rot.all["Lichens", 1]`, $p$-value = `r
+sem.fm.tab.rot.all["Lichens", 3]`) data well, as the model did not
+show significant differences from their observed covariance matrices
+based on their respective $X^2$ Goodness of Fit tests. Moth crown
+herbivory effects on litter explained significant amounts of community
+variation in differences in lichen abundance ($R^2$ = `r
+r2.l.rot.all["l.A"]`), richness ($R^2$ = `r r2.l.rot.all["l.R"]`) and
+diversity ($R^2$ = `r r2.l.rot.all["l.D"]`). Whole community
+differences between moth susceptible and resistant trees were also
+signifcantly explained by crown size differences for lichens ($R^2$ =
+`r r2.l.rot.all["rot.l.X1"]`). These effects were significantly
+mediated by the negative effects of litter on the abundance of large
+rocks, creating a combined negative effect of moth herbivory on lichen
+(Figure 5). Similar to the lichen model, the plant SEM displayed good
+model fit ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, $X^2$ = `r
+sem.fm.tab.rot.all["Plants", 1]`, $p$-value = `r
+sem.fm.tab.rot.all["Plants", 3]`); however, only the effect of tree
+crown on litter was significant and neither light nor litter showed
+significant effects on any of the plant community metrics (see Figure
+5).
 
 Removing rocks from the plant model we find the following. 
   The model displays good fit ($df$ = `r sem.fm.tab.rot.norock["Plants", 2]`, 
