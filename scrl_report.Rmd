@@ -1750,7 +1750,7 @@ xtable::xtable(modindices(fit.v.rot.all))
 
 ```{r sem-mod-indices-plants-nr, results = "asis"}
 
-xtable::xtable(modindices(fit.v.rot.norock))
+kable(modindices(fit.v.rot.norock))
 
 ```
 
