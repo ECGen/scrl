@@ -1627,12 +1627,13 @@ lav.v.rot.norock <- 'light ~ crown
                   litter ~ crown
                   light ~ trunk
                   litter ~ trunk
-                  p.A ~ light + litter
-                  p.R ~ light + litter
-                  p.D ~ light + litter
-                  rot.p.X1 ~ light + litter
-                  rot.p.X2 ~ light + litter
-                  rot.p.X3 ~ light + litter
+                  rock.sm ~ litter
+                  p.A ~ light + litter + rock.sm
+                  p.R ~ light + litter  + rock.sm
+                  p.D ~ light + litter  + rock.sm
+                  rot.p.X1 ~ light + litter  + rock.sm
+                  rot.p.X2 ~ light + litter  + rock.sm 
+                  rot.p.X3 ~ light + litter  + rock.sm
                   p.A ~~ rot.p.X2
                   p.A ~~ p.R
                   p.A ~~ p.D
@@ -1954,6 +1955,33 @@ nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] ==
 nodes(tg.v.rot.all)[nodes(tg.v.rot.all)[, "name"] == 
                     "rot.p.X1", "label"] <- "axis 1"
 plot(tg.v.rot.all)
+
+```
+
+```{r plot-sem-tidy-plant-rot-norock}
+
+lay <- get_layout("crown", "", "", "",     "p.A",
+                  "", "",  "litter", "", "",
+                  "", "",  "", "",          "p.R",
+                  "", "", "rock.sm", "", "",          
+                  "", "",      "", "", "p.D",
+                  "", "", "", "", "", 
+                  "", "",      "", "",    "rot.p.X1",
+                  rows = 7)
+tg.v.rot.norock <- prepare_graph(fit.v.rot.norock, 
+                              layout = lay,
+                              text_size = 2.6)
+nodes(tg.v.rot.norock)[nodes(tg.v.rot.norock)[, "name"] == 
+                    "p.A", "label"] <- "abundance"
+nodes(tg.v.rot.norock)[nodes(tg.v.rot.norock)[, "name"] == 
+                    "p.R", "label"] <- "richness"
+nodes(tg.v.rot.norock)[nodes(tg.v.rot.norock)[, "name"] == 
+                    "p.D", "label"] <- "diversity"
+nodes(tg.v.rot.norock)[nodes(tg.v.rot.norock)[, "name"] == 
+                    "rock.sm", "label"] <- "rock <3cm"
+nodes(tg.v.rot.norock)[nodes(tg.v.rot.norock)[, "name"] == 
+                    "rot.p.X1", "label"] <- "axis 1"
+plot(tg.v.rot.norock)
 
 ```
 
