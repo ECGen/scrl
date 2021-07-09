@@ -1963,10 +1963,10 @@ plot(tg.v.rot.all)
 lay <- get_layout("crown", "", "litter", "",     "p.A",
                   "", "",  "", "", "",
                   "", "",  "", "",          "p.R",
-                  "", "", "", "", "",          
-                  "", "", "rock.sm", "", "p.D",
+                  "", "", "light", "", "",          
+                  "", "", "", "", "p.D",
                   "", "", "", "", "", 
-                  "", "",      "", "",    "rot.p.X1",
+                  "", "",  "rock.sm", "",    "rot.p.X1",
                   rows = 7)
 tg.v.rot.norock <- prepare_graph(fit.v.rot.norock, 
                               layout = lay,
