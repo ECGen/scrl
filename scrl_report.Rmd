@@ -1960,11 +1960,11 @@ plot(tg.v.rot.all)
 
 ```{r plot-sem-tidy-plant-rot-norock}
 
-lay <- get_layout("crown", "", "", "",     "p.A",
-                  "", "",  "litter", "", "",
+lay <- get_layout("crown", "", "litter", "",     "p.A",
+                  "", "",  "", "", "",
                   "", "",  "", "",          "p.R",
-                  "", "", "rock.sm", "", "",          
-                  "", "",      "", "", "p.D",
+                  "", "", "", "", "",          
+                  "", "", "rock.sm", "", "p.D",
                   "", "", "", "", "", 
                   "", "",      "", "",    "rot.p.X1",
                   rows = 7)
