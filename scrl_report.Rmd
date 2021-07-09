@@ -1944,7 +1944,7 @@ plot(tg.apriori.norock)
 
 ```{r plot-sem-tidy-lichen-rot}
 
-lay <- get_layout("crown", "", "", "",     "l.A",
+lay <- get_layout("crown", "", "light", "",     "l.A",
                   "", "",      "", "", "",
                   "", "",      "", "",          "l.R",
                   "litter", "", "rock.lg", "", "",          
@@ -1970,7 +1970,7 @@ plot(tg.l.rot.all)
 
 ```
 
-```{r plot-sem-tidy-plant-rot}
+```{r plot-sem-tidy-plant-rot, eval = FALSE}
 
 lay <- get_layout("crown", "", "", "",     "p.A",
                   "", "",      "", "", "",
@@ -1999,10 +1999,10 @@ plot(tg.v.rot.all)
 
 ```{r plot-sem-tidy-plant-rot-norock}
 
-lay <- get_layout("crown", "", "litter", "",     "p.A",
+lay <- get_layout("crown", "", "light", "",     "p.A",
                   "", "",  "", "", "",
                   "", "",  "", "",          "p.R",
-                  "trunk", "", "light", "", "",          
+                  "", "", "litter", "", "",          
                   "", "", "", "", "p.D",
                   "", "", "", "", "", 
                   "", "",  "", "",    "rot.p.X1",
