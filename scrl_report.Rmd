@@ -2095,7 +2095,10 @@ rocks, creating a combined negative effect of moth herbivory on lichen
 (Figure 5). Similar to the lichen model, the plant SEM displayed good
 model fit ($df$ = `r sem.fm.tab.rot.all["Plants", 2]`, $X^2$ = `r sem.fm.tab.rot.all["Plants", 1]`, $p$-value = `r sem.fm.tab.rot.all["Plants", 3]`); however, only the effect of tree
 crown on litter was significant and neither light nor litter showed significant effects on any of the plant community metrics (see Figure
-5).
+5). However, pathways involving light differences between resistant and
+susceptible trees were not supported in the saxicole or vascular plant
+SEMs (Appendix S1: Table S3).
+
 
 Removing rocks from the plant model we find the following. 
   The model displays good fit ($df$ = `r sem.fm.tab.rot.norock["Plants", 2]`, 
