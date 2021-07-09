@@ -1627,6 +1627,24 @@ lav.v.rot.norock <- 'light ~ crown
                   litter ~ crown
                   light ~ trunk
                   litter ~ trunk
+                  p.A ~ light + litter
+                  p.R ~ light + litter 
+                  p.D ~ light + litter 
+                  rot.p.X1 ~ light + litter 
+                  rot.p.X2 ~ light + litter 
+                  rot.p.X3 ~ light + litter 
+                  p.A ~~ rot.p.X2
+                  p.A ~~ p.R
+                  p.A ~~ p.D
+                  p.R ~~ p.D
+                  p.A ~~ rot.p.X1
+                  p.R ~~ rot.p.X1
+'
+
+lav.v.rot.rocklitter <- 'light ~ crown
+                  litter ~ crown
+                  light ~ trunk
+                  litter ~ trunk
                   rock.sm ~ litter
                   p.A ~ light + litter + rock.sm
                   p.R ~ light + litter  + rock.sm
@@ -1870,6 +1888,7 @@ apriori.dat <- data.frame(crown = rnorm(30),
 lav.apriori <- 'light ~ crown
                 litter ~ crown
                 rock.lg ~ litter
+                rock.sm ~ litter
                 abundance ~ light + rock.lg + rock.sm
                 richness ~ light + rock.lg + rock.sm
                 diversity ~ light + rock.lg + rock.sm
@@ -1911,7 +1930,7 @@ lay <- get_layout("crown", "", "", "",     "l.A",
                   "litter", "", "rock.lg", "", "",          
                   "", "",      "", "", "l.D",
                   "", "", "", "", "", 
-                  "", "",      "", "",    "rot.l.X1",
+                  "trunk", "",      "", "",    "rot.l.X1",
                   rows = 7)
 tg.l.rot.all <- prepare_graph(fit.l.rot.all, 
                               layout = lay,
@@ -1963,10 +1982,10 @@ plot(tg.v.rot.all)
 lay <- get_layout("crown", "", "litter", "",     "p.A",
                   "", "",  "", "", "",
                   "", "",  "", "",          "p.R",
-                  "", "", "", "", "",          
+                  "trunk", "", "light", "", "",          
                   "", "", "", "", "p.D",
                   "", "", "", "", "", 
-                  "", "",  "rock.sm", "",    "rot.p.X1",
+                  "", "",  "", "",    "rot.p.X1",
                   rows = 7)
 tg.v.rot.norock <- prepare_graph(fit.v.rot.norock, 
                               layout = lay,
