@@ -1479,15 +1479,17 @@ colnames(v.com.dif.ord) <- paste0("p.", colnames(v.com.dif.ord))
 ```{r proc-rot-ord}
 
 l.com.dif.ord.proc <- procrustes(env.dif[, "rock.lg"], l.com.dif.ord)$Yrot
-v.com.dif.ord.proc <- procrustes(env.dif[, "rock.sm"], v.com.dif.ord)$Yrot
+v.com.dif.ord.proc <- procrustes(tra.dif[, "litter"], v.com.dif.ord)$Yrot
 
 colnames(l.com.dif.ord.proc) <- paste0("rot.", colnames(l.com.dif.ord))
 colnames(v.com.dif.ord.proc) <- paste0("rot.", colnames(v.com.dif.ord))
 
 l.com.dif.vec.rot <- envfit(l.com.dif.ord.proc, 
-                            data.frame(env.dif[, -1], litter = tra.dif[, "litter"]))
+                            data.frame(env.dif[, c(-1, -3)], 
+                                       litter = tra.dif[, "litter"]))
 v.com.dif.vec.rot <- envfit(v.com.dif.ord.proc, 
-                            data.frame(env.dif[, -1], litter = tra.dif[, "litter"]))
+                            data.frame(env.dif[, c(-1, -3)], 
+                                       litter = tra.dif[, "litter"]))
 
 ```
 
