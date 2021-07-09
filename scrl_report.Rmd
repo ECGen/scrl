@@ -2220,7 +2220,7 @@ respectively.
 
 sem.combined <- rbind(
     table_results(fit.l.rot.all)[, c("label", "est_sig", "se", "pval")],
-    table_results(fit.v.rot.all)[, c("label", "est_sig", "se", "pval")])
+    table_results(fit.v.rot.norock)[, c("label", "est_sig", "se", "pval")])
 sem.combined <- sem.combined[!(duplicated(sem.combined[, 1])), ]
 sem.combined[,1] <- gsub("rot.", "", sem.combined[, 1])
 sem.combined[,1] <- gsub(".A.", ".abundance.", sem.combined[, 1])
