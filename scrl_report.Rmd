@@ -1870,7 +1870,6 @@ apriori.dat <- data.frame(crown = rnorm(30),
                           light = rnorm(30),
                           litter = rnorm(30),
                           rock.lg = rnorm(30),
-                          rock.sm = rnorm(30),
                           richness = rnorm(30),
                           abundance = rnorm(30),
                           diversity = rnorm(30),
@@ -1878,12 +1877,10 @@ apriori.dat <- data.frame(crown = rnorm(30),
 lav.apriori <- 'light ~ crown
                 litter ~ crown
                 rock.lg ~ litter
-                rock.sm ~ litter
-                abundance ~ light + rock.lg + rock.sm
-                richness ~ light + rock.lg + rock.sm
-                diversity ~ light + rock.lg + rock.sm
-                ordination ~ light + rock.lg + rock.sm
-                rock.lg ~~ rock.sm
+                abundance ~ light + rock.lg
+                richness ~ light + rock.lg
+                diversity ~ light + rock.lg
+                ordination ~ light + rock.lg
                '
 fit.apriori <- lavaan::sem(lav.apriori, data = apriori.dat)
 
@@ -1892,7 +1889,7 @@ lay.apriori <- get_layout("crown", "", "light", "",     "abundance",
                   "", "",      "", "",          "richness",
                   "litter", "", "rock.lg", "", "",    
                   "", "",      "", "", "diversity",
-                  "", "", "rock.sm", "", "", 
+                  "", "", "", "", "", 
                   "", "",      "", "", "",
                   "", "",   "", "",    "ordination",
                   rows = 8)
@@ -1902,8 +1899,6 @@ tg.apriori <- prepare_graph(fit.apriori,
                               text_size = 2.5)
 nodes(tg.apriori)[nodes(tg.apriori)[, "name"] == 
                     "rock.lg", "label"] <- "rock >3cm"
-nodes(tg.apriori)[nodes(tg.apriori)[, "name"] == 
-                  "rock.sm", "label"] <- "rock <3cm"
 edges(tg.apriori)[, "label"] <- ""
 
 plot(tg.apriori)
