@@ -2082,8 +2082,8 @@ lichens and plants, their multivariate differences were not correlated
 
 Moth susceptiblity indirectly influenced lichen but not plant
 community composition by impacting local environmental conditions via
-altered tree traits. The SEMs fit the lichen ($df$ = `r sem.fm.tab.rot.all["Lichens", 2]`, $X^2$ = `r
-sem.fm.tab.rot.all["Lichens", 1]`, $p$-value = `r sem.fm.tab.rot.all["Lichens", 3]`) data well, as the model did not
+altered tree traits. The SEMs fit the lichen ($df$ = `r
+sem.fm.tab.rot.all["Lichens", 2]`, $X^2$ = `r sem.fm.tab.rot.all["Lichens", 1]`, $p$-value = `r sem.fm.tab.rot.all["Lichens", 3]`) data well, as the model did not
 show significant differences from their observed covariance matrices
 based on their respective $X^2$ Goodness of Fit tests. Moth crown
 herbivory effects on litter explained significant amounts of community
