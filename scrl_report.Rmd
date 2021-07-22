@@ -2214,8 +2214,8 @@ respectively.
 ```{r combined-sem-tables}
 
 sem.combined <- rbind(
-    table_results(fit.l.rot.all, digits = 6)[, c("label", "est_sig", "se", "pval")],
-    table_results(fit.v.rot.norock, digits = 6)[, c("label", "est_sig", "se", "pval")])
+    table_results(fit.l.rot.all, digits = 4)[, c("label", "est_sig", "se", "pval")],
+    table_results(fit.v.rot.norock, digits = 4)[, c("label", "est_sig", "se", "pval")])
 sem.combined <- sem.combined[!(duplicated(sem.combined[, 1])), ]
 sem.combined[,1] <- gsub("rot.", "", sem.combined[, 1])
 sem.combined[,1] <- gsub(".A.", ".abundance.", sem.combined[, 1])
@@ -2228,7 +2228,7 @@ sem.combined[,1] <- gsub(".X", ".axis", sem.combined[, 1])
 ```{r norocks-sem-tables}
 
 sem.norock <- rbind(
-    table_results(fit.v.rot.norock, digits = 6)[, c("label", "est_sig", "se", "pval")])
+    table_results(fit.v.rot.norock, digits = 4)[, c("label", "est_sig", "se", "pval")])
 sem.norock <- sem.norock[!(duplicated(sem.norock[, 1])), ]
 sem.norock[,1] <- gsub("rot.", "", sem.norock[, 1])
 sem.norock[,1] <- gsub(".A.", ".abundance.", sem.norock[, 1])
