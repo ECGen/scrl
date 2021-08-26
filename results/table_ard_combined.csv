@@ -1,0 +1,7 @@
+"","community","metric","t","df","mean","p.value"
+"l.A","lichens","abundance",-2.249,29,-1.544,0.0323
+"l.R","lichens","richness",-2.955,29,-2.533,0.0062
+"l.D","lichens","diversity",-2.447,29,-0.437,0.0207
+"p.A","plants","abundance",-7.135,29,-22.433,0
+"p.R","plants","richness",-7.477,29,-1.3,0
+"p.D","plants","diversity",-4.219,29,-0.295,2e-04
