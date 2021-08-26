@@ -5,15 +5,16 @@ Sunset Crater Rock Lichen/Moss Project
   the saxicole (lichen and moss) community on rocks under the canopy
   of the trees. 
 - The project is written in RMarkdown notebook format, which you can
-  rander and browse.
+  render and browse.
 - If you would like to run the code and/or add-on and re-build and
   render a new version of the project, you can use the
-  !(https://rmarkdown.rstudio.com/)[rmarkdown] package. 
-  
+  ![rmarkdown](https://rmarkdown.rstudio.com/) package. 
+- This renders a PDF document version of the analysis report.
+- Please see `?rmarkdown::render` for more info. 
+
 ```{r}
 
 rmarkdown::render("scrl_report.Rmd")
-rmarkdown::render("scrl_report.Rmd", "word_document")
 
 ```
 
