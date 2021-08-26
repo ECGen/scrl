@@ -1,6 +1,8 @@
 Sunset Crater Rock Lichen/Moss Project
 ======================================
 
+[![DOI](https://zenodo.org/badge/285126380.svg)](https://zenodo.org/badge/latestdoi/285126380)
+
 - This is an analysis of the effect of Pinyon Pine tree traits on
   the saxicole (lichen and moss) community on rocks under the canopy
   of the trees. 
